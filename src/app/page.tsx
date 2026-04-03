@@ -1,0 +1,314 @@
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import HeroSection from "@/components/HeroSection";
+import ResourceCard from "@/components/ResourceCard";
+import UpdatesSection from "@/components/UpdatesSection";
+import CTASection from "@/components/CTASection";
+import QuickDonationBox from "@/components/QuickDonationBox";
+import ProgramsCarousel from "@/components/ProgramsCarousel";
+import DonationFundsCarousel from "@/components/DonationFundsCarousel";
+import { programs } from "@/data/programs";
+import { updates } from "@/data/updates";
+import { resources } from "@/data/resources";
+import { latestUpdatesPreviewLimit } from "@/data/homepage";
+import { Suspense } from "react";
+import { getPublicFunds } from "@/lib/public-funds";
+
+export const metadata = {
+  title: "One World Hands | For the World, With a Magic Touch",
+  description:
+    "One World Hands is a humanitarian NGO empowering individuals and supporting communities through education, direct action, and collaboration.",
+};
+
+export default async function Home() {
+  const publicFunds = await getPublicFunds();
+
+  return (
+    <div className="flex min-h-screen flex-col bg-white font-sans text-foreground">
+      <div className="w-full border-b border-neutral-100 bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-4 py-2 text-center text-sm font-medium text-neutral-800 sm:px-6 lg:px-8">
+          Where Magic Hands Unite, Wonders Arise.
+        </div>
+      </div>
+
+      <Header />
+
+      <main id="main" className="flex-1">
+        <HeroSection />
+
+        <div id="quick-donation" className="scroll-mt-28">
+          <Suspense
+            fallback={
+              <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+                <p className="text-sm font-semibold text-neutral-900">
+                  Preparing donation options...
+                </p>
+              </div>
+            }
+          >
+            <QuickDonationBox funds={publicFunds} />
+          </Suspense>
+        </div>
+
+        <section aria-labelledby="about-preview-title">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <h2
+              id="about-preview-title"
+              className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
+            >
+              Our Vision & Mission
+            </h2>
+
+            <div className="mt-8 grid gap-6 lg:grid-cols-2">
+              <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-50 ring-1 ring-sky-200">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5 text-sky-700"
+                      fill="none"
+                    >
+                      <path
+                        d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <p className="text-sm font-semibold text-neutral-900">Vision</p>
+                </div>
+
+                <p className="mt-5 text-base leading-8 text-neutral-700">
+                  A world where every human being has opportunity, dignity, and
+                  support to live a better life.
+                </p>
+              </div>
+
+              <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-200">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5 text-green-700"
+                      fill="none"
+                    >
+                      <path
+                        d="M20 6L10 17l-5-5"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <p className="text-sm font-semibold text-neutral-900">Mission</p>
+                </div>
+
+                <p className="mt-5 text-base leading-8 text-neutral-700">
+                  To empower individuals, support communities, and address social,
+                  economic, and environmental challenges through direct action,
+                  education, and collaboration.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 flex justify-center">
+              <a
+                href="/about-us"
+                className="inline-flex items-center justify-center rounded-full border border-neutral-200 bg-white px-6 py-3 text-sm font-semibold text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+              >
+                Know More
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <ProgramsCarousel programs={programs} />
+
+        <DonationFundsCarousel funds={publicFunds} />
+
+        <section aria-labelledby="why-support-title">
+          <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
+            <div>
+              <h2
+                id="why-support-title"
+                className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
+              >
+                Why Support Us
+              </h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
+                Trust is built through consistent care, transparency, and
+                measurable learning.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  title: "Compassion-Driven Action",
+                  body: "Support that starts with dignity and responds to real needs identified by community partners.",
+                  icon: (
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5 text-sky-700"
+                      fill="none"
+                    >
+                      <path
+                        d="M20.8 4.6c-1.4-1.4-3.7-1.4-5.1 0L12 8.3 8.3 4.6c-1.4-1.4-3.7-1.4-5.1 0-1.4 1.4-1.4 3.7 0 5.1L12 18.5l8.8-8.8c1.4-1.4 1.4-3.7 0-5.1Z"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  title: "Transparent Giving",
+                  body: "Clear updates and learning notes so donors can see progress, challenges, and next steps.",
+                  icon: (
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5 text-green-700"
+                      fill="none"
+                    >
+                      <path
+                        d="M12 2l7 4v6c0 5-3.5 9.5-7 10-3.5-.5-7-5-7-10V6l7-4Z"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M9 12l2 2 4-5"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  title: "Community-Focused Impact",
+                  body: "Programs designed with local people—so solutions fit the context and strengthen long-term capacity.",
+                  icon: (
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5 text-indigo-700"
+                      fill="none"
+                    >
+                      <path
+                        d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M22 21v-2a4 4 0 0 0-3-3.87"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M16 3.13a4 4 0 0 1 0 7.75"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  title: "Sustainable Change",
+                  body: "We support practices that endure—training, stewardship, and collaboration that help communities continue after the initial support.",
+                  icon: (
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5 text-teal-700"
+                      fill="none"
+                    >
+                      <path
+                        d="M21 10c0 7-9 13-9 13S3 17 3 10a6 6 0 0 1 18 0Z"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M9 11c1.5 1.5 4.5 1.5 6 0"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  ),
+                },
+              ].map((pillar) => (
+                <div
+                  key={pillar.title}
+                  className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-50 ring-1 ring-sky-200">
+                      {pillar.icon}
+                    </span>
+                    <h3 className="text-base font-semibold text-neutral-950">
+                      {pillar.title}
+                    </h3>
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-neutral-700">
+                    {pillar.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div className="bg-neutral-50/60">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <UpdatesSection updates={updates} limit={latestUpdatesPreviewLimit} />
+          </div>
+        </div>
+
+        <section aria-labelledby="resources-title">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <div>
+              <h2
+                id="resources-title"
+                className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
+              >
+                Resources Preview
+              </h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
+                Explore reports, publications, learning notes, and media from
+                across our programs.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {resources.map((r) => (
+                <ResourceCard key={r.id} resource={r} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <CTASection />
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

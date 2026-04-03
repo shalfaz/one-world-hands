@@ -1,0 +1,250 @@
+import type { Program } from "@/types/ngo";
+
+export const programs: Program[] = [
+  {
+    id: "food-assistance",
+    title: "Food Assistance Program",
+    description:
+      "Dignity-first food support for families facing hunger, combined with community guidance on safe, nourishing meal planning.",
+    category: "Hunger Relief",
+    location: "Partner communities and local distribution points",
+    duration: "Seasonal and ongoing cycles",
+    impactPoints: [
+      "Monthly essentials delivered with care and accountability",
+      "Community-led learning on nutrition basics and hygiene",
+      "Support coordinated with local services when needs escalate",
+    ],
+    fundingSources: ["Hunger Relief Fund", "General Donation Fund"],
+    href: "/programs",
+    accent: {
+      bg: "bg-sky-50",
+      ring: "ring-sky-200",
+      text: "text-sky-800",
+      gradientFrom: "from-sky-500",
+      gradientTo: "to-green-500",
+    },
+  },
+  {
+    id: "emergency-relief",
+    title: "Emergency Relief Program",
+    description:
+      "Rapid, needs-based support for households affected by emergencies—prioritizing safety, essential items, and next-step recovery.",
+    category: "Emergency Response",
+    location: "Rapidly affected areas with vetted community partners",
+    duration: "Immediate support + recovery follow-up",
+    impactPoints: [
+      "Essential supplies for households with urgent needs",
+      "Targeted support shaped by community-identified priorities",
+      "Recovery guidance delivered through trusted local networks",
+    ],
+    fundingSources: [
+      "Emergency Relief Fund",
+      "General Donation Fund",
+      "Zakat Fund",
+    ],
+    href: "/programs",
+    accent: {
+      bg: "bg-amber-50",
+      ring: "ring-amber-200",
+      text: "text-amber-900",
+      gradientFrom: "from-amber-500",
+      gradientTo: "to-sky-500",
+    },
+  },
+  {
+    id: "medical-assistance",
+    title: "Medical Assistance Program",
+    description:
+      "Wellbeing support that helps people access timely care through prevention sessions, referrals, and essential health support.",
+    category: "Health & Medical Aid",
+    location: "Community-led outreach locations and partner clinics",
+    duration: "Seasonal outreach and referral pathways",
+    impactPoints: [
+      "Screening days supported with referral guidance",
+      "Health education built around real barriers and daily life",
+      "Wellbeing kits for vulnerable households when appropriate",
+    ],
+    fundingSources: ["Medical Aid Fund", "General Donation Fund"],
+    href: "/programs",
+    accent: {
+      bg: "bg-cyan-50",
+      ring: "ring-cyan-200",
+      text: "text-cyan-800",
+      gradientFrom: "from-cyan-500",
+      gradientTo: "to-sky-500",
+    },
+  },
+  {
+    id: "winter-support",
+    title: "Winter Support Program",
+    description:
+      "Seasonal winter assistance that supports families with warm essentials and protective care practices.",
+    category: "Seasonal Support",
+    location: "Community distribution partners during cold seasons",
+    duration: "Winter cycle",
+    impactPoints: [
+      "Warm essentials delivered to vulnerable households",
+      "Care guidance shared with caregivers and local leaders",
+      "Needs triage coordinated through community points",
+    ],
+    fundingSources: ["Winter Support Fund", "General Donation Fund"],
+    href: "/programs",
+    accent: {
+      bg: "bg-green-50",
+      ring: "ring-green-200",
+      text: "text-green-800",
+      gradientFrom: "from-green-500",
+      gradientTo: "to-sky-500",
+    },
+  },
+  {
+    id: "education-support",
+    title: "Education Support Program",
+    description:
+      "Learning support for children and youth through tutoring, learning materials, and confidence-building mentorship.",
+    category: "Education",
+    location: "Partner schools and learning hubs",
+    duration: "Academic year and intensives",
+    impactPoints: [
+      "Tutoring and learning materials aligned to needs",
+      "Mentoring sessions designed for practical learning pathways",
+      "Support for caregivers to help learning last beyond the classroom",
+    ],
+    fundingSources: ["Education Support Fund", "General Donation Fund"],
+    href: "/programs",
+    accent: {
+      bg: "bg-indigo-50",
+      ring: "ring-indigo-200",
+      text: "text-indigo-800",
+      gradientFrom: "from-indigo-500",
+      gradientTo: "to-green-500",
+    },
+  },
+  {
+    id: "merit-scholarship",
+    title: "Merit Scholarship Program",
+    description:
+      "Scholarship support for students showing strong effort and readiness—helping education continue with dignity.",
+    category: "Scholarships",
+    location: "Partner schools and vetted community networks",
+    duration: "Term-based scholarship cycles",
+    impactPoints: [
+      "Scholarship support to reduce barriers to learning",
+      "Check-ins focused on wellbeing and progress, not grades alone",
+      "Mentoring guidance to help students stay on track",
+    ],
+    fundingSources: [
+      "Merit Scholarship Fund",
+      "Education Support Fund",
+      "General Donation Fund",
+    ],
+    href: "/programs",
+    accent: {
+      bg: "bg-teal-50",
+      ring: "ring-teal-200",
+      text: "text-teal-800",
+      gradientFrom: "from-teal-500",
+      gradientTo: "to-sky-500",
+    },
+  },
+  {
+    id: "self-reliance-livelihood",
+    title: "Self-Reliance & Livelihood Program",
+    description:
+      "Practical opportunities and learning for stability—supporting people to build resilience through small, achievable pathways.",
+    category: "Livelihood & Resilience",
+    location: "Community groups with local facilitators",
+    duration: "Program cycles with mentorship",
+    impactPoints: [
+      "Learning circles and practical skills sessions",
+      "Support designed to strengthen long-term community capacity",
+      "Community-led monitoring and shared learning",
+    ],
+    fundingSources: [
+      "Self-Reliance & Livelihood Fund",
+      "General Donation Fund",
+    ],
+    href: "/programs",
+    accent: {
+      bg: "bg-sky-50",
+      ring: "ring-sky-200",
+      text: "text-sky-800",
+      gradientFrom: "from-sky-500",
+      gradientTo: "to-indigo-500",
+    },
+  },
+  {
+    id: "clean-water",
+    title: "Clean Water Program",
+    description:
+      "Safe water support and community stewardship training to help households and schools access clean water reliably.",
+    category: "Water & Dignity",
+    location: "Watersheds supported by partner stewardship groups",
+    duration: "Multi-cycle support and training",
+    impactPoints: [
+      "Water access upgrades supported with maintenance guidance",
+      "Handwashing and sanitation education for homes and schools",
+      "Stewardship training designed for long-term care",
+    ],
+    fundingSources: ["Clean Water Fund", "General Donation Fund"],
+    href: "/programs",
+    accent: {
+      bg: "bg-green-50",
+      ring: "ring-green-200",
+      text: "text-green-800",
+      gradientFrom: "from-green-500",
+      gradientTo: "to-sky-500",
+    },
+  },
+  {
+    id: "tree-plantation",
+    title: "Tree Plantation Program",
+    description:
+      "Community planting and stewardship to support healthier environments and longer-term resilience.",
+    category: "Environment & Stewardship",
+    location: "Community sites and partner-facilitated planting areas",
+    duration: "Seasonal planting and care periods",
+    impactPoints: [
+      "Tree planting supported through community-led planning",
+      "Care practices shared to improve survival and stewardship",
+      "Ongoing learning for long-term environmental responsibility",
+    ],
+    fundingSources: ["Tree Plantation Fund", "General Donation Fund"],
+    href: "/programs",
+    accent: {
+      bg: "bg-emerald-50",
+      ring: "ring-emerald-200",
+      text: "text-emerald-800",
+      gradientFrom: "from-emerald-500",
+      gradientTo: "to-green-500",
+    },
+  },
+  {
+    id: "community-support",
+    title: "Community Support Program",
+    description:
+      "A broad support pathway that helps families access help with dignity—connecting needs to appropriate funds and services.",
+    category: "Community Partnerships",
+    location: "Local partner networks and community referral points",
+    duration: "Ongoing support pathways",
+    impactPoints: [
+      "Dignity-first coordination and referrals with local partners",
+      "Support guided by community-identified needs",
+      "Learning and feedback loops to improve how help is delivered",
+    ],
+    fundingSources: [
+      "General Donation Fund",
+      "Zakat Fund",
+      "Sadaqah Jariyah Fund",
+    ],
+    href: "/programs",
+    accent: {
+      bg: "bg-neutral-50",
+      ring: "ring-neutral-200",
+      text: "text-neutral-800",
+      gradientFrom: "from-sky-500",
+      gradientTo: "to-green-500",
+    },
+  },
+];
+
