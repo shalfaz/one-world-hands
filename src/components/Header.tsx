@@ -6,6 +6,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import AuthModal from "@/components/AuthModal";
 import { logoutUser } from "@/app/login/actions";
+import { FaUser, FaHeart, FaChevronDown } from "react-icons/fa6";
+import { MdDashboard, MdLogout } from "react-icons/md";
+import { IoClose, IoMenu } from "react-icons/io5";
 
 type NavItem = { label: string; href: string };
 
@@ -138,7 +141,7 @@ export default function Header() {
       <header className="sticky top-0 z-50 w-full border-b border-neutral-100 bg-white/80 backdrop-blur">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:rounded-md focus:bg-sky-600 focus:px-3 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-60 focus:rounded-md focus:bg-sky-600 focus:px-3 focus:py-2 focus:text-white"
         >
           Skip to content
         </a>
@@ -185,27 +188,14 @@ export default function Header() {
                     <Link
                       href={item.href}
                       className={[
-                        "inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium transition-colors hover:text-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2",
+                        "inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium transition-colors hover:text-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2",
                         isActive
                           ? "font-semibold text-sky-700"
                           : "text-neutral-700",
                       ].join(" ")}
                     >
                       Resources
-                      <svg
-                        aria-hidden="true"
-                        viewBox="0 0 24 24"
-                        className="h-4 w-4"
-                        fill="none"
-                      >
-                        <path
-                          d="M6 9l6 6 6-6"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                      <FaChevronDown className="h-3 w-3" />
                     </Link>
 
                     <div className="invisible absolute left-1/2 top-full z-50 mt-3 w-60 -translate-x-1/2 rounded-2xl border border-neutral-200 bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100">
@@ -275,21 +265,9 @@ export default function Header() {
                   className="border-l border-neutral-200 px-3 py-2 text-neutral-700 transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
                   aria-label="More language options"
                   aria-expanded={languageMenuOpen}
+                  title="More languages"
                 >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5"
-                    fill="none"
-                  >
-                    <path
-                      d="M6 9l6 6 6-6"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <FaChevronDown className="h-4 w-4" />
                 </button>
               </div>
 
@@ -325,21 +303,12 @@ export default function Header() {
                   <button
                     type="button"
                     onClick={() => setUserMenuOpen((v) => !v)}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50 hover:text-sky-600"
                     aria-label="Open account menu"
                     aria-expanded={userMenuOpen}
+                    title="Account menu"
                   >
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 24 24"
-                      className="h-5 w-5"
-                      fill="none"
-                    >
-                      <path
-                        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4 0-7 2-7 4.5 0 .3.2.5.5.5h13a.5.5 0 0 0 .5-.5C19 16 16 14 12 14Z"
-                        fill="currentColor"
-                      />
-                    </svg>
+                    <FaUser className="h-5 w-5" />
                   </button>
 
                   {userMenuOpen && (
@@ -360,24 +329,26 @@ export default function Header() {
                         <Link
                           href="/"
                           onClick={() => setUserMenuOpen(false)}
-                          className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-50"
+                          className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-50 flex items-center gap-2"
                         >
-                          Website Home
+                          🏠 Website Home
                         </Link>
 
                         <Link
                           href={dashboardHref}
                           onClick={() => setUserMenuOpen(false)}
-                          className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-50"
+                          className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-50 flex items-center gap-2"
                         >
+                          <MdDashboard className="text-lg" />
                           {getRoleLabel(userRole)} Dashboard
                         </Link>
 
                         <form action={logoutUser}>
                           <button
                             type="submit"
-                            className="w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
+                            className="w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50 flex items-center gap-2"
                           >
+                            <MdLogout className="text-lg" />
                             Logout
                           </button>
                         </form>
@@ -389,29 +360,20 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => setAuthModalOpen(true)}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50 hover:text-sky-600"
                   aria-label="Open authentication form"
                   title="Login / Sign up"
                 >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5"
-                    fill="none"
-                  >
-                    <path
-                      d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4 0-7 2-7 4.5 0 .3.2.5.5.5h13a.5.5 0 0 0 .5-.5C19 16 16 14 12 14Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                  <FaUser className="h-5 w-5" />
                 </button>
               )}
             </div>
 
             <Link
               href="/donation-funds"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-sky-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-sky-600 px-5 text-sm font-semibold text-white shadow-md hover:shadow-lg hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 transition-all"
             >
+              <FaHeart className="text-base" />
               Donate Now
             </Link>
 
@@ -423,28 +385,11 @@ export default function Header() {
               onClick={() => setMobileOpen((v) => !v)}
             >
               <span className="sr-only">Menu</span>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                className="h-5 w-5"
-                fill="none"
-              >
-                {mobileOpen ? (
-                  <path
-                    d="M6 6l12 12M18 6L6 18"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                  />
-                ) : (
-                  <path
-                    d="M4 7h16M4 12h16M4 17h16"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                  />
-                )}
-              </svg>
+              {mobileOpen ? (
+                <IoClose className="h-5 w-5" />
+              ) : (
+                <IoMenu className="h-5 w-5" />
+              )}
             </button>
           </div>
         </div>
@@ -572,9 +517,10 @@ export default function Header() {
 
                     <Link
                       href={dashboardHref}
-                      className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
+                      className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
                       onClick={() => setMobileOpen(false)}
                     >
+                      <MdDashboard className="text-lg" />
                       {getRoleLabel(userRole)} Dashboard
                     </Link>
 
@@ -592,8 +538,9 @@ export default function Header() {
                     >
                       <button
                         type="submit"
-                        className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-red-200 bg-white px-4 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
+                        className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-4 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
                       >
+                        <MdLogout className="text-lg" />
                         Logout
                       </button>
                     </form>
@@ -605,28 +552,20 @@ export default function Header() {
                       setMobileOpen(false);
                       setAuthModalOpen(true);
                     }}
-                    className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-700 transition-colors hover:bg-neutral-50"
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white text-neutral-700 transition-colors hover:bg-neutral-50"
                     aria-label="Open authentication form"
                   >
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 24 24"
-                      className="h-5 w-5"
-                      fill="none"
-                    >
-                      <path
-                        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4 0-7 2-7 4.5 0 .3.2.5.5.5h13a.5.5 0 0 0 .5-.5C19 16 16 14 12 14Z"
-                        fill="currentColor"
-                      />
-                    </svg>
+                    <FaUser className="text-lg" />
+                    Login / Sign up
                   </button>
                 )}
 
                 <Link
                   href="/donation-funds"
-                  className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-sky-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-sky-700"
+                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-sky-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-sky-700"
                   onClick={() => setMobileOpen(false)}
                 >
+                  <FaHeart className="text-base" />
                   Donate Now
                 </Link>
               </div>

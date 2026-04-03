@@ -3,9 +3,17 @@ import Link from "next/link";
 import PageShell from "@/components/PageShell";
 
 export const metadata = {
-  title: "Contact | One World Hands",
+  title: "Contact One World Hands | Get in Touch - Partnerships & Volunteering",
   description:
-    "Get in touch with One World Hands for partnerships, volunteering, or donation questions.",
+    "Contact One World Hands for partnerships, volunteering opportunities, donations, or questions. Reach out to join our humanitarian mission.",
+  keywords:
+    "contact One World Hands, NGO contact, volunteer, partnership, donation inquiry, humanitarian organization",
+  openGraph: {
+    title: "Contact Us | One World Hands",
+    description:
+      "Get in touch with One World Hands for partnerships, volunteering, or support.",
+    url: "https://oneworldhands.org/contact",
+  },
 };
 
 export default function ContactPage() {

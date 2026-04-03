@@ -4,9 +4,17 @@ import FundCard from "@/components/FundCard";
 import { getPublicFunds } from "@/lib/public-funds";
 
 export const metadata = {
-  title: "Donation Funds | One World Hands",
+  title: "Donate | Support Our Humanitarian Programs | One World Hands",
   description:
-    "Support One World Hands through transparent, dignity-first donation funds aligned to community needs.",
+    "Make a transparent, dignity-first donation to One World Hands. Support food assistance, emergency relief, medical aid, education, and winter support programs globally.",
+  keywords:
+    "donate, charity, humanitarian donation, NGO donation, food assistance donation, emergency relief fund, transparent giving",
+  openGraph: {
+    title: "Donate to One World Hands | Transparent Humanitarian Support",
+    description:
+      "Support our community-designed programs through transparent, dignity-first donations.",
+    url: "https://oneworldhands.org/donation-funds",
+  },
 };
 
 export default async function DonationFundsPage() {
