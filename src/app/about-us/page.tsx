@@ -2,9 +2,17 @@ import Link from "next/link";
 import PageShell from "@/components/PageShell";
 
 export const metadata = {
-  title: "About Us | One World Hands",
+  title: "About One World Hands | Our Mission, Vision & Values",
   description:
-    "Learn about One World Hands—our vision, mission, and how we work with communities to create dignity-first support.",
+    "Discover One World Hands—a humanitarian NGO committed to dignity-first support. Learn about our mission to empower individuals and communities through education, direct action, and collaboration globally.",
+  keywords:
+    "about One World Hands, humanitarian organization, NGO mission, community support, humanitarian values",
+  openGraph: {
+    title: "About One World Hands | Humanitarian Organization",
+    description:
+      "Learn about our mission to empower communities with dignity-first humanitarian support.",
+    url: "https://oneworldhands.org/about-us",
+  },
 };
 
 export default function AboutUsPage() {

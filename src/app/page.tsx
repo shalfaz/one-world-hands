@@ -15,9 +15,33 @@ import { Suspense } from "react";
 import { getPublicFunds } from "@/lib/public-funds";
 
 export const metadata = {
-  title: "One World Hands | For the World, With a Magic Touch",
+  title: "One World Hands | For the World, With a Magic Touch - Humanitarian NGO",
   description:
-    "One World Hands is a humanitarian NGO empowering individuals and supporting communities through education, direct action, and collaboration.",
+    "One World Hands empowers individuals and supports communities worldwide through dignity-first humanitarian programs. Donate, volunteer, or partner with us in food assistance, emergency relief, medical aid, education, and more.",
+  keywords:
+    "humanitarian aid, NGO, community support, global charity, emergency relief, education support, volunteer",
+  openGraph: {
+    title: "One World Hands | Humanitarian NGO for Global Community Support",
+    description:
+      "Join us in building dignity-first humanitarian support for communities in need.",
+    url: "https://oneworldhands.org",
+    siteName: "One World Hands",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "One World Hands | Humanitarian NGO",
+    description:
+      "Empowering communities through dignity-first humanitarian support and education.",
+  },
 };
 
 export default async function Home() {
@@ -25,9 +49,9 @@ export default async function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans text-foreground">
-      <div className="w-full border-b border-neutral-100 bg-neutral-50">
-        <div className="mx-auto max-w-7xl px-4 py-2 text-center text-sm font-medium text-neutral-800 sm:px-6 lg:px-8">
-          Where Magic Hands Unite, Wonders Arise.
+      <div className="w-full border-b-2 border-neutral-200 bg-linear-to-r from-sky-50 to-blue-50">
+        <div className="mx-auto max-w-7xl px-4 py-3 text-center text-sm font-bold text-sky-700 sm:px-6 lg:px-8">
+          ✨ Where Magic Hands Unite, Wonders Arise. 🌍
         </div>
       </div>
 
@@ -54,19 +78,21 @@ export default async function Home() {
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             <h2
               id="about-preview-title"
-              className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
+              className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl"
             >
               Our Vision & Mission
             </h2>
 
-            <div className="mt-8 grid gap-6 lg:grid-cols-2">
-              <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-50 ring-1 ring-sky-200">
+            <div className="mt-10 grid gap-8 lg:grid-cols-2">
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-sky-300 bg-linear-to-br from-white to-sky-50 p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <div className="pointer-events-none absolute right-0 top-0 h-20 w-20 rounded-full bg-linear-to-br from-sky-200 to-blue-300 opacity-10" />
+                
+                <div className="relative flex items-center gap-4">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-sky-500 to-blue-600 ring-4 ring-sky-100 shadow-lg">
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
-                      className="h-5 w-5 text-sky-700"
+                      className="h-6 w-6 text-white"
                       fill="none"
                     >
                       <path
@@ -77,22 +103,24 @@ export default async function Home() {
                       />
                     </svg>
                   </span>
-                  <p className="text-sm font-semibold text-neutral-900">Vision</p>
+                  <p className="text-lg font-bold text-neutral-900">Vision</p>
                 </div>
 
-                <p className="mt-5 text-base leading-8 text-neutral-700">
+                <p className="mt-6 text-base leading-8 text-neutral-700">
                   A world where every human being has opportunity, dignity, and
                   support to live a better life.
                 </p>
               </div>
 
-              <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-200">
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-emerald-300 bg-linear-to-br from-white to-emerald-50 p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <div className="pointer-events-none absolute right-0 top-0 h-20 w-20 rounded-full bg-linear-to-br from-emerald-200 to-green-300 opacity-10" />
+                
+                <div className="relative flex items-center gap-4">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-green-500 to-emerald-600 ring-4 ring-emerald-100 shadow-lg">
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
-                      className="h-5 w-5 text-green-700"
+                      className="h-6 w-6 text-white"
                       fill="none"
                     >
                       <path
@@ -104,10 +132,10 @@ export default async function Home() {
                       />
                     </svg>
                   </span>
-                  <p className="text-sm font-semibold text-neutral-900">Mission</p>
+                  <p className="text-lg font-bold text-neutral-900">Mission</p>
                 </div>
 
-                <p className="mt-5 text-base leading-8 text-neutral-700">
+                <p className="mt-6 text-base leading-8 text-neutral-700">
                   To empower individuals, support communities, and address social,
                   economic, and environmental challenges through direct action,
                   education, and collaboration.
@@ -115,12 +143,12 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="mt-8 flex justify-center">
+            <div className="mt-10 flex justify-center">
               <a
                 href="/about-us"
-                className="inline-flex items-center justify-center rounded-full border border-neutral-200 bg-white px-6 py-3 text-sm font-semibold text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-sky-600 to-blue-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
               >
-                Know More
+                📖 Know More
               </a>
             </div>
           </div>
@@ -135,7 +163,7 @@ export default async function Home() {
             <div>
               <h2
                 id="why-support-title"
-                className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
+                className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl"
               >
                 Why Support Us
               </h2>
@@ -145,7 +173,7 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {[
                 {
                   title: "Compassion-Driven Action",
@@ -154,7 +182,7 @@ export default async function Home() {
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
-                      className="h-5 w-5 text-sky-700"
+                      className="h-6 w-6 text-rose-500"
                       fill="none"
                     >
                       <path
@@ -165,6 +193,9 @@ export default async function Home() {
                       />
                     </svg>
                   ),
+                  gradient: "from-rose-50 to-pink-50",
+                  border: "border-rose-300",
+                  bgIcon: "from-rose-500 to-pink-600",
                 },
                 {
                   title: "Transparent Giving",
@@ -173,7 +204,7 @@ export default async function Home() {
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
-                      className="h-5 w-5 text-green-700"
+                      className="h-6 w-6 text-emerald-500"
                       fill="none"
                     >
                       <path
@@ -191,6 +222,9 @@ export default async function Home() {
                       />
                     </svg>
                   ),
+                  gradient: "from-emerald-50 to-green-50",
+                  border: "border-emerald-300",
+                  bgIcon: "from-emerald-500 to-green-600",
                 },
                 {
                   title: "Community-Focused Impact",
@@ -199,7 +233,7 @@ export default async function Home() {
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
-                      className="h-5 w-5 text-indigo-700"
+                      className="h-6 w-6 text-indigo-500"
                       fill="none"
                     >
                       <path
@@ -228,6 +262,9 @@ export default async function Home() {
                       />
                     </svg>
                   ),
+                  gradient: "from-indigo-50 to-purple-50",
+                  border: "border-indigo-300",
+                  bgIcon: "from-indigo-500 to-purple-600",
                 },
                 {
                   title: "Sustainable Change",
@@ -236,7 +273,7 @@ export default async function Home() {
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
-                      className="h-5 w-5 text-teal-700"
+                      className="h-6 w-6 text-teal-500"
                       fill="none"
                     >
                       <path
@@ -253,17 +290,22 @@ export default async function Home() {
                       />
                     </svg>
                   ),
+                  gradient: "from-teal-50 to-cyan-50",
+                  border: "border-teal-300",
+                  bgIcon: "from-teal-500 to-cyan-600",
                 },
               ].map((pillar) => (
                 <div
                   key={pillar.title}
-                  className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                  className={`group relative overflow-hidden rounded-2xl border-2 ${pillar.border} bg-linear-to-br ${pillar.gradient} p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-50 ring-1 ring-sky-200">
+                  <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-full bg-linear-to-br opacity-10" />
+                  
+                  <div className="relative flex items-start gap-4">
+                    <span className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-linear-to-br ${pillar.bgIcon} ring-4 ring-offset-2 text-white shadow-lg`}>
                       {pillar.icon}
                     </span>
-                    <h3 className="text-base font-semibold text-neutral-950">
+                    <h3 className="text-base font-bold text-neutral-950 pt-1">
                       {pillar.title}
                     </h3>
                   </div>
@@ -276,7 +318,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <div className="bg-neutral-50/60">
+        <div className="bg-linear-to-b from-neutral-50 to-blue-50/30 border-y-2 border-neutral-200">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             <UpdatesSection updates={updates} limit={latestUpdatesPreviewLimit} />
           </div>
@@ -287,9 +329,9 @@ export default async function Home() {
             <div>
               <h2
                 id="resources-title"
-                className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
+                className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl"
               >
-                Resources Preview
+                📚 Resources Preview
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
                 Explore reports, publications, learning notes, and media from
@@ -297,7 +339,7 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {resources.map((r) => (
                 <ResourceCard key={r.id} resource={r} />
               ))}
