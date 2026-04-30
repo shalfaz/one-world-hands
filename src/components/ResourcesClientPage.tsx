@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import ResourceCard from "@/components/ResourceCard";
 
@@ -14,16 +14,7 @@ const resourceTypes = [
   { label: "Document", value: "document" },
 ];
 
-const resourceTopics = [
-  "All",
-  "Flood",
-  "Food Distribution",
-  "Self Reliance",
-  "Qurbani",
-  "Winter Relief",
-];
 
-const resourceYears = ["All", "2026", "2025", "2024", "2023", "2022"];
 
 type SupabaseResource = {
   id: string;
@@ -124,7 +115,7 @@ function mapDbResourceToCard(resource: SupabaseResource) {
     type: type.toLowerCase(),
     topic: "All",
     year: createdYear,
-    href: previewUrl || "#",
+    href: `/resources/${resource.id}`,
     previewUrl,
     accent,
   };
@@ -135,10 +126,9 @@ export default function ResourcesClientPage({
   error = false,
 }: ResourcesClientPageProps) {
   const searchParams = useSearchParams();
+  const [, startTransition] = useTransition();
 
   const [activeType, setActiveType] = useState("photo");
-  const [activeTopic, setActiveTopic] = useState("All");
-  const [activeYear, setActiveYear] = useState("All");
 
   useEffect(() => {
     const typeParam = searchParams.get("type");
@@ -155,7 +145,9 @@ export default function ResourcesClientPage({
         "document",
       ].includes(typeParam.toLowerCase())
     ) {
-      setActiveType(typeParam.toLowerCase());
+      startTransition(() => {
+        setActiveType(typeParam.toLowerCase());
+      });
     }
   }, [searchParams]);
 
@@ -173,21 +165,13 @@ export default function ResourcesClientPage({
           : normalizedType === activeType ||
             (activeType === "annual report" && normalizedType === "report");
 
-      const topicMatch =
-        activeTopic === "All"
-          ? true
-          : item.topic.toLowerCase() === activeTopic.toLowerCase();
-
-      const yearMatch =
-        activeYear === "All" ? true : String(item.year) === activeYear;
-
-      return typeMatch && topicMatch && yearMatch;
+      return typeMatch;
     });
-  }, [normalizedResources, activeType, activeTopic, activeYear]);
+  }, [normalizedResources, activeType]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
+      <section className="rounded-4xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
           Resources
         </h1>
@@ -221,78 +205,39 @@ export default function ResourcesClientPage({
         </div>
       </div>
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)]">
-        <aside className="h-fit rounded-[1.75rem] border border-neutral-200 bg-white p-5 shadow-sm">
-          <div className="space-y-3">
-            {resourceTopics.map((topic) => {
-              const isActive = activeTopic === topic;
-
-              return (
-                <button
-                  key={topic}
-                  type="button"
-                  onClick={() => setActiveTopic(topic)}
-                  className={[
-                    "block w-full rounded-xl px-3 py-2 text-left text-sm font-medium transition",
-                    isActive
-                      ? "bg-sky-50 text-sky-700"
-                      : "text-neutral-800 hover:bg-neutral-50",
-                  ].join(" ")}
-                >
-                  {topic}
-                </button>
-              );
-            })}
+      <div className="mt-8">
+        {error && (
+          <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            Failed to load resources from database.
           </div>
-        </aside>
+        )}
 
-        <div>
-          <div className="rounded-2xl border border-neutral-200 bg-neutral-100 p-2">
-            <div className="flex flex-wrap gap-2">
-              {resourceYears.map((year) => {
-                const isActive = activeYear === year;
-
-                return (
-                  <button
-                    key={year}
-                    type="button"
-                    onClick={() => setActiveYear(year)}
-                    className={[
-                      "rounded-xl px-4 py-2 text-sm font-medium transition",
-                      isActive
-                        ? "bg-white text-neutral-900 shadow-sm"
-                        : "text-neutral-700 hover:bg-white/70",
-                    ].join(" ")}
-                  >
-                    {year}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {error && (
-            <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-              Failed to load resources from database.
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {filteredResources.length > 0 ? (
+            filteredResources.map((resource) => (
+              <ResourceCard
+                key={resource.id}
+                resource={{
+                  id: resource.id,
+                  title: resource.title,
+                  description: resource.description,
+                  category: resource.category,
+                  href: resource.href,
+                  previewUrl: resource.previewUrl,
+                  accent: resource.accent,
+                }}
+              />
+            ))
+          ) : (
+            <div className="col-span-full rounded-4xl border border-dashed border-neutral-300 bg-white p-10 text-center">
+              <h2 className="text-lg font-semibold text-neutral-900">
+                No resources found
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                Try changing the type filter.
+              </p>
             </div>
           )}
-
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {filteredResources.length > 0 ? (
-              filteredResources.map((resource) => (
-                <ResourceCard key={resource.id} resource={resource as any} />
-              ))
-            ) : (
-              <div className="col-span-full rounded-[1.75rem] border border-dashed border-neutral-300 bg-white p-10 text-center">
-                <h2 className="text-lg font-semibold text-neutral-900">
-                  No resources found
-                </h2>
-                <p className="mt-2 text-sm leading-6 text-neutral-600">
-                  Try changing the type, topic, or year filter.
-                </p>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import FundCard from "@/components/FundCard";
-import { getPublicFunds } from "@/lib/public-funds";
+import { getActiveFunds } from "@/lib/services/fundService";
 
 export const metadata = {
   title: "Donate | Support Our Humanitarian Programs | One World Hands",
@@ -18,12 +18,75 @@ export const metadata = {
 };
 
 export default async function DonationFundsPage() {
-  const funds = await getPublicFunds();
+  // Load active funds from MongoDB
+  const activeFunds = await getActiveFunds();
+
+  // Helper function to get accent colors by category
+  const getAccentByCategory = (category: string) => {
+    const accents: Record<string, { bg: string; ring: string; text: string; gradientFrom: string; gradientTo: string }> = {
+      education: {
+        bg: "bg-blue-50",
+        ring: "ring-blue-200",
+        text: "text-blue-700",
+        gradientFrom: "from-blue-400",
+        gradientTo: "to-blue-600",
+      },
+      health: {
+        bg: "bg-red-50",
+        ring: "ring-red-200",
+        text: "text-red-700",
+        gradientFrom: "from-red-400",
+        gradientTo: "to-red-600",
+      },
+      emergency: {
+        bg: "bg-orange-50",
+        ring: "ring-orange-200",
+        text: "text-orange-700",
+        gradientFrom: "from-orange-400",
+        gradientTo: "to-orange-600",
+      },
+      community: {
+        bg: "bg-emerald-50",
+        ring: "ring-emerald-200",
+        text: "text-emerald-700",
+        gradientFrom: "from-emerald-400",
+        gradientTo: "to-emerald-600",
+      },
+      livelihood: {
+        bg: "bg-purple-50",
+        ring: "ring-purple-200",
+        text: "text-purple-700",
+        gradientFrom: "from-purple-400",
+        gradientTo: "to-purple-600",
+      },
+      other: {
+        bg: "bg-neutral-50",
+        ring: "ring-neutral-200",
+        text: "text-neutral-700",
+        gradientFrom: "from-neutral-400",
+        gradientTo: "to-neutral-600",
+      },
+    };
+    return accents[category] || accents.other;
+  };
+
+  const funds = activeFunds.map((fund) => ({
+    id: fund._id,
+    name: fund.name,
+    description: fund.description,
+    category: fund.category,
+    impactSummary: fund.impactSummary,
+    targetAmount: fund.targetAmount,
+    raisedAmount: fund.raisedAmount,
+    progress: fund.targetAmount > 0 ? (fund.raisedAmount / fund.targetAmount) * 100 : 0,
+    href: `/donation-funds/${fund._id}`,
+    accent: getAccentByCategory(fund.category),
+  }));
 
   return (
     <PageShell>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
+        <section className="rounded-4xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
           <h1 className="text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
             Donation Funds
           </h1>
@@ -57,7 +120,7 @@ export default async function DonationFundsPage() {
                     <p
                       className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ${fund.accent.bg} ${fund.accent.text} ${fund.accent.ring}`}
                     >
-                      {fund.categoryLabel}
+                      {fund.category.charAt(0).toUpperCase() + fund.category.slice(1)}
                     </p>
                   </div>
 
@@ -66,7 +129,7 @@ export default async function DonationFundsPage() {
               ))}
             </div>
           ) : (
-            <div className="rounded-[2rem] border border-dashed border-neutral-300 bg-white p-10 text-center">
+            <div className="rounded-4xl border border-dashed border-neutral-300 bg-white p-10 text-center">
               <h2 className="text-lg font-semibold text-neutral-900">
                 No active donation funds found
               </h2>

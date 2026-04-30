@@ -1,100 +1,141 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { supabaseServer } from "@/lib/supabase-server";
 import { hashPassword } from "@/lib/password";
+import User from "@/lib/models/User";
+import connectToDatabase from "@/lib/mongoose";
+import nodemailer from "nodemailer";
 
-function normalizeRole(role: string) {
-  const nextRole = role.trim().toLowerCase();
-
-  if (nextRole === "admin") return "admin";
-  if (nextRole === "employee") return "employee";
-  if (nextRole === "volunteer") return "volunteer";
-
-  return "volunteer";
-}
+// Configure email transporter
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.APP_EMAIL,
+    pass: process.env.APP_PASSWORD,
+  },
+});
 
 export async function createUser(formData: FormData) {
-  const name = String(formData.get("name") || "").trim();
-  const email = String(formData.get("email") || "")
-    .trim()
-    .toLowerCase();
-  const password = String(formData.get("password") || "").trim();
-  const role = normalizeRole(String(formData.get("role") || "volunteer"));
+  try {
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const role = formData.get("role") as string;
 
-  if (!name || !email || !password) return;
+    console.log("Creating user:", { name, email, role });
 
-  const hashedPassword = hashPassword(password);
+    if (!name || !email || !password || !role) {
+      console.error("All fields are required");
+      return;
+    }
 
-  const { error } = await supabaseServer.from("users").insert({
-    name,
-    email,
-    password: hashedPassword,
-    role,
-  });
+    // Connect to MongoDB
+    console.log("Connecting to MongoDB...");
+    await connectToDatabase();
+    console.log("MongoDB connected");
 
-  if (error) {
-    console.error("CREATE USER ERROR:", error);
-    return;
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      console.error("User already exists:", email);
+      return;
+    }
+
+    // Hash password
+    const hashedPassword = hashPassword(password);
+    console.log("Password hashed");
+
+    // Create user
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role,
+    });
+
+    await newUser.save();
+    console.log("User saved to database");
+
+    // Send email with login details
+    console.log("Sending email to:", email);
+    await transporter.sendMail({
+      from: process.env.APP_EMAIL,
+      to: email,
+      subject: "Your Account Created - One World Hands NGO",
+      html: `
+        <h2>Welcome to One World Hands NGO!</h2>
+        <p>Dear ${name},</p>
+        <p>Your account has been created successfully. Here are your login details:</p>
+        <ul>
+          <li><strong>Email:</strong> ${email}</li>
+          <li><strong>Password:</strong> ${password}</li>
+          <li><strong>Role:</strong> ${role}</li>
+          <li><strong>Login URL:</strong> <a href="http://localhost:3000/login">http://localhost:3000/login</a></li>
+        </ul>
+        <p><strong>Please change your password after your first login.</strong></p>
+        <p>Best regards,<br>One World Hands Team</p>
+      `,
+    });
+
+    console.log("User created and email sent successfully");
+  } catch (error) {
+    console.error("Error creating user:", error);
   }
-
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/users");
 }
 
 export async function updateUserRole(formData: FormData) {
-  const id = String(formData.get("id") || "").trim();
-  const role = normalizeRole(String(formData.get("role") || "volunteer"));
+  try {
+    const userId = formData.get("userId") as string;
+    const role = formData.get("role") as string;
 
-  if (!id) return;
+    console.log("Updating user role:", { userId, role });
 
-  const { error } = await supabaseServer
-    .from("users")
-    .update({ role })
-    .eq("id", id);
+    if (!userId || !role) {
+      console.error("User ID and role are required");
+      return;
+    }
 
-  if (error) {
-    console.error("UPDATE USER ROLE ERROR:", error);
-    return;
+    // Connect to MongoDB
+    await connectToDatabase();
+
+    // Update user role
+    const result = await User.updateOne(
+      { _id: userId },
+      { role }
+    );
+
+    if (result.modifiedCount > 0) {
+      console.log("User role updated successfully");
+    } else {
+      console.error("User not found or role not changed");
+    }
+  } catch (error) {
+    console.error("Error updating user role:", error);
   }
-
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/users");
-}
-
-export async function updateUserPassword(formData: FormData) {
-  const id = String(formData.get("id") || "").trim();
-  const password = String(formData.get("password") || "").trim();
-
-  if (!id || !password) return;
-
-  const hashedPassword = hashPassword(password);
-
-  const { error } = await supabaseServer
-    .from("users")
-    .update({ password: hashedPassword })
-    .eq("id", id);
-
-  if (error) {
-    console.error("UPDATE USER PASSWORD ERROR:", error);
-    return;
-  }
-
-  revalidatePath("/dashboard/users");
 }
 
 export async function deleteUser(formData: FormData) {
-  const id = String(formData.get("id") || "").trim();
+  try {
+    const userId = formData.get("userId") as string;
 
-  if (!id) return;
+    console.log("Deleting user:", userId);
 
-  const { error } = await supabaseServer.from("users").delete().eq("id", id);
+    if (!userId) {
+      console.error("User ID is required");
+      return;
+    }
 
-  if (error) {
-    console.error("DELETE USER ERROR:", error);
-    return;
+    // Connect to MongoDB
+    await connectToDatabase();
+
+    // Delete user
+    const result = await User.deleteOne({ _id: userId });
+
+    if (result.deletedCount > 0) {
+      console.log("User deleted successfully");
+    } else {
+      console.error("User not found");
+    }
+  } catch (error) {
+    console.error("Error deleting user:", error);
   }
-
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/users");
 }

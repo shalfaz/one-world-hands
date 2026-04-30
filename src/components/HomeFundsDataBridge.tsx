@@ -1,9 +1,10 @@
 import DonationFundsCarousel from "@/components/DonationFundsCarousel";
 import QuickDonationBox from "@/components/QuickDonationBox";
-import { getPublicFunds } from "@/lib/public-funds";
 
 export default async function HomeFundsDataBridge() {
-  const funds = await getPublicFunds();
+  // TODO: Load funds from MongoDB
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const funds: any[] = [];
 
   if (!funds.length) {
     return null;

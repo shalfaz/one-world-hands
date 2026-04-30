@@ -1,17 +1,37 @@
 import DashboardSidebar from "@/components/DashboardSidebar";
-import { supabaseServer } from "@/lib/supabase-server";
-import {
-  createUser,
-  deleteUser,
-  updateUserPassword,
-  updateUserRole,
-} from "./actions";
+import { createUser } from "./actions";
+import User from "@/lib/models/User";
+import connectToDatabase from "@/lib/mongoose";
+import { UserActions } from "./UserActions";
+import UserCreateForm from "./UserCreateForm";
 
-export default async function DashboardUsersPage() {
-  const { data: users, error } = await supabaseServer
-    .from("users")
-    .select("id, name, email, role, created_at")
-    .order("created_at", { ascending: false });
+interface PageProps {
+  searchParams: Promise<{ page?: string }>;
+}
+
+const USERS_PER_PAGE = 10;
+
+export default async function DashboardUsersPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const currentPage = parseInt(params.page || "1", 10);
+  
+  let users: any[] = [];
+  let totalUsers = 0;
+  
+  try {
+    await connectToDatabase();
+    totalUsers = await User.countDocuments();
+    const skip = (currentPage - 1) * USERS_PER_PAGE;
+    users = await User.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(USERS_PER_PAGE)
+      .lean();
+  } catch (error) {
+    console.error("Error fetching users:", error);
+  }
+
+  const totalPages = Math.ceil(totalUsers / USERS_PER_PAGE);
 
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "#e2e8f0" }}>
@@ -34,49 +54,7 @@ export default async function DashboardUsersPage() {
             Create New User
           </h2>
 
-          <form action={createUser} className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <input
-              name="name"
-              placeholder="Full name"
-              className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-              required
-            />
-
-            <input
-              name="email"
-              type="email"
-              placeholder="Email address"
-              className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-              required
-            />
-
-            <input
-              name="password"
-              type="password"
-              placeholder="Temporary password"
-              className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-              required
-            />
-
-            <select
-              name="role"
-              defaultValue="volunteer"
-              className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-            >
-              <option value="admin">Admin</option>
-              <option value="employee">Employee</option>
-              <option value="volunteer">Volunteer</option>
-            </select>
-
-            <div className="md:col-span-2 xl:col-span-4">
-              <button
-                type="submit"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700"
-              >
-                Create User
-              </button>
-            </div>
-          </form>
+          <UserCreateForm />
         </div>
 
         <div className="mt-6 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
@@ -91,96 +69,82 @@ export default async function DashboardUsersPage() {
             </div>
           </div>
 
-          {error ? (
-            <p className="mt-4 text-sm text-red-600">Failed to load users.</p>
-          ) : (
-            <div className="mt-6 space-y-4">
-              {users?.map((user) => (
-                <div
-                  key={user.id}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-5"
-                >
-                  <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-950">
-                        {user.name}
-                      </h3>
-                      <p className="mt-1 text-sm text-slate-600">{user.email}</p>
-                      <p className="mt-2 inline-flex rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-sky-700">
-                        {user.role}
-                      </p>
-                    </div>
+          <div className="mt-6 space-y-4">
+            {users.length > 0 ? (
+              <>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-slate-200">
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Name</th>
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Email</th>
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Role</th>
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Created</th>
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users.map((user: any) => (
+                        <tr key={user._id.toString()} className="border-b border-slate-200 hover:bg-slate-50">
+                          <td className="px-4 py-3 text-slate-900">{user.name}</td>
+                          <td className="px-4 py-3 text-slate-600">{user.email}</td>
+                          <td className="px-4 py-3">
+                            <UserActions userId={user._id.toString()} currentRole={user.role} />
+                          </td>
+                          <td className="px-4 py-3 text-slate-600">
+                            {new Date(user.createdAt).toLocaleDateString()}
+                          </td>
+                          <td className="px-4 py-3">
+                            <button className="text-red-600 hover:text-red-700 font-semibold text-xs">
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-                    <div className="grid gap-4 xl:min-w-[540px] xl:grid-cols-3">
-                      <form action={updateUserRole} className="space-y-2">
-                        <input type="hidden" name="id" value={user.id} />
-                        <label className="block text-xs font-semibold uppercase tracking-wide text-slate-500">
-                          Update Role
-                        </label>
-                        <select
-                          name="role"
-                          defaultValue={user.role}
-                          className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-                        >
-                          <option value="admin">Admin</option>
-                          <option value="employee">Employee</option>
-                          <option value="volunteer">Volunteer</option>
-                        </select>
-                        <button
-                          type="submit"
-                          className="w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
-                        >
-                          Save Role
-                        </button>
-                      </form>
+                {totalPages > 1 && (
+                  <div className="mt-6 flex items-center justify-center gap-2">
+                    {currentPage > 1 && (
+                      <a
+                        href={`?page=${currentPage - 1}`}
+                        className="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                      >
+                        Previous
+                      </a>
+                    )}
 
-                      <form action={updateUserPassword} className="space-y-2">
-                        <input type="hidden" name="id" value={user.id} />
-                        <label className="block text-xs font-semibold uppercase tracking-wide text-slate-500">
-                          Reset Password
-                        </label>
-                        <input
-                          name="password"
-                          type="password"
-                          placeholder="New password"
-                          className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-                          required
-                        />
-                        <button
-                          type="submit"
-                          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
-                        >
-                          Update Password
-                        </button>
-                      </form>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <a
+                        key={page}
+                        href={`?page=${page}`}
+                        className={`rounded-md px-3 py-2 text-sm font-semibold ${
+                          page === currentPage
+                            ? "bg-sky-600 text-white"
+                            : "border border-slate-300 text-slate-700 hover:bg-slate-50"
+                        }`}
+                      >
+                        {page}
+                      </a>
+                    ))}
 
-                      <form action={deleteUser} className="space-y-2">
-                        <input type="hidden" name="id" value={user.id} />
-                        <label className="block text-xs font-semibold uppercase tracking-wide text-slate-500">
-                          Remove User
-                        </label>
-                        <div className="flex h-11 items-center rounded-xl border border-red-200 bg-red-50 px-4 text-sm text-red-600">
-                          Delete this account
-                        </div>
-                        <button
-                          type="submit"
-                          className="w-full rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
-                        >
-                          Delete User
-                        </button>
-                      </form>
-                    </div>
+                    {currentPage < totalPages && (
+                      <a
+                        href={`?page=${currentPage + 1}`}
+                        className="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                      >
+                        Next
+                      </a>
+                    )}
                   </div>
-                </div>
-              ))}
-
-              {!users?.length && (
-                <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center text-sm text-slate-500">
-                  No users found.
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </>
+            ) : (
+              <p className="text-center text-slate-500 py-8">No users found. Create your first user above.</p>
+            )}
+          </div>
         </div>
       </main>
     </div>

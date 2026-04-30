@@ -10,6 +10,7 @@ const navItems = [
   { name: "Funds", href: "/dashboard/funds" },
   { name: "Programs", href: "/dashboard/programs" },
   { name: "Resources", href: "/dashboard/resources" },
+  { name: "Messages", href: "/dashboard/messages" },
   { name: "Users", href: "/dashboard/users" },
 ];
 

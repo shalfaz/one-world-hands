@@ -1,23 +1,17 @@
 import DashboardSidebar from "../../components/DashboardSidebar";
-import { supabaseServer } from "../../lib/supabase-server";
 
 export default async function DashboardPage() {
-  const [{ count: donationsCount }, { count: donorsCount }, { count: fundsCount }, { count: activeFundsCount }, { count: programsCount }, { count: activeProgramsCount }, { count: resourcesCount }, { data: latestDonations }, { data: topFunds }] =
-    await Promise.all([
-      supabaseServer.from("donations").select("*", { count: "exact", head: true }),
-      supabaseServer.from("donations").select("email", { count: "exact", head: true }),
-      supabaseServer.from("funds").select("*", { count: "exact", head: true }),
-      supabaseServer.from("funds").select("*", { count: "exact", head: true }).eq("status", "active"),
-      supabaseServer.from("programs").select("*", { count: "exact", head: true }),
-      supabaseServer.from("programs").select("*", { count: "exact", head: true }).eq("status", "active"),
-      supabaseServer.from("resources").select("*", { count: "exact", head: true }),
-      supabaseServer.from("donations").select("*").order("created_at", { ascending: false }).limit(5),
-      supabaseServer.from("funds").select("*").order("created_at", { ascending: false }).limit(5),
-    ]);
-
-  const { data: donationAmounts } = await supabaseServer.from("donations").select("amount");
-  const totalDonationsAmount =
-    donationAmounts?.reduce((sum, item) => sum + Number(item.amount || 0), 0) || 0;
+  // TODO: Connect to MongoDB for dashboard stats
+  const donationsCount = 0;
+  const donorsCount = 0;
+  const fundsCount = 0;
+  const activeFundsCount = 0;
+  const programsCount = 0;
+  const activeProgramsCount = 0;
+  const resourcesCount = 0;
+  const latestDonations: Array<{ id: string; name: string; email: string; fund_id: string; amount: number; status: string }> = [];
+  const topFunds: Array<{ id: string; name: string; amount: number; category: string; status: string }> = [];
+  const totalDonationsAmount = 0;
 
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f9" }}>

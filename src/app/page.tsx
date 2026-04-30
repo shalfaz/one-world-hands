@@ -7,12 +7,8 @@ import CTASection from "@/components/CTASection";
 import QuickDonationBox from "@/components/QuickDonationBox";
 import ProgramsCarousel from "@/components/ProgramsCarousel";
 import DonationFundsCarousel from "@/components/DonationFundsCarousel";
-import { programs } from "@/data/programs";
-import { updates } from "@/data/updates";
-import { resources } from "@/data/resources";
-import { latestUpdatesPreviewLimit } from "@/data/homepage";
 import { Suspense } from "react";
-import { getPublicFunds } from "@/lib/public-funds";
+
 
 export const metadata = {
   title: "One World Hands | For the World, With a Magic Touch - Humanitarian NGO",
@@ -45,7 +41,9 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const publicFunds = await getPublicFunds();
+  // TODO: Load funds from MongoDB
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const publicFunds: any[] = [];
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans text-foreground">
@@ -154,7 +152,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <ProgramsCarousel programs={programs} />
+        <ProgramsCarousel programs={[]} />
 
         <DonationFundsCarousel funds={publicFunds} />
 
@@ -320,7 +318,7 @@ export default async function Home() {
 
         <div className="bg-linear-to-b from-neutral-50 to-blue-50/30 border-y-2 border-neutral-200">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <UpdatesSection updates={updates} limit={latestUpdatesPreviewLimit} />
+            <UpdatesSection updates={[]} limit={3} />
           </div>
         </div>
 
@@ -340,9 +338,7 @@ export default async function Home() {
             </div>
 
             <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {resources.map((r) => (
-                <ResourceCard key={r.id} resource={r} />
-              ))}
+              {/* Resources will be loaded from MongoDB */}
             </div>
           </div>
         </section>
