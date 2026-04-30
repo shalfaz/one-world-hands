@@ -23,13 +23,14 @@ export default function ResourceCard({
   const hasPreview = Boolean(resource.previewUrl);
 
   return (
-    <article
-      className={[
-        "group rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all",
-        "hover:-translate-y-0.5 hover:shadow-md",
-        resource.accent.bg,
-      ].join(" ")}
-    >
+    <Link href={resource.href || "#"}>
+      <article
+        className={[
+          "group h-full rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all cursor-pointer",
+          "hover:-translate-y-0.5 hover:shadow-md hover:border-sky-400",
+          resource.accent.bg,
+        ].join(" ")}
+      >
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
@@ -78,12 +79,8 @@ export default function ResourceCard({
       </p>
 
       <div className="mt-6">
-        <Link
-          href={resource.href || "#"}
-          target={resource.href?.startsWith("http") ? "_blank" : undefined}
-          rel={resource.href?.startsWith("http") ? "noreferrer" : undefined}
-          className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition-colors hover:border-sky-300 hover:bg-sky-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
-          aria-label={`Open ${resource.category}: ${resource.title}`}
+        <span
+          className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition-colors group-hover:border-sky-300 group-hover:bg-sky-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
         >
           View
           <svg
@@ -100,8 +97,9 @@ export default function ResourceCard({
               strokeLinejoin="round"
             />
           </svg>
-        </Link>
+        </span>
       </div>
-    </article>
+      </article>
+    </Link>
   );
 }

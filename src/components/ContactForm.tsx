@@ -44,10 +44,9 @@ export default function ContactForm() {
           return;
         }
 
-        // Demo-only: no backend integration yet.
         setStatus({
           kind: "success",
-          message: "Thanks for reaching out. We’ll respond within 2–3 days.",
+          message: "Thanks for reaching out. We will respond within 2-3 days.",
         });
         setName("");
         setEmail("");
@@ -127,10 +126,9 @@ export default function ContactForm() {
         </button>
 
         <p className="text-xs leading-5 text-neutral-600">
-          Demo form: no data is sent. Replace with your email integration when ready.
+          We will respond within 2-3 days.
         </p>
       </div>
     </form>
   );
 }
-

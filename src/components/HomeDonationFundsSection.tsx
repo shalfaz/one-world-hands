@@ -1,9 +1,10 @@
 import Link from "next/link";
 import FundCard from "@/components/FundCard";
-import { getPublicFunds } from "@/lib/public-funds";
 
 export default async function HomeDonationFundsSection() {
-  const funds = await getPublicFunds();
+  // TODO: Load funds from MongoDB
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const funds: any[] = [];
   const featuredFunds = funds.slice(0, 6);
 
   if (!featuredFunds.length) {

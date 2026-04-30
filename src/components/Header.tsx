@@ -2,579 +2,348 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import AuthModal from "@/components/AuthModal";
 import { logoutUser } from "@/app/login/actions";
-import { FaUser, FaHeart, FaChevronDown } from "react-icons/fa6";
-import { MdDashboard, MdLogout } from "react-icons/md";
-import { IoClose, IoMenu } from "react-icons/io5";
 
-type NavItem = { label: string; href: string };
-
-const navItems: NavItem[] = [
+const navItems = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "/about-us" },
+  { label: "About", href: "/about-us" },
   { label: "Programs", href: "/programs" },
+  { label: "Donations", href: "/donation-funds" },
   { label: "Resources", href: "/resources" },
-  { label: "Updates", href: "/updates" },
   { label: "Contact", href: "/contact" },
 ];
 
-const resourceDropdownItems = [
-  { label: "Photos", href: "/resources?type=photo" },
-  { label: "Videos", href: "/resources?type=video" },
-  { label: "Blogs", href: "/resources?type=blog" },
-  { label: "Annual Reports", href: "/resources?type=annual report" },
-  { label: "Publications", href: "/resources?type=publication" },
-  { label: "Webinars", href: "/resources?type=webinar" },
-];
-
-const languageOptions = [
-  { code: "BAN", label: "বাংলা" },
-  { code: "ENG", label: "English" },
-  { code: "FRA", label: "Français" },
-  { code: "ESP", label: "Español" },
-  { code: "ARB", label: "العربية" },
-];
-
-function readCookie(name: string) {
-  if (typeof document === "undefined") return "";
-  const escapedName = name.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
-  const match = document.cookie.match(
-    new RegExp(`(?:^|; )${escapedName}=([^;]*)`)
-  );
-  return match ? decodeURIComponent(match[1]) : "";
-}
-
-function getDashboardPathByRole(role: string) {
-  if (role === "admin") return "/dashboard";
-  if (role === "employee") return "/employee-dashboard";
-  if (role === "volunteer") return "/volunteer-dashboard";
-  return "/dashboard";
-}
-
-function getRoleLabel(role: string) {
-  if (role === "admin") return "Admin";
-  if (role === "employee") return "Employee";
-  if (role === "volunteer") return "Volunteer";
-  return "User";
-}
-
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("BAN");
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState("");
   const [userName, setUserName] = useState("");
+  const [userRole, setUserRole] = useState("");
   const [userEmail, setUserEmail] = useState("");
-
   const pathname = usePathname();
-  const userMenuRef = useRef<HTMLDivElement | null>(null);
+  const userDropdownRef = useRef<HTMLDivElement>(null);
 
+  // Read user data from cookies on mount
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMobileOpen(false);
-        setLanguageMenuOpen(false);
-        setUserMenuOpen(false);
-      }
+    const readCookie = (name: string) => {
+      if (typeof document === "undefined") return "";
+      const escapedName = name.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
+      const match = document.cookie.match(new RegExp(`(?:^|; )${escapedName}=([^;]*)`));
+      return match ? decodeURIComponent(match[1]) : "";
     };
 
-    const onClickOutside = (e: MouseEvent) => {
-      if (
-        userMenuRef.current &&
-        !userMenuRef.current.contains(e.target as Node)
-      ) {
-        setUserMenuOpen(false);
-      }
-    };
+    const session = readCookie("owh_session_public");
+    const role = readCookie("owh_role_public");
+    const name = readCookie("owh_name_public");
+    const email = readCookie("owh_email_public");
 
-    window.addEventListener("keydown", onKeyDown);
-    document.addEventListener("mousedown", onClickOutside);
-
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("mousedown", onClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [mobileOpen]);
-
-  useEffect(() => {
-    const syncAuthState = () => {
-      const session = readCookie("owh_session_public");
-      const role = readCookie("owh_role_public");
-      const name = readCookie("owh_name_public");
-      const email = readCookie("owh_email_public");
-
-      setIsAuthenticated(session === "authenticated");
+    if (session === "authenticated" && role) {
+      setIsAuthenticated(true);
       setUserRole(role);
-      setUserName(name);
-      setUserEmail(email);
-    };
-
-    syncAuthState();
-    window.addEventListener("focus", syncAuthState);
-
-    return () => window.removeEventListener("focus", syncAuthState);
+      setUserName(name || "User");
+      setUserEmail(email || "");
+    }
   }, [pathname]);
 
-  const dashboardHref = useMemo(
-    () => getDashboardPathByRole(userRole),
-    [userRole]
-  );
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userDropdownRef.current && !userDropdownRef.current.contains(e.target as Node)) {
+        setUserDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(href);
+  };
 
   return (
-    <>
-      <header className="sticky top-0 z-50 w-full border-b border-neutral-100 bg-white/80 backdrop-blur">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-60 focus:rounded-md focus:bg-sky-600 focus:px-3 focus:py-2 focus:text-white"
-        >
-          Skip to content
-        </a>
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-sm">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <div className="relative h-10 w-10 overflow-hidden rounded-lg bg-sky-600 flex items-center justify-center shrink-0">
+              <Image
+                src="/logo1.png"
+                alt="One World Hands"
+                width={40}
+                height={40}
+                className="h-full w-full object-contain"
+                priority
+              />
+            </div>
+            <div className="hidden sm:block">
+              <p className="text-base font-bold text-slate-900 leading-none">One World</p>
+              <p className="text-xs text-sky-600 font-semibold leading-none">Hands NGO</p>
+            </div>
+          </Link>
 
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="group inline-flex items-center gap-3 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
-              aria-label="One World Hands home"
-            >
-              <span className="inline-flex items-center">
-                <Image
-                  src="/logo1.png"
-                  alt="One World Hands logo"
-                  width={120}
-                  height={120}
-                  className="h-12 w-auto object-contain"
-                  priority
-                />
-              </span>
-              <div className="flex flex-col leading-tight">
-                <span className="text-base font-semibold tracking-wide text-[#1EA7D7] sm:text-lg">
-                  One World Hands
-                </span>
-              </div>
-            </Link>
-          </div>
-
-          <nav
-            className="hidden flex-1 items-center justify-center gap-8 xl:flex"
-            aria-label="Primary"
-          >
-            {navItems.map((item) => {
-              const isActive =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname === item.href ||
-                    (item.href === "/resources" && pathname === "/resources");
-
-              if (item.label === "Resources") {
-                return (
-                  <div key={item.href} className="group relative">
-                    <Link
-                      href={item.href}
-                      className={[
-                        "inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium transition-colors hover:text-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2",
-                        isActive
-                          ? "font-semibold text-sky-700"
-                          : "text-neutral-700",
-                      ].join(" ")}
-                    >
-                      Resources
-                      <FaChevronDown className="h-3 w-3" />
-                    </Link>
-
-                    <div className="invisible absolute left-1/2 top-full z-50 mt-3 w-60 -translate-x-1/2 rounded-2xl border border-neutral-200 bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100">
-                      <div className="grid gap-1">
-                        {resourceDropdownItems.map((subItem) => (
-                          <Link
-                            key={subItem.href}
-                            href={subItem.href}
-                            className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-sky-50 hover:text-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
-                          >
-                            {subItem.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={[
-                    "whitespace-nowrap text-sm font-medium transition-colors hover:text-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2",
-                    isActive ? "font-semibold text-sky-700" : "text-neutral-700",
-                  ].join(" ")}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  isActive(item.href)
+                    ? "bg-sky-50 text-sky-700 font-semibold"
+                    : "text-slate-700 hover:text-sky-700 hover:bg-sky-50"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <div className="relative hidden md:block">
-              <div className="flex items-center overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
-                <button
-                  type="button"
-                  onClick={() => setSelectedLanguage("BAN")}
-                  className={[
-                    "px-3 py-2 text-sm font-semibold transition-colors",
-                    selectedLanguage === "BAN"
-                      ? "bg-sky-500 text-white"
-                      : "text-neutral-700 hover:bg-neutral-50",
-                  ].join(" ")}
-                >
-                  BAN
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setSelectedLanguage("ENG")}
-                  className={[
-                    "border-l border-neutral-200 px-3 py-2 text-sm font-semibold transition-colors",
-                    selectedLanguage === "ENG"
-                      ? "bg-sky-500 text-white"
-                      : "text-neutral-700 hover:bg-neutral-50",
-                  ].join(" ")}
-                >
-                  ENG
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setLanguageMenuOpen((v) => !v)}
-                  className="border-l border-neutral-200 px-3 py-2 text-neutral-700 transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
-                  aria-label="More language options"
-                  aria-expanded={languageMenuOpen}
-                  title="More languages"
-                >
-                  <FaChevronDown className="h-4 w-4" />
-                </button>
-              </div>
-
-              {languageMenuOpen && (
-                <div className="absolute right-0 top-full z-50 mt-2 w-44 rounded-2xl border border-neutral-200 bg-white p-2 shadow-lg">
-                  <div className="grid gap-1">
-                    {languageOptions.map((lang) => (
-                      <button
-                        key={lang.code}
-                        type="button"
-                        onClick={() => {
-                          setSelectedLanguage(lang.code);
-                          setLanguageMenuOpen(false);
-                        }}
-                        className={[
-                          "rounded-xl px-3 py-2 text-left text-sm font-medium transition-colors",
-                          selectedLanguage === lang.code
-                            ? "bg-sky-50 text-sky-700"
-                            : "text-neutral-800 hover:bg-neutral-50",
-                        ].join(" ")}
-                      >
-                        {lang.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="relative hidden md:block" ref={userMenuRef}>
-              {isAuthenticated ? (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => setUserMenuOpen((v) => !v)}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50 hover:text-sky-600"
-                    aria-label="Open account menu"
-                    aria-expanded={userMenuOpen}
-                    title="Account menu"
-                  >
-                    <FaUser className="h-5 w-5" />
-                  </button>
-
-                  {userMenuOpen && (
-                    <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-neutral-200 bg-white p-2 shadow-xl">
-                      <div className="rounded-xl bg-neutral-50 px-3 py-3">
-                        <p className="text-sm font-semibold text-neutral-900">
-                          {userName || "Signed In User"}
-                        </p>
-                        <p className="mt-1 text-xs text-neutral-500">
-                          {userEmail || "No email"}
-                        </p>
-                        <p className="mt-2 inline-flex rounded-full bg-sky-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-sky-700">
-                          {getRoleLabel(userRole)}
-                        </p>
-                      </div>
-
-                      <div className="mt-2 grid gap-1">
-                        <Link
-                          href="/"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-50 flex items-center gap-2"
-                        >
-                          🏠 Website Home
-                        </Link>
-
-                        <Link
-                          href={dashboardHref}
-                          onClick={() => setUserMenuOpen(false)}
-                          className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-50 flex items-center gap-2"
-                        >
-                          <MdDashboard className="text-lg" />
-                          {getRoleLabel(userRole)} Dashboard
-                        </Link>
-
-                        <form action={logoutUser}>
-                          <button
-                            type="submit"
-                            className="w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50 flex items-center gap-2"
-                          >
-                            <MdLogout className="text-lg" />
-                            Logout
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setAuthModalOpen(true)}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50 hover:text-sky-600"
-                  aria-label="Open authentication form"
-                  title="Login / Sign up"
-                >
-                  <FaUser className="h-5 w-5" />
-                </button>
-              )}
-            </div>
-
+          {/* CTA Buttons */}
+          <div className="flex items-center gap-3 ml-auto">
+            {/* Donate Button */}
             <Link
               href="/donation-funds"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-sky-600 px-5 text-sm font-semibold text-white shadow-md hover:shadow-lg hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 transition-all"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition-colors"
             >
-              <FaHeart className="text-base" />
-              Donate Now
+              <span>❤️</span>
+              <span>Donate</span>
             </Link>
 
+            {/* User Dropdown or Auth Buttons */}
+            {isAuthenticated ? (
+              <div ref={userDropdownRef} className="relative">
+                <button
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold hover:bg-sky-50 transition-colors"
+                >
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                  </svg>
+                  <span>{userName.split(" ")[0]}</span>
+                  <svg className={`h-4 w-4 transition-transform ${userDropdownOpen ? "rotate-180" : ""}`} fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+
+                {/* Dropdown Menu */}
+                {userDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-lg bg-white border border-slate-200 shadow-lg ring-1 ring-slate-100 overflow-hidden">
+                    {/* User Info */}
+                    <div className="px-4 py-3 border-b border-slate-200 bg-slate-50">
+                      <p className="text-sm font-semibold text-slate-900">{userName}</p>
+                      <p className="text-xs text-slate-600">{userEmail}</p>
+                      <span className="inline-block mt-2 px-2 py-1 bg-sky-100 text-sky-700 text-xs font-semibold rounded capitalize">
+                        {userRole}
+                      </span>
+                    </div>
+
+                    {/* Menu Items */}
+                    <div className="py-2">
+                      {userRole === "admin" && (
+                        <Link
+                          href="/dashboard"
+                          className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
+                          onClick={() => setUserDropdownOpen(false)}
+                        >
+                          📊 Admin Dashboard
+                        </Link>
+                      )}
+                      {userRole === "employee" && (
+                        <Link
+                          href="/employee-dashboard"
+                          className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
+                          onClick={() => setUserDropdownOpen(false)}
+                        >
+                          💼 Employee Dashboard
+                        </Link>
+                      )}
+                      {userRole === "volunteer" && (
+                        <Link
+                          href="/volunteer-dashboard"
+                          className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
+                          onClick={() => setUserDropdownOpen(false)}
+                        >
+                          🤝 Volunteer Dashboard
+                        </Link>
+                      )}
+                      <Link
+                        href="/profile"
+                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
+                        onClick={() => setUserDropdownOpen(false)}
+                      >
+                        👤 Profile
+                      </Link>
+                      <form action={logoutUser} className="block">
+                        <button
+                          type="submit"
+                          className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium"
+                        >
+                          🚪 Sign Out
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                {/* Login Button */}
+                <Link
+                  href="/login"
+                  className="hidden sm:inline-flex px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold hover:bg-sky-50 transition-colors"
+                >
+                  Login
+                </Link>
+
+                {/* Sign Up Button */}
+                <Link
+                  href="/signup"
+                  className="hidden sm:inline-flex px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold hover:bg-sky-700 transition-colors"
+                >
+                  Join Us
+                </Link>
+              </>
+            )}
+
+            {/* Mobile Menu Button */}
             <button
-              type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-700 transition-shadow hover:shadow-sm xl:hidden"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen((v) => !v)}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden inline-flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 transition-colors"
+              aria-label="Toggle menu"
             >
-              <span className="sr-only">Menu</span>
-              {mobileOpen ? (
-                <IoClose className="h-5 w-5" />
-              ) : (
-                <IoMenu className="h-5 w-5" />
-              )}
+              <svg
+                className={`h-6 w-6 text-slate-700 transition-transform ${
+                  mobileMenuOpen ? "rotate-90" : ""
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {mobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
             </button>
           </div>
         </div>
 
-        {mobileOpen && (
-          <div
-            className="fixed inset-0 z-50 bg-neutral-900/40 xl:hidden"
-            role="presentation"
-            onClick={() => setMobileOpen(false)}
-          >
-            <div
-              className="absolute right-3 top-3 w-[calc(100%-1.5rem)] max-w-sm rounded-2xl border border-neutral-200 bg-white p-4 shadow-xl"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobile navigation"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center">
-                    <Image
-                      src="/logo1.png"
-                      alt="One World Hands logo"
-                      width={100}
-                      height={100}
-                      className="h-10 w-auto object-contain"
-                      priority
-                    />
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-[#1EA7D7]">
-                      One World Hands
-                    </p>
-                    <p className="text-xs text-neutral-600">
-                      For the world, with care
-                    </p>
-                  </div>
-                </div>
-              </div>
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className="border-t border-slate-200 bg-slate-50 px-2 py-4 lg:hidden">
+            <div className="space-y-2">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                    isActive(item.href)
+                      ? "bg-sky-600 text-white"
+                      : "text-slate-700 hover:bg-sky-100"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
 
-              <div className="mt-4 grid gap-2">
-                {navItems.map((item) => (
-                  <div key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-sky-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-
-                    {item.label === "Resources" && (
-                      <div className="ml-3 mt-1 grid gap-1 border-l border-neutral-200 pl-3">
-                        {resourceDropdownItems.map((subItem) => (
-                          <Link
-                            key={subItem.href}
-                            href={subItem.href}
-                            className="rounded-lg px-2 py-1.5 text-sm text-neutral-600 transition-colors hover:bg-sky-50 hover:text-sky-700"
-                            onClick={() => setMobileOpen(false)}
-                          >
-                            {subItem.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 space-y-3">
-                <div className="flex items-center overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedLanguage("BAN")}
-                    className={[
-                      "flex-1 px-3 py-2 text-sm font-semibold transition-colors",
-                      selectedLanguage === "BAN"
-                        ? "bg-green-500 text-white"
-                        : "text-neutral-700 hover:bg-neutral-50",
-                    ].join(" ")}
-                  >
-                    BAN
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setSelectedLanguage("ENG")}
-                    className={[
-                      "flex-1 border-l border-neutral-200 px-3 py-2 text-sm font-semibold transition-colors",
-                      selectedLanguage === "ENG"
-                        ? "bg-green-500 text-white"
-                        : "text-neutral-700 hover:bg-neutral-50",
-                    ].join(" ")}
-                  >
-                    ENG
-                  </button>
-                </div>
-
-                <div className="grid gap-2">
-                  {languageOptions.map((lang) => (
-                    <button
-                      key={lang.code}
-                      type="button"
-                      onClick={() => setSelectedLanguage(lang.code)}
-                      className="rounded-xl border border-neutral-200 bg-white px-3 py-2 text-left text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
-                    >
-                      {lang.label}
-                    </button>
-                  ))}
-                </div>
+              <div className="border-t border-slate-200 pt-3 mt-3 space-y-2">
+                <Link
+                  href="/donation-funds"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold w-full hover:bg-red-700 transition-colors"
+                >
+                  <span>❤️</span>
+                  <span>Donate</span>
+                </Link>
 
                 {isAuthenticated ? (
                   <>
-                    <div className="rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-3">
-                      <p className="text-sm font-semibold text-neutral-900">
-                        {userName || "Signed In User"}
-                      </p>
-                      <p className="mt-1 text-xs text-neutral-500">
-                        {userEmail || "No email"}
-                      </p>
-                      <p className="mt-2 inline-flex rounded-full bg-sky-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-sky-700">
-                        {getRoleLabel(userRole)}
-                      </p>
-                    </div>
-
+                    {userRole === "admin" && (
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
+                      >
+                        📊 Admin Dashboard
+                      </Link>
+                    )}
+                    {userRole === "employee" && (
+                      <Link
+                        href="/employee-dashboard"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
+                      >
+                        💼 Employee Dashboard
+                      </Link>
+                    )}
+                    {userRole === "volunteer" && (
+                      <Link
+                        href="/volunteer-dashboard"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
+                      >
+                        🤝 Volunteer Dashboard
+                      </Link>
+                    )}
                     <Link
-                      href={dashboardHref}
-                      className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
-                      onClick={() => setMobileOpen(false)}
+                      href="/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold w-full hover:bg-sky-50 transition-colors"
                     >
-                      <MdDashboard className="text-lg" />
-                      {getRoleLabel(userRole)} Dashboard
+                      👤 Profile
                     </Link>
-
-                    <Link
-                      href="/"
-                      className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      Website Home
-                    </Link>
-
-                    <form
-                      action={logoutUser}
-                      onSubmit={() => setMobileOpen(false)}
-                    >
+                    <form action={logoutUser}>
                       <button
                         type="submit"
-                        className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-4 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
+                        className="w-full px-4 py-2 rounded-lg border-2 border-red-200 bg-red-50 text-red-600 text-sm font-semibold hover:bg-red-100 transition-colors"
                       >
-                        <MdLogout className="text-lg" />
-                        Logout
+                        🚪 Sign Out
                       </button>
                     </form>
                   </>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMobileOpen(false);
-                      setAuthModalOpen(true);
-                    }}
-                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white text-neutral-700 transition-colors hover:bg-neutral-50"
-                    aria-label="Open authentication form"
-                  >
-                    <FaUser className="text-lg" />
-                    Login / Sign up
-                  </button>
-                )}
+                  <>
+                    <Link
+                      href="/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold w-full hover:bg-sky-50 transition-colors"
+                    >
+                      Login
+                    </Link>
 
-                <Link
-                  href="/donation-funds"
-                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-sky-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-sky-700"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <FaHeart className="text-base" />
-                  Donate Now
-                </Link>
+                    <Link
+                      href="/signup"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
+                    >
+                      Join Us
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
         )}
-      </header>
-
-      <AuthModal open={authModalOpen} onClose={() => setAuthModalOpen(false)} />
-    </>
+      </div>
+    </header>
   );
 }

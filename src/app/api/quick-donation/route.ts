@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { supabaseServer } from "@/lib/supabase-server";
 
 export async function POST(req: Request) {
   try {
@@ -16,25 +15,12 @@ export async function POST(req: Request) {
       );
     }
 
-    const { error } = await supabaseServer.from("donations").insert({
-      name: "Quick Donor",
-      email: contact,
-      amount,
-      fund_id: fundId,
-      status: "pending",
-    });
-
-    if (error) {
-      console.error("QUICK DONATION ERROR:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
+    // TODO: Save donation to MongoDB
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("QUICK DONATION API ERROR:", error);
-
+    console.error("QUICK DONATION ERROR:", error);
     return NextResponse.json(
-      { error: "Something went wrong while saving the donation." },
+      { error: "Failed to process donation." },
       { status: 500 }
     );
   }
