@@ -31,6 +31,15 @@ async function connectToDatabase() {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
+    // Provide a clearer error message for connection failures
+    if (e && (e as any).name === "MongooseServerSelectionError") {
+      throw new Error(
+        `Could not connect to MongoDB at ${MONGODB_URI.split("@").pop() || MONGODB_URI}: ${
+          (e as Error).message
+        }`
+      );
+    }
+
     throw e;
   }
 

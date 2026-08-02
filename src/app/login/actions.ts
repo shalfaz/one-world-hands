@@ -14,7 +14,13 @@ export async function loginUser(formData: FormData) {
     redirect("/login?error=missing");
   }
 
-  await connectToDatabase();
+  try {
+    await connectToDatabase();
+  } catch (err) {
+    console.error('Database connection error during login:', err);
+    redirect('/login?error=db');
+  }
+
   const user = await User.findOne({ email });
 
   if (!user) {
