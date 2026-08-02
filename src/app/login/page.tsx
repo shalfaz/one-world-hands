@@ -138,7 +138,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 />
                 <span className="text-sm text-slate-600">Remember me</span>
               </label>
-              <a href="#" className="text-sm font-semibold text-sky-600 hover:text-sky-700">
+              <a href="/forgot-password" className="text-sm font-semibold text-sky-600 hover:text-sky-700">
                 Forgot password?
               </a>
             </div>

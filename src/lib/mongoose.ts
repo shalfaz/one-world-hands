@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGO_URI;
-
-if (!MONGODB_URI) {
-  throw new Error("Please define the MONGO_URI environment variable inside .env.local");
-}
+const MONGODB_URI = process.env.MONGO_URI || process.env.MONGODB_URI;
 
 let cached = (global as any).mongoose;
 
@@ -13,6 +9,12 @@ if (!cached) {
 }
 
 async function connectToDatabase() {
+  if (!MONGODB_URI) {
+    throw new Error(
+      "MongoDB connection string is not configured. Set MONGO_URI or MONGODB_URI in your environment."
+    );
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -22,7 +24,7 @@ async function connectToDatabase() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       return mongoose;
     });
   }
@@ -46,4 +48,5 @@ async function connectToDatabase() {
   return cached.conn;
 }
 
+export { connectToDatabase };
 export default connectToDatabase;

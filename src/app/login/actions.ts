@@ -17,8 +17,8 @@ export async function loginUser(formData: FormData) {
   try {
     await connectToDatabase();
   } catch (err) {
-    console.error('Database connection error during login:', err);
-    redirect('/login?error=db');
+    console.error("Database connection error during login:", err);
+    redirect("/login?error=db");
   }
 
   const user = await User.findOne({ email });
@@ -42,15 +42,63 @@ export async function loginUser(formData: FormData) {
   const cookieStore = await cookies();
 
   // Preserving the old cookies the app relies on
-  cookieStore.set("owh_session", "authenticated", { httpOnly: true, secure: false, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 7 });
-  cookieStore.set("owh_role", role, { httpOnly: true, secure: false, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 7 });
-  cookieStore.set("owh_email", user.email, { httpOnly: true, secure: false, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 7 });
-  cookieStore.set("owh_name", user.name || "", { httpOnly: true, secure: false, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 7 });
+  cookieStore.set("owh_session", "authenticated", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+  cookieStore.set("owh_role", role, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+  cookieStore.set("owh_email", user.email, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+  cookieStore.set("owh_name", user.name || "", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
 
-  cookieStore.set("owh_session_public", "authenticated", { httpOnly: false, secure: false, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 7 });
-  cookieStore.set("owh_role_public", role, { httpOnly: false, secure: false, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 7 });
-  cookieStore.set("owh_email_public", user.email, { httpOnly: false, secure: false, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 7 });
-  cookieStore.set("owh_name_public", user.name || "", { httpOnly: false, secure: false, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 7 });
+  cookieStore.set("owh_session_public", "authenticated", {
+    httpOnly: false,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+  cookieStore.set("owh_role_public", role, {
+    httpOnly: false,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+  cookieStore.set("owh_email_public", user.email, {
+    httpOnly: false,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+  cookieStore.set("owh_name_public", user.name || "", {
+    httpOnly: false,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
 
   redirect("/");
 }
