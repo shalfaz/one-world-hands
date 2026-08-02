@@ -110,9 +110,59 @@ export async function deleteProgram(programId: string) {
   }
 }
 
+function getDefaultPrograms() {
+  const now = new Date().toISOString();
+
+  return [
+    {
+      _id: "food-assistance",
+      title: "Food Assistance Program",
+      description: "Providing food aid to vulnerable families.",
+      category: "relief",
+      location: "Global",
+      status: "active",
+      createdBy: {
+        _id: "",
+        name: "One World Hands",
+        email: "",
+      },
+      createdAt: now,
+      updatedAt: now,
+    },
+    {
+      _id: "medical-assistance",
+      title: "Medical Assistance Program",
+      description: "Healthcare and medical support for communities.",
+      category: "health",
+      location: "Global",
+      status: "active",
+      createdBy: {
+        _id: "",
+        name: "One World Hands",
+        email: "",
+      },
+      createdAt: now,
+      updatedAt: now,
+    },
+  ];
+}
+
 export async function getPrograms() {
   try {
-    await connectToDatabase();
+    if (!process.env.MONGO_URI && !process.env.MONGODB_URI) {
+      return getDefaultPrograms();
+    }
+
+    try {
+      await connectToDatabase();
+    } catch (dbError) {
+      console.warn(
+        "Database connection failed in getPrograms, falling back to defaults:",
+        dbError instanceof Error ? dbError.message : String(dbError)
+      );
+      return getDefaultPrograms();
+    }
+
     const programs = await Program.find()
       .lean()
       .sort({ createdAt: -1 });
@@ -141,8 +191,8 @@ export async function getPrograms() {
 
     return programsWithUsers;
   } catch (error) {
-    console.error("Get programs error:", error);
-    return [];
+    console.error("Unexpected error in getPrograms:", error);
+    return getDefaultPrograms();
   }
 }
 
