@@ -1,22 +1,16 @@
 import Link from "next/link";
 import FundCard from "@/components/FundCard";
+import { getPublicDonationFunds } from "@/lib/data/donationFunds";
 
-export default async function HomeDonationFundsSection() {
-  // TODO: Load funds from MongoDB
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const funds: any[] = [];
-  const featuredFunds = funds.slice(0, 6);
-
-  if (!featuredFunds.length) {
-    return null;
-  }
+export default function HomeDonationFundsSection() {
+  const featuredFunds = getPublicDonationFunds().slice(0, 6);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-600">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#008744]">
               Donation Funds
             </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
@@ -36,7 +30,7 @@ export default async function HomeDonationFundsSection() {
           </Link>
         </div>
 
-        <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {featuredFunds.map((fund) => (
             <FundCard key={fund.id} fund={fund} />
           ))}

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 type FundCardFund = {
@@ -5,6 +6,9 @@ type FundCardFund = {
   name: string;
   description: string;
   href: string;
+  image?: string;
+  category?: string;
+  categoryLabel?: string;
   accent: {
     bg: string;
     ring: string;
@@ -16,57 +20,59 @@ type FundCardFund = {
 
 export default function FundCard({ fund }: { fund: FundCardFund }) {
   return (
-    <article
-      className={[
-        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all",
-        "hover:-translate-y-0.5 hover:shadow-md",
-        "select-none",
-        fund.accent.bg,
-      ].join(" ")}
-    >
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-full bg-gradient-to-br ${fund.accent.gradientFrom} ${fund.accent.gradientTo} opacity-10`}
-      />
-
-      <div className="relative flex h-full flex-col">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
-              Donation Fund
-            </p>
-            <h3 className="mt-2 text-lg font-semibold leading-6 text-neutral-950">
-              {fund.name}
-            </h3>
-          </div>
-
-          <span
-            className={`mt-1 inline-flex h-11 w-11 items-center justify-center rounded-2xl ring-1 ${fund.accent.ring} bg-white`}
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+        {fund.image ? (
+          <Image
+            src={fund.image}
+            alt=""
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${fund.accent.gradientFrom} ${fund.accent.gradientTo}`}
           >
             <svg
-              aria-hidden="true"
               viewBox="0 0 24 24"
-              className={`h-5 w-5 ${fund.accent.text}`}
+              className="h-12 w-12 text-white/80"
               fill="none"
+              aria-hidden="true"
             >
               <path
                 d="M12 2l2.2 6.9H21l-5.6 4 2.1 7.1L12 15.8 6.5 20l2.1-7.1-5.6-4h6.8L12 2Z"
                 stroke="currentColor"
-                strokeWidth="1.9"
+                strokeWidth="1.5"
                 strokeLinejoin="round"
               />
             </svg>
-          </span>
-        </div>
+          </div>
+        )}
+      </div>
 
-        <p className="mt-4 text-sm leading-6 text-neutral-700">
+      <div className="flex flex-1 flex-col p-5 text-center">
+        <h3 className="text-base font-bold leading-snug text-neutral-950 sm:text-lg">
+          {fund.name}
+        </h3>
+
+        {fund.categoryLabel || fund.category ? (
+          <div className="mt-2">
+            <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+              {fund.categoryLabel || (fund.category || "").charAt(0).toUpperCase() + (fund.category || "").slice(1)}
+            </span>
+          </div>
+        ) : null}
+
+        <p className="mt-3 flex-1 text-sm leading-6 text-neutral-600">
           {fund.description}
         </p>
 
-        <div className="mt-auto pt-6">
+        <div className="mt-5 pt-1">
           <Link
             href={fund.href}
-            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+            className="inline-flex h-11 w-full items-center justify-center rounded-md bg-[#008744] px-6 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#006b36] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#008744] focus-visible:ring-offset-2"
             aria-label={`Donate to ${fund.name}`}
           >
             Donate
