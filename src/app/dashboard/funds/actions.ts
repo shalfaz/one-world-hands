@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import connectToDatabase from "@/lib/mongoose";
 import Fund from "@/lib/models/Fund";
 import User from "@/lib/models/User";
+import { DONATION_FUNDS } from "@/lib/data/donationFunds";
 import { redirect } from "next/navigation";
 
 async function getUserFromCookie() {
@@ -147,6 +148,54 @@ export async function getFunds() {
   } catch (error) {
     console.error("Get funds error:", error);
     return [];
+  }
+}
+
+export async function seedDefaultFunds() {
+  try {
+    const user = await getUserFromCookie();
+    await connectToDatabase();
+
+    let created = 0;
+    let updated = 0;
+
+    for (const fund of DONATION_FUNDS) {
+      const payload = {
+        name: fund.name,
+        slug: fund.slug,
+        description: fund.description,
+        category: fund.category,
+        impactSummary: fund.impactSummary,
+        targetAmount: 0,
+        raisedAmount: 0,
+        status: "active",
+      };
+
+      const existing = await Fund.findOne({ slug: fund.slug });
+
+      if (existing) {
+        await Fund.findByIdAndUpdate(existing._id, payload, {
+          runValidators: true,
+        });
+        updated += 1;
+      } else {
+        await Fund.create({
+          ...payload,
+          createdBy: user._id,
+        });
+        created += 1;
+      }
+    }
+
+    return {
+      success: true,
+      created,
+      updated,
+      total: DONATION_FUNDS.length,
+    };
+  } catch (error) {
+    console.error("Seed default funds error:", error);
+    throw error;
   }
 }
 

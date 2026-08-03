@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import DashboardSidebar from "../../../components/DashboardSidebar";
 import FundForm from "./FundForm";
 import FundList from "./FundList";
-import { getFunds } from "./actions";
+import { getFunds, seedDefaultFunds } from "./actions";
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 
@@ -60,6 +60,44 @@ function FundsContent() {
 
     loadFunds();
   }, [searchParams]);
+
+  const [seeding, setSeeding] = useState(false);
+
+  const handleSeedDefaults = async () => {
+    const result = await Swal.fire({
+      title: "Import Default Funds?",
+      text: "This will add or update all 13 standard donation funds in the database.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#0284c7",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, import funds",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!result.isConfirmed) return;
+
+    setSeeding(true);
+    try {
+      const seedResult = await seedDefaultFunds();
+      await handleRefresh();
+      Swal.fire({
+        icon: "success",
+        title: "Funds imported!",
+        text: `Created ${seedResult.created}, updated ${seedResult.updated} (${seedResult.total} total).`,
+        timer: 2500,
+      });
+    } catch (err) {
+      console.error("Seed error:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Import failed",
+        text: "Could not import default funds. Check your database connection and login.",
+      });
+    } finally {
+      setSeeding(false);
+    }
+  };
 
   const handleRefresh = async () => {
     setLoading(true);
@@ -124,27 +162,42 @@ function FundsContent() {
             </div>
 
             {/* Form Section */}
-            <div>
-              <p className="text-sm font-semibold text-slate-700 mb-3">
-                {editingFund ? "Edit Fund" : "Create New Fund"}
-              </p>
-              <FundForm
-                fund={editingFund}
-                onSuccess={() => {
-                  handleRefresh();
-                  setEditingFund(null);
-                }}
-              />
-            </div>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold text-slate-700">
+                  {editingFund ? "Edit Fund" : "Create New Fund"}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleSeedDefaults}
+                  disabled={seeding}
+                  className="inline-flex h-10 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 px-5 text-sm font-semibold text-emerald-800 transition-colors hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {seeding ? "Importing..." : "Import 13 Default Funds"}
+                </button>
+              </div>
 
-            {editingFund && (
-              <button
-                onClick={() => setEditingFund(null)}
-                className="w-full rounded-full bg-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-300"
-              >
-                ✕ Cancel Editing
-              </button>
-            )}
+              <div className="mt-4">
+                <FundForm
+                  fund={editingFund}
+                  onSuccess={() => {
+                    handleRefresh();
+                    setEditingFund(null);
+                  }}
+                />
+              </div>
+
+              {editingFund && (
+                <div className="mt-3">
+                  <button
+                    onClick={() => setEditingFund(null)}
+                    className="w-full rounded-full bg-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-300"
+                  >
+                    ✕ Cancel Editing
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

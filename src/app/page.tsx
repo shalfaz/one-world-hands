@@ -7,6 +7,10 @@ import CTASection from "@/components/CTASection";
 import QuickDonationBox from "@/components/QuickDonationBox";
 import ProgramsCarousel from "@/components/ProgramsCarousel";
 import DonationFundsCarousel from "@/components/DonationFundsCarousel";
+import {
+  getPublicDonationFunds,
+  getQuickDonationFunds,
+} from "@/lib/data/donationFunds";
 import { Suspense } from "react";
 
 
@@ -41,9 +45,8 @@ export const metadata = {
 };
 
 export default async function Home() {
-  // TODO: Load funds from MongoDB
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const publicFunds: any[] = [];
+  const publicFunds = getPublicDonationFunds();
+  const quickDonationFunds = getQuickDonationFunds();
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans text-foreground">
@@ -68,7 +71,7 @@ export default async function Home() {
               </div>
             }
           >
-            <QuickDonationBox funds={publicFunds} />
+            <QuickDonationBox funds={quickDonationFunds} />
           </Suspense>
         </div>
 
