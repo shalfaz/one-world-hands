@@ -245,7 +245,7 @@ export default function QuickDonationBox({
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex h-11 items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                    className="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-[#0084d1] shadow-sm transition-colors hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
                   >
                     {submitting ? "Saving..." : "Donate Now"}
                   </button>
