@@ -121,16 +121,16 @@ export default function QuickDonationBox({
   return (
     <section aria-labelledby="quick-donate-title" id="quick-donation">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+        <div className="rounded-[2rem] border border-[#0074b8] bg-[#0084d1] p-6 shadow-sm sm:p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h2
                 id="quick-donate-title"
-                className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
+                className="text-2xl font-semibold tracking-tight text-white sm:text-3xl"
               >
                 Make Your Donation
               </h2>
-              <p className="mt-2 max-w-xl text-base leading-7 text-neutral-700">
+              <p className="mt-2 max-w-xl text-base leading-7 text-white/90">
                 Choose a donation fund and share support in seconds.
               </p>
             </div>
@@ -173,7 +173,7 @@ export default function QuickDonationBox({
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="donation-fund"
-                    className="text-sm font-semibold text-neutral-900"
+                    className="text-sm font-semibold text-white"
                   >
                     Donation Fund <span className="text-red-500">*</span>
                   </label>
@@ -198,7 +198,7 @@ export default function QuickDonationBox({
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="donor-contact"
-                    className="text-sm font-semibold text-neutral-900"
+                    className="text-sm font-semibold text-white"
                   >
                     Phone / Email <span className="text-red-500">*</span>
                   </label>
@@ -216,7 +216,7 @@ export default function QuickDonationBox({
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="donation-amount"
-                    className="text-sm font-semibold text-neutral-900"
+                    className="text-sm font-semibold text-white"
                   >
                     Donation Amount <span className="text-red-500">*</span>
                   </label>
@@ -252,11 +252,11 @@ export default function QuickDonationBox({
                 </div>
               </form>
 
-              <p className="mt-4 text-center text-sm text-neutral-700">
+              <p className="mt-4 text-center text-sm text-white/90">
                 You will receive tax relief when you donate.{" "}
                 <a
                   href="#"
-                  className="font-semibold text-sky-600 hover:underline"
+                    className="font-semibold text-white underline-offset-2 hover:underline"
                 >
                   Click here to learn more
                 </a>

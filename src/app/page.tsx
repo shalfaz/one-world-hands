@@ -50,9 +50,9 @@ export default async function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans text-foreground">
-      <div className="w-full border-b-2 border-neutral-200 bg-linear-to-r from-sky-50 to-blue-50">
-        <div className="mx-auto max-w-7xl px-4 py-3 text-center text-sm font-bold text-sky-700 sm:px-6 lg:px-8">
-          ✨ Where Magic Hands Unite, Wonders Arise. 🌍
+      <div className="w-full border-b border-sky-100 bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-3 text-center text-sm font-bold text-[#0084d1] sm:px-6 lg:px-8">
+          Where Magic Hands Unite, Wonders Arise.
         </div>
       </div>
 

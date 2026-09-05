@@ -23,19 +23,19 @@ export default function Footer() {
             </p>
             <p className="mt-6 text-sm leading-6 text-neutral-700">
               <span className="font-bold text-neutral-900">One World Hands</span>{" "}
-              — A global initiative for humanity, unity, and hope. ✨
+              — A global initiative for humanity, unity, and hope.
             </p>
           </div>
 
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900 flex items-center gap-2"><span>📌</span> Quick Links</p>
+            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Quick Links</p>
             <ul className="mt-4 space-y-2.5">
               <li>
                 <Link
                   href="/"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
                 >
-                  <span className="text-base">🏠</span> Home
+                  Home
                 </Link>
               </li>
               <li>
@@ -75,7 +75,7 @@ export default function Footer() {
                   href="/updates"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
                 >
-                  <span>📰</span> Updates
+                  Updates
                 </Link>
               </li>
               <li>
@@ -90,7 +90,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900 flex items-center gap-2"><span>📊</span> Programs</p>
+            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Programs</p>
             <ul className="mt-4 space-y-2.5">
               <li>
                 <Link
@@ -121,7 +121,7 @@ export default function Footer() {
                   href="/programs#winter-support"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <span className="inline mr-2">❄️</span> Winter Support
+                  Winter Support
                 </Link>
               </li>
               <li>
@@ -144,7 +144,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900 flex items-center gap-2"><GiMoneyStack className="text-base" /> Donation Funds</p>
+            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Donation Funds</p>
             <ul className="mt-4 space-y-2.5">
               <li>
                 <Link
@@ -175,7 +175,7 @@ export default function Footer() {
                   href="/donation-funds#winter-support"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <span className="inline mr-2">❄️</span> Winter Support
+                  Winter Support
                 </Link>
               </li>
               <li>
@@ -183,7 +183,7 @@ export default function Footer() {
                   href="/donation-funds#general-donation"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <span className="inline mr-2">🎁</span> General Donation
+                  General Donation
                 </Link>
               </li>
               <li className="pt-2">
@@ -225,7 +225,7 @@ export default function Footer() {
             </ul>
 
             <div className="mt-6">
-              <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">🌐 Social</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Social</p>
               <div className="mt-3 flex flex-wrap gap-4">
                 <a
                   href="https://facebook.com"
@@ -269,7 +269,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t-2 border-neutral-200 pt-8 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-medium">© {new Date().getFullYear()} <span className="font-bold text-neutral-900">One World Hands</span>. All rights reserved. 🌍</p>
+          <p className="font-medium">© {new Date().getFullYear()} <span className="font-bold text-neutral-900">One World Hands</span>. All rights reserved.</p>
           <div className="flex gap-6">
             <Link
               href="/privacy"
