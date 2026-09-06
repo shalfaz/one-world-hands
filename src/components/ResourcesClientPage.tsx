@@ -181,8 +181,8 @@ export default function ResourcesClientPage({
         </p>
       </section>
 
-      <div className="mt-10 overflow-x-auto">
-        <div className="inline-flex min-w-full rounded-full bg-sky-500 p-1 text-white">
+      <div className="mt-10">
+        <div className="grid w-full grid-cols-2 gap-2 rounded-full bg-sky-500 p-2 text-white sm:grid-cols-3 lg:grid-cols-7">
           {resourceTypes.map((type) => {
             const isActive = activeType === type.value;
 
@@ -192,7 +192,7 @@ export default function ResourcesClientPage({
                 type="button"
                 onClick={() => setActiveType(type.value)}
                 className={[
-                  "rounded-full px-5 py-2 text-sm font-semibold transition",
+                  "flex items-center justify-center rounded-full px-3 py-2 text-center text-sm font-semibold transition",
                   isActive
                     ? "bg-white text-sky-700 shadow-sm"
                     : "text-white hover:bg-white/15",

@@ -1,8 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
-import ResourceCard from "@/components/ResourceCard";
-import UpdatesSection from "@/components/UpdatesSection";
 import CTASection from "@/components/CTASection";
 import QuickDonationBox from "@/components/QuickDonationBox";
 import ProgramsCarousel from "@/components/ProgramsCarousel";
@@ -321,29 +319,39 @@ export default async function Home() {
           </div>
         </section>
 
-        <div className="bg-linear-to-b from-neutral-50 to-blue-50/30 border-y-2 border-neutral-200">
-          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <UpdatesSection updates={[]} limit={3} />
-          </div>
-        </div>
-
         <section aria-labelledby="resources-title">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <div>
-              <h2
-                id="resources-title"
-                className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl"
-              >
-                📚 Resources Preview
-              </h2>
-              <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
-                Explore reports, publications, learning notes, and media from
-                across our programs.
-              </p>
-            </div>
+            <h2
+              id="resources-title"
+              className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl"
+            >
+              Resources Preview
+            </h2>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
+              Explore reports, publications, learning notes, and media from
+              across our programs.
+            </p>
 
-            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {/* Resources will be loaded from MongoDB */}
+            <div className="mt-8">
+              <div className="grid w-full grid-cols-2 gap-2 rounded-full bg-sky-500 p-2 text-white sm:grid-cols-3 lg:grid-cols-7">
+                {[
+                  { label: "Photo", href: "/resources?type=photo" },
+                  { label: "Video", href: "/resources?type=video" },
+                  { label: "Blogs", href: "/resources?type=blog" },
+                  { label: "Annual Report", href: "/resources?type=annual%20report" },
+                  { label: "Publications", href: "/resources?type=publication" },
+                  { label: "Webinar", href: "/resources?type=webinar" },
+                  { label: "Document", href: "/resources?type=document" },
+                ].map((category) => (
+                  <a
+                    key={category.label}
+                    href={category.href}
+                    className="flex items-center justify-center rounded-full px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                  >
+                    {category.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </section>
