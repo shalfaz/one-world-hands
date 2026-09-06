@@ -11,6 +11,7 @@ import {
   getPublicDonationFunds,
   getQuickDonationFunds,
 } from "@/lib/data/donationFunds";
+import { getPublishedProgramsForCarousel } from "@/lib/services/programService";
 import { Suspense } from "react";
 
 
@@ -47,6 +48,7 @@ export const metadata = {
 export default async function Home() {
   const publicFunds = getPublicDonationFunds();
   const quickDonationFunds = getQuickDonationFunds();
+  const programs = await getPublishedProgramsForCarousel();
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans text-foreground">
@@ -155,7 +157,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <ProgramsCarousel programs={[]} />
+        <ProgramsCarousel programs={programs} />
 
         <DonationFundsCarousel funds={publicFunds} />
 

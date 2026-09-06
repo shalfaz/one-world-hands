@@ -1,6 +1,73 @@
 import connectToDatabase from "@/lib/mongoose";
 import Program from "@/lib/models/Program";
 import User from "@/lib/models/User";
+import type { Program as ProgramType } from "@/types/ngo";
+
+const accentByCategory = {
+  health: {
+    bg: "bg-red-50",
+    ring: "ring-red-200",
+    text: "text-red-700",
+    gradientFrom: "from-red-400",
+    gradientTo: "to-red-600",
+  },
+  education: {
+    bg: "bg-blue-50",
+    ring: "ring-blue-200",
+    text: "text-blue-700",
+    gradientFrom: "from-blue-400",
+    gradientTo: "to-blue-600",
+  },
+  community: {
+    bg: "bg-emerald-50",
+    ring: "ring-emerald-200",
+    text: "text-emerald-700",
+    gradientFrom: "from-emerald-400",
+    gradientTo: "to-emerald-600",
+  },
+  livelihood: {
+    bg: "bg-purple-50",
+    ring: "ring-purple-200",
+    text: "text-purple-700",
+    gradientFrom: "from-purple-400",
+    gradientTo: "to-purple-600",
+  },
+  relief: {
+    bg: "bg-orange-50",
+    ring: "ring-orange-200",
+    text: "text-orange-700",
+    gradientFrom: "from-orange-400",
+    gradientTo: "to-orange-600",
+  },
+  other: {
+    bg: "bg-neutral-50",
+    ring: "ring-neutral-200",
+    text: "text-neutral-700",
+    gradientFrom: "from-neutral-400",
+    gradientTo: "to-neutral-600",
+  },
+} as const;
+
+function transformToCarouselProgram(program: Record<string, unknown>): ProgramType {
+  const category = String(program.category || "other");
+  const accent = accentByCategory[category as keyof typeof accentByCategory] || accentByCategory.other;
+
+  return {
+    id: String(program._id || program.id || ""),
+    title: String(program.title || ""),
+    description: String(program.description || ""),
+    category,
+    location: String(program.location || "Global"),
+    duration: String(program.duration || "Ongoing"),
+    impactPoints: [
+      "Supporting communities in need",
+      "Creating lasting positive change",
+      "Building resilience and capacity",
+    ],
+    href: `/programs/${program._id}`,
+    accent,
+  };
+}
 
 function getDefaultPrograms() {
   const now = new Date().toISOString();
@@ -174,4 +241,9 @@ export async function getPublishedPrograms() {
     console.error("Unexpected error in getPublishedPrograms:", error);
     return getDefaultPrograms();
   }
+}
+
+export async function getPublishedProgramsForCarousel(): Promise<ProgramType[]> {
+  const programs = await getPublishedPrograms();
+  return programs.map(transformToCarouselProgram);
 }
