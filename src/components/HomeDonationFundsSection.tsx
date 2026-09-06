@@ -7,7 +7,7 @@ export default function HomeDonationFundsSection() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
+      <div className="rounded-4xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#008744]">

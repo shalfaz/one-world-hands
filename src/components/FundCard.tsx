@@ -21,7 +21,7 @@ type FundCardFund = {
 export default function FundCard({ fund }: { fund: FundCardFund }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+      <div className="relative aspect-4/3 w-full overflow-hidden bg-neutral-100">
         {fund.image ? (
           <Image
             src={fund.image}
@@ -33,7 +33,7 @@ export default function FundCard({ fund }: { fund: FundCardFund }) {
         ) : (
           <div
             aria-hidden="true"
-            className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${fund.accent.gradientFrom} ${fund.accent.gradientTo}`}
+            className={`flex h-full w-full items-center justify-center bg-linear-to-br ${fund.accent.gradientFrom} ${fund.accent.gradientTo}`}
           >
             <svg
               viewBox="0 0 24 24"
