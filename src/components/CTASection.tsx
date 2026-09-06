@@ -4,7 +4,7 @@ export default function CTASection() {
   return (
     <section aria-labelledby="get-involved-title" className="my-12 sm:my-16 lg:my-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-white px-6 py-12 shadow-[0_20px_60px_-32px_rgba(15,23,42,0.28)] sm:px-10 sm:py-14 lg:px-12">
+        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-12 shadow-[0_20px_60px_-32px_rgba(15,23,42,0.28)] sm:px-10 sm:py-14 lg:px-12">
           <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-sky-100 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-16 -left-14 h-48 w-48 rounded-full bg-emerald-100 blur-3xl" />
 
@@ -44,7 +44,7 @@ export default function CTASection() {
             </div>
 
             <div className="relative">
-              <div className="rounded-[24px] border border-slate-200 bg-slate-50 p-4 shadow-sm sm:p-5">
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 shadow-sm sm:p-5">
                 <div className="grid gap-3 sm:gap-4">
                   <Link
                     href="/donation-funds"
