@@ -66,7 +66,7 @@ export default async function Home() {
         <div id="quick-donation" className="scroll-mt-28">
           <Suspense
             fallback={
-              <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+              <div className="rounded-4xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
                 <p className="text-sm font-semibold text-neutral-900">
                   Preparing donation options...
                 </p>
