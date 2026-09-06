@@ -1,8 +1,5 @@
 import Link from "next/link";
-import { FaHandshake, FaMapPin, FaEnvelope, FaPhone, FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa6";
-import { MdInfo, MdShoppingCart, MdBook, MdLocalDining, MdEmergency, MdLocalHospital, MdSchool } from "react-icons/md";
-import { GiMoneyStack } from "react-icons/gi";
-import { TbLock } from "react-icons/tb";
+import { FaEnvelope, FaPhone, FaMapPin, FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -11,7 +8,6 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2">
-              <FaHandshake className="text-2xl text-sky-600" />
               <p className="text-lg font-bold bg-linear-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
                 One World Hands
               </p>
@@ -23,51 +19,51 @@ export default function Footer() {
             </p>
             <p className="mt-6 text-sm leading-6 text-neutral-700">
               <span className="font-bold text-neutral-900">One World Hands</span>{" "}
-              — A global initiative for humanity, unity, and hope. ✨
+              — A global initiative for humanity, unity, and hope.
             </p>
           </div>
 
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900 flex items-center gap-2"><span>📌</span> Quick Links</p>
+            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Quick Links</p>
             <ul className="mt-4 space-y-2.5">
               <li>
                 <Link
                   href="/"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
                 >
-                  <span className="text-base">🏠</span> Home
+                  Home
                 </Link>
               </li>
               <li>
                 <Link
                   href="/about-us"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
+                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdInfo className="text-base" /> About Us
+                  About Us
                 </Link>
               </li>
               <li>
                 <Link
                   href="/programs"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
+                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdShoppingCart className="text-base" /> Programs
+                  Programs
                 </Link>
               </li>
               <li>
                 <Link
                   href="/donation-funds"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
+                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <GiMoneyStack className="text-base" /> Donation Funds
+                  Donation Funds
                 </Link>
               </li>
               <li>
                 <Link
                   href="/resources"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
+                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdBook className="text-base" /> Resources
+                  Resources
                 </Link>
               </li>
               <li>
@@ -75,29 +71,29 @@ export default function Footer() {
                   href="/updates"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
                 >
-                  <span>📰</span> Updates
+                  Updates
                 </Link>
               </li>
               <li>
                 <Link
                   href="/contact"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
+                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <FaEnvelope className="text-base" /> Contact
+                  Contact
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900 flex items-center gap-2"><span>📊</span> Programs</p>
+            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Programs</p>
             <ul className="mt-4 space-y-2.5">
               <li>
                 <Link
                   href="/programs#food-assistance"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdLocalDining className="inline mr-2" /> Food Assistance
+                  Food Assistance
                 </Link>
               </li>
               <li>
@@ -105,7 +101,7 @@ export default function Footer() {
                   href="/programs#emergency-relief"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdEmergency className="inline mr-2" /> Emergency Relief
+                  Emergency Relief
                 </Link>
               </li>
               <li>
@@ -113,7 +109,7 @@ export default function Footer() {
                   href="/programs#medical-assistance"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdLocalHospital className="inline mr-2" /> Medical Assistance
+                  Medical Assistance
                 </Link>
               </li>
               <li>
@@ -121,7 +117,7 @@ export default function Footer() {
                   href="/programs#winter-support"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <span className="inline mr-2">❄️</span> Winter Support
+                  Winter Support
                 </Link>
               </li>
               <li>
@@ -129,7 +125,7 @@ export default function Footer() {
                   href="/programs#education-support"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdSchool className="inline mr-2" /> Education Support
+                  Education Support
                 </Link>
               </li>
               <li className="pt-2">
@@ -144,14 +140,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900 flex items-center gap-2"><GiMoneyStack className="text-base" /> Donation Funds</p>
+            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Donation Funds</p>
             <ul className="mt-4 space-y-2.5">
               <li>
                 <Link
                   href="/donation-funds#hunger-relief"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdLocalDining className="inline mr-2" /> Hunger Relief
+                  Hunger Relief
                 </Link>
               </li>
               <li>
@@ -159,7 +155,7 @@ export default function Footer() {
                   href="/donation-funds#emergency-relief"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdEmergency className="inline mr-2" /> Emergency Relief
+                  Emergency Relief
                 </Link>
               </li>
               <li>
@@ -167,7 +163,7 @@ export default function Footer() {
                   href="/donation-funds#medical-aid"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <MdLocalHospital className="inline mr-2" /> Medical Aid
+                  Medical Aid
                 </Link>
               </li>
               <li>
@@ -175,7 +171,7 @@ export default function Footer() {
                   href="/donation-funds#winter-support"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <span className="inline mr-2">❄️</span> Winter Support
+                  Winter Support
                 </Link>
               </li>
               <li>
@@ -183,7 +179,7 @@ export default function Footer() {
                   href="/donation-funds#general-donation"
                   className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
                 >
-                  <span className="inline mr-2">🎁</span> General Donation
+                  General Donation
                 </Link>
               </li>
               <li className="pt-2">
@@ -198,7 +194,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900 flex items-center gap-2"><FaEnvelope className="text-base" /> Contact</p>
+            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Contact</p>
             <ul className="mt-4 space-y-3">
               <li className="text-sm text-neutral-700 flex items-center">
                 <FaEnvelope className="mr-2 text-sky-600" />
@@ -225,7 +221,7 @@ export default function Footer() {
             </ul>
 
             <div className="mt-6">
-              <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">🌐 Social</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Social</p>
               <div className="mt-3 flex flex-wrap gap-4">
                 <a
                   href="https://facebook.com"
@@ -269,20 +265,20 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t-2 border-neutral-200 pt-8 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-medium">© {new Date().getFullYear()} <span className="font-bold text-neutral-900">One World Hands</span>. All rights reserved. 🌍</p>
+          <p className="font-medium">© {new Date().getFullYear()} <span className="font-bold text-neutral-900">One World Hands</span>. All rights reserved.</p>
           <div className="flex gap-6">
             <Link
               href="/privacy"
-              className="font-medium transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
+              className="font-medium transition-all hover:text-sky-600 hover:translate-x-1"
               aria-label="Privacy policy"
             >
-              <TbLock className="text-base" /> Privacy
+              Privacy
             </Link>
             <Link
               href="/contact"
-              className="font-medium transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
+              className="font-medium transition-all hover:text-sky-600 hover:translate-x-1"
             >
-              <FaEnvelope className="text-base" /> Contact
+              Contact
             </Link>
           </div>
         </div>

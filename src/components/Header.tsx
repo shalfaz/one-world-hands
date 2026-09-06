@@ -67,12 +67,12 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-[#0074b8] bg-[#0084d1]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative h-10 w-10 overflow-hidden rounded-lg bg-sky-600 flex items-center justify-center shrink-0">
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-1">
               <Image
                 src="/logo1.png"
                 alt="One World Hands"
@@ -83,8 +83,8 @@ export default function Header() {
               />
             </div>
             <div className="hidden sm:block">
-              <p className="text-base font-bold text-slate-900 leading-none">One World</p>
-              <p className="text-xs text-sky-600 font-semibold leading-none">Hands NGO</p>
+              <p className="text-base font-bold leading-none text-white">One World</p>
+              <p className="text-xs font-semibold leading-none text-white/90">Hands NGO</p>
             </div>
           </Link>
 
@@ -96,8 +96,8 @@ export default function Header() {
                 href={item.href}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   isActive(item.href)
-                    ? "bg-sky-50 text-sky-700 font-semibold"
-                    : "text-slate-700 hover:text-sky-700 hover:bg-sky-50"
+                    ? "bg-white text-[#0084d1] font-semibold"
+                    : "text-white hover:bg-white/15"
                 }`}
               >
                 {item.label}
@@ -110,9 +110,8 @@ export default function Header() {
             {/* Donate Button */}
             <Link
               href="/donation-funds"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition-colors"
+                  className="hidden sm:inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700"
             >
-              <span>❤️</span>
               <span>Donate</span>
             </Link>
 
@@ -121,7 +120,7 @@ export default function Header() {
               <div ref={userDropdownRef} className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold hover:bg-sky-50 transition-colors"
+                  className="hidden sm:flex items-center gap-2 rounded-lg border-2 border-white px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                 >
                   <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
@@ -152,7 +151,7 @@ export default function Header() {
                           className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
                           onClick={() => setUserDropdownOpen(false)}
                         >
-                          📊 Admin Dashboard
+                          Admin Dashboard
                         </Link>
                       )}
                       {userRole === "employee" && (
@@ -161,7 +160,7 @@ export default function Header() {
                           className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
                           onClick={() => setUserDropdownOpen(false)}
                         >
-                          💼 Employee Dashboard
+                          Employee Dashboard
                         </Link>
                       )}
                       {userRole === "volunteer" && (
@@ -170,7 +169,7 @@ export default function Header() {
                           className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
                           onClick={() => setUserDropdownOpen(false)}
                         >
-                          🤝 Volunteer Dashboard
+                          Volunteer Dashboard
                         </Link>
                       )}
                       <Link
@@ -178,14 +177,14 @@ export default function Header() {
                         className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
                         onClick={() => setUserDropdownOpen(false)}
                       >
-                        👤 Profile
+                        Profile
                       </Link>
                       <form action={logoutUser} className="block">
                         <button
                           type="submit"
                           className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium"
                         >
-                          🚪 Sign Out
+                          Sign Out
                         </button>
                       </form>
                     </div>
@@ -197,7 +196,7 @@ export default function Header() {
                 {/* Login Button */}
                 <Link
                   href="/login"
-                  className="hidden sm:inline-flex px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold hover:bg-sky-50 transition-colors"
+                  className="hidden sm:inline-flex rounded-lg border-2 border-white px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                 >
                   Login
                 </Link>
@@ -205,7 +204,7 @@ export default function Header() {
                 {/* Sign Up Button */}
                 <Link
                   href="/signup"
-                  className="hidden sm:inline-flex px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold hover:bg-sky-700 transition-colors"
+                  className="hidden sm:inline-flex rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#0084d1] transition-colors hover:bg-sky-50"
                 >
                   Join Us
                 </Link>
@@ -215,11 +214,11 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden inline-flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 transition-colors"
+              className="lg:hidden inline-flex items-center justify-center rounded-lg p-2 transition-colors hover:bg-white/15"
               aria-label="Toggle menu"
             >
               <svg
-                className={`h-6 w-6 text-slate-700 transition-transform ${
+                  className={`h-6 w-6 text-white transition-transform ${
                   mobileMenuOpen ? "rotate-90" : ""
                 }`}
                 fill="none"
@@ -248,7 +247,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="border-t border-slate-200 bg-slate-50 px-2 py-4 lg:hidden">
+          <div className="border-t border-white/20 bg-[#0084d1] px-2 py-4 lg:hidden">
             <div className="space-y-2">
               {navItems.map((item) => (
                 <Link
@@ -258,7 +257,7 @@ export default function Header() {
                   className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     isActive(item.href)
                       ? "bg-sky-600 text-white"
-                      : "text-slate-700 hover:bg-sky-100"
+                      : "text-white hover:bg-white/15"
                   }`}
                 >
                   {item.label}
@@ -271,7 +270,6 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold w-full hover:bg-red-700 transition-colors"
                 >
-                  <span>❤️</span>
                   <span>Donate</span>
                 </Link>
 
@@ -283,7 +281,7 @@ export default function Header() {
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
                       >
-                        📊 Admin Dashboard
+                        Admin Dashboard
                       </Link>
                     )}
                     {userRole === "employee" && (
@@ -292,7 +290,7 @@ export default function Header() {
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
                       >
-                        💼 Employee Dashboard
+                        Employee Dashboard
                       </Link>
                     )}
                     {userRole === "volunteer" && (
@@ -301,7 +299,7 @@ export default function Header() {
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
                       >
-                        🤝 Volunteer Dashboard
+                        Volunteer Dashboard
                       </Link>
                     )}
                     <Link
@@ -309,14 +307,14 @@ export default function Header() {
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold w-full hover:bg-sky-50 transition-colors"
                     >
-                      👤 Profile
+                      Profile
                     </Link>
                     <form action={logoutUser}>
                       <button
                         type="submit"
                         className="w-full px-4 py-2 rounded-lg border-2 border-red-200 bg-red-50 text-red-600 text-sm font-semibold hover:bg-red-100 transition-colors"
                       >
-                        🚪 Sign Out
+                        Sign Out
                       </button>
                     </form>
                   </>
