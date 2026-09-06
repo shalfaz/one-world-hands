@@ -1,0 +1,26 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="30" x2="724" y2="570" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E0F2FE"/>
+      <stop offset="1" stop-color="#DCFCE7"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" rx="48" fill="url(#bg)"/>
+  <circle cx="626" cy="136" r="72" fill="#FDE68A" opacity="0.75"/>
+  <circle cx="180" cy="448" r="94" fill="#BFDBFE" opacity="0.8"/>
+  <g transform="translate(190 160)">
+    <path d="M180 100C180 52 214 16 258 16C289 16 314 31 332 56C344 72 352 92 352 112C352 181 300 228 238 272C176 228 124 181 124 112C124 92 132 72 144 56C162 31 187 16 218 16C262 16 296 52 296 100" fill="#F43F5E"/>
+    <path d="M208 150C196 135 176 132 164 145C152 158 153 178 165 191L220 243L275 191C287 178 288 158 276 145C264 132 244 135 232 150L220 162L208 150Z" fill="#FB7185"/>
+    <path d="M312 176C356 176 392 212 392 256V291C392 315 372 334 348 334H211C187 334 168 315 168 291V256C168 212 204 176 248 176H312Z" fill="#0F172A" opacity="0.12"/>
+    <path d="M146 300C146 251 185 212 234 212H282C331 212 370 251 370 300V335C370 353 355 368 337 368H169C151 368 136 353 136 335V300H146Z" fill="#0F172A" opacity="0.12"/>
+    <path d="M182 244C182 206 213 176 251 176H279C317 176 348 206 348 244V297C348 314 334 328 317 328H214C197 328 182 314 182 297V244Z" fill="#0EA5E9"/>
+    <path d="M210 254C210 225 234 202 263 202H287C316 202 340 225 340 254V280C340 297 326 311 309 311H232C215 311 201 297 201 280V254H210Z" fill="#E0F2FE"/>
+    <circle cx="259" cy="226" r="16" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="300" cy="226" r="16" fill="#FFFFFF" opacity="0.9"/>
+    <path d="M248 294C257 280 276 280 285 294" stroke="#0EA5E9" stroke-width="12" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(80 68)">
+    <path d="M0 196C60 130 112 106 170 104C172 154 145 206 102 240C60 272 25 287 0 289V196Z" fill="#22C55E" opacity="0.25"/>
+    <path d="M112 152C92 126 80 106 80 80C80 50 102 24 134 24C166 24 190 50 190 88C190 128 166 162 112 152Z" fill="#16A34A" opacity="0.25"/>
+  </g>
+</svg>

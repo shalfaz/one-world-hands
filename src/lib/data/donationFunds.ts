@@ -72,6 +72,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [500, 1000, 2500, 5000],
     categoryLabel: "General",
     href: "/#quick-donation?fund=general-donation",
+    image: "/funds/general-donation.svg",
     accent: accent.community,
   },
   {
@@ -85,6 +86,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [500, 1000, 2500],
     categoryLabel: "Food",
     href: "/#quick-donation?fund=hunger-relief",
+    image: "/funds/hunger-relief.svg",
     accent: accent.emergency,
   },
   {
@@ -98,6 +100,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [1000, 2500, 5000],
     categoryLabel: "Health",
     href: "/#quick-donation?fund=medical-aid",
+    image: "/funds/medical-aid.svg",
     accent: accent.health,
   },
   {
@@ -111,6 +114,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [500, 1500, 3000],
     categoryLabel: "Education",
     href: "/#quick-donation?fund=education-support",
+    image: "/funds/education-support.svg",
     accent: accent.education,
   },
   {
@@ -124,6 +128,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [2500, 5000, 10000],
     categoryLabel: "Education",
     href: "/#quick-donation?fund=merit-scholarship",
+    image: "/funds/merit-scholarship.svg",
     accent: accent.education,
   },
   {
@@ -137,6 +142,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [1500, 3500, 7500],
     categoryLabel: "Livelihood",
     href: "/#quick-donation?fund=self-reliance-livelihood",
+    image: "/funds/self-reliance-livelihood.svg",
     accent: accent.livelihood,
   },
   {
@@ -150,6 +156,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [1000, 5000, 10000],
     categoryLabel: "Community",
     href: "/#quick-donation?fund=clean-water",
+    image: "/funds/clean-water.svg",
     accent: accent.community,
   },
   {
@@ -163,6 +170,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [500, 1500, 3000],
     categoryLabel: "Environment",
     href: "/#quick-donation?fund=tree-plantation",
+    image: "/funds/tree-plantation.svg",
     accent: accent.community,
   },
   {
@@ -176,6 +184,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [1000, 2500, 5000],
     categoryLabel: "Emergency",
     href: "/#quick-donation?fund=emergency-relief",
+    image: "/funds/emergency-relief.svg",
     accent: accent.emergency,
   },
   {
@@ -189,6 +198,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [750, 1500, 3000],
     categoryLabel: "Seasonal",
     href: "/#quick-donation?fund=winter-support",
+    image: "/funds/winter-support.svg",
     accent: accent.emergency,
   },
   {
@@ -202,6 +212,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [500, 1500, 2500],
     categoryLabel: "Seasonal",
     href: "/#quick-donation?fund=ramadan-food-iftar",
+    image: "/funds/ramadan-food-iftar.svg",
     accent: accent.community,
   },
   {
@@ -215,6 +226,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [2500, 5000, 10000],
     categoryLabel: "Zakat",
     href: "/#quick-donation?fund=zakat",
+    image: "/funds/zakat.svg",
     accent: accent.other,
   },
   {
@@ -228,6 +240,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
     suggestedAmounts: [1000, 5000, 15000],
     categoryLabel: "Sadaqah",
     href: "/#quick-donation?fund=sadaqah-jariyah",
+    image: "/funds/sadaqah-jariyah.svg",
     accent: accent.community,
   },
 ];

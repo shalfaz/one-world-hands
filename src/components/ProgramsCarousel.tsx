@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import ProgramCard from "@/components/ProgramCard";
+import HomeProgramCard from "@/components/HomeProgramCard";
 import type { Program } from "@/types/ngo";
 
 export default function ProgramsCarousel({
@@ -75,7 +75,7 @@ export default function ProgramsCarousel({
                 className="min-w-0 flex-[0_0_100%] px-2 sm:flex-[0_0_50%] lg:flex-[0_0_25%]"
               >
                 <div className="h-full">
-                  <ProgramCard program={program} />
+                  <HomeProgramCard program={program} />
                 </div>
               </div>
             ))}
