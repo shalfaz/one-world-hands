@@ -87,7 +87,7 @@ export default async function Home() {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2">
-              <div className="group relative overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.28)]">
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.28)]">
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-sky-500" />
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-700">
                   Vision
@@ -98,7 +98,7 @@ export default async function Home() {
                 </p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.28)]">
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.28)]">
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-emerald-500" />
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
                   Mission
@@ -162,7 +162,7 @@ export default async function Home() {
               ].map((pillar) => (
                 <div
                   key={pillar.title}
-                  className="group relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-6 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.24)]"
+                  className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.24)]"
                 >
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-sky-500" />
                   <h3 className="text-lg font-bold leading-7 text-neutral-950">
