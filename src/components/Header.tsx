@@ -323,7 +323,7 @@ export default function Header() {
                     <Link
                       href="/login"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold w-full hover:bg-sky-50 transition-colors"
+                      className="flex items-center justify-center px-4 py-2 rounded-lg border-2 border-white bg-white text-[#0084d1] text-sm font-semibold w-full hover:bg-sky-50 transition-colors shadow-sm"
                     >
                       Login
                     </Link>
@@ -331,7 +331,7 @@ export default function Header() {
                     <Link
                       href="/signup"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
+                      className="flex items-center justify-center px-4 py-2 rounded-lg border-2 border-white bg-white text-[#0084d1] text-sm font-semibold w-full hover:bg-sky-50 transition-colors shadow-sm"
                     >
                       Join Us
                     </Link>
