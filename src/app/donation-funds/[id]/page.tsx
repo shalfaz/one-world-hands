@@ -27,8 +27,8 @@ export default async function FundDetailPage({ params }: FundPageProps) {
 
   return (
     <PageShell>
-      <div className="bg-[#f6f8f5]">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <div className="bg-[#f4f7f4]">
+        <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 sm:py-10 lg:px-8">
           <Link
             href="/donation-funds"
             className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 transition-colors hover:text-[#007a3d]"
@@ -36,16 +36,25 @@ export default async function FundDetailPage({ params }: FundPageProps) {
             <span aria-hidden="true">←</span> All donation funds
           </Link>
 
-          <div className="mt-6 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-12">
-            <section>
-              <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-neutral-200">
+          <div className="mt-5 grid items-start gap-7 lg:grid-cols-[minmax(0,1.08fr)_minmax(390px,0.92fr)] lg:gap-10">
+            <article className="min-w-0">
+              <header className="mb-5">
+                <p className="text-xs font-bold uppercase text-[#007a3d]">
+                  {fund.categoryLabel || fund.category} fund
+                </p>
+                <h1 className="mt-1.5 text-3xl font-bold leading-tight text-neutral-950 sm:text-4xl">
+                  {fund.name}
+                </h1>
+              </header>
+
+              <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-neutral-200 shadow-sm">
                 {fund.image ? (
                   <Image
                     src={fund.image}
                     alt={fund.name}
                     fill
                     priority
-                    sizes="(max-width: 1024px) 100vw, 52vw"
+                    sizes="(max-width: 1024px) 100vw, 55vw"
                     className="object-cover"
                   />
                 ) : (
@@ -56,25 +65,40 @@ export default async function FundDetailPage({ params }: FundPageProps) {
                 )}
               </div>
 
-              <div className="mt-7">
-                <p className="text-sm font-bold uppercase text-[#007a3d]">
-                  {fund.categoryLabel || fund.category}
+              <blockquote className="mt-5 rounded-lg border border-[#dce9df] bg-[#edf4ef] px-5 py-5 sm:px-7">
+                <p className="text-center text-base font-semibold leading-7 text-[#234333]">
+                  {fund.impactSummary}
                 </p>
-                <h1 className="mt-2 max-w-2xl text-3xl font-bold leading-tight text-neutral-950 sm:text-4xl">
-                  {fund.name}
-                </h1>
-                <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
-                  {fund.description}
+              </blockquote>
+
+              <div className="mt-6 space-y-5 text-sm leading-6 text-neutral-700 sm:text-base sm:leading-7">
+                <p>{fund.description}</p>
+                <p>
+                  Your contribution helps support this fund&apos;s work and the
+                  people and communities it serves. Every gift, at any amount,
+                  is welcome.
                 </p>
               </div>
 
-              <div className="mt-7 border-t border-neutral-200 pt-6">
-                <h2 className="text-lg font-bold text-neutral-950">Your gift at work</h2>
-                <p className="mt-2 max-w-2xl leading-7 text-neutral-700">
-                  {fund.impactSummary}
+              <section className="mt-6 rounded-lg border border-[#dce9df] bg-[#edf4ef] p-5 sm:p-6" aria-labelledby="fund-priorities-title">
+                <h2 id="fund-priorities-title" className="text-lg font-bold text-[#173c2a]">
+                  Fund priorities
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-neutral-700">
+                  Contributions support the activities described for this fund:
                 </p>
-              </div>
-            </section>
+                <ul className="mt-4 grid gap-2.5 text-sm leading-5 text-neutral-800">
+                  <li className="flex items-start gap-2.5">
+                    <span aria-hidden="true" className="mt-0.5 text-[#008744]">●</span>
+                    <span>{fund.impactSummary}</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span aria-hidden="true" className="mt-0.5 text-[#008744]">●</span>
+                    <span>{fund.description}</span>
+                  </li>
+                </ul>
+              </section>
+            </article>
 
             <DonationCheckout fund={fund} />
           </div>

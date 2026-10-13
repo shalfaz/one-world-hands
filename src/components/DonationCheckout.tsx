@@ -81,27 +81,43 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
   return (
     <section
       aria-labelledby="donation-form-title"
-      className="rounded-lg border border-neutral-200 bg-white p-5 shadow-sm sm:p-7"
+      className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-[0_8px_30px_rgba(20,55,35,0.08)]"
     >
-      <div className="flex items-center justify-between border-b border-neutral-200 pb-5">
-        <div>
-          <p className="text-xs font-bold uppercase text-[#007a3d]">
-            {submitted ? "Thank you" : `Step ${step} of 2`}
-          </p>
-          <h2 id="donation-form-title" className="mt-1 text-xl font-bold text-neutral-950">
-            {submitted ? "Donation details received" : step === 1 ? "Choose your gift" : "Payment method"}
-          </h2>
-        </div>
-        {!submitted && (
-          <div className="flex gap-1.5" aria-label={`Step ${step} of 2`}>
-            <span className="h-1.5 w-8 rounded-full bg-[#008744]" />
-            <span className={`h-1.5 w-8 rounded-full ${step === 2 ? "bg-[#008744]" : "bg-neutral-200"}`} />
+      <div className="bg-[#008744] px-5 py-5 text-white sm:px-7 sm:py-6">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase text-white/75">
+              {submitted ? "Thank you" : `Step ${step} of 2`}
+            </p>
+            <h2 id="donation-form-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">
+              {submitted ? "Donation details received" : step === 1 ? "Make a difference today" : "Choose how to donate"}
+            </h2>
+            <p className="mt-2 max-w-md text-sm leading-5 text-white/90">
+              {submitted
+                ? fund.name
+                : step === 1
+                  ? `Support ${fund.name} and help strengthen its work.`
+                  : "Review your gift and select a payment method."}
+            </p>
           </div>
-        )}
+          {!submitted && (
+            <div className="flex shrink-0 gap-1.5 pt-1" aria-label={`Step ${step} of 2`}>
+              <span className="h-1.5 w-7 rounded-full bg-white" />
+              <span className={`h-1.5 w-7 rounded-full ${step === 2 ? "bg-white" : "bg-white/35"}`} />
+            </div>
+          )}
+        </div>
       </div>
 
+      <div className="p-5 sm:p-7">
+        {!submitted && step === 1 && (
+          <p className="mb-4 border-b border-neutral-200 pb-4 text-sm font-medium text-neutral-700">
+            Your payment method can be selected on the next step.
+          </p>
+        )}
+
       {submitted ? (
-        <div className="pt-6" role="status" aria-live="polite">
+        <div role="status" aria-live="polite">
           <p className="text-base leading-7 text-neutral-800">
             Your ৳{Number(selectedAmount).toLocaleString()} donation details for {fund.name} were submitted.
           </p>
@@ -110,10 +126,10 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
           </p>
         </div>
       ) : step === 1 ? (
-        <form className="pt-5" onSubmit={continueToPayment}>
+        <form onSubmit={continueToPayment}>
           <fieldset>
             <legend className="text-sm font-semibold text-neutral-800">Select an amount</legend>
-            <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="mt-3 grid grid-cols-3 gap-2">
               {fund.suggestedAmounts.map((suggestedAmount) => (
                 <button
                   key={suggestedAmount}
@@ -201,7 +217,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
           </button>
         </form>
       ) : (
-        <form className="pt-5" onSubmit={submitDonation}>
+        <form onSubmit={submitDonation}>
           <div className="flex items-center justify-between border-b border-neutral-200 pb-4 text-sm">
             <span className="text-neutral-600">Your donation</span>
             <span className="font-bold text-neutral-950">৳{Number(selectedAmount).toLocaleString()}</span>
@@ -256,6 +272,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
           </div>
         </form>
       )}
+      </div>
     </section>
   );
 }
