@@ -7,10 +7,18 @@ export async function POST(req: Request) {
     const fundId = String(body?.fundId || "").trim();
     const contact = String(body?.contact || "").trim();
     const amount = Number(body?.amount || 0);
+    const paymentMethod = String(body?.paymentMethod || "").trim();
 
-    if (!fundId || !contact || amount <= 0) {
+    if (!fundId || !contact || !Number.isFinite(amount) || amount <= 0) {
       return NextResponse.json(
         { error: "Invalid donation data." },
+        { status: 400 }
+      );
+    }
+
+    if (paymentMethod && !["bkash", "nagad", "card"].includes(paymentMethod)) {
+      return NextResponse.json(
+        { error: "Invalid payment method." },
         { status: 400 }
       );
     }
