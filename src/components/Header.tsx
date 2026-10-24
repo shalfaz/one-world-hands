@@ -71,20 +71,20 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-1">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden">
               <Image
                 src="/logo1.png"
                 alt="One World Hands"
-                width={40}
-                height={40}
+                width={48}
+                height={48}
                 className="h-full w-full object-contain"
                 priority
               />
             </div>
-            <div className="hidden sm:block">
+            <div className="block leading-tight">
               <p className="text-base font-bold leading-none text-white">One World</p>
-              <p className="text-xs font-semibold leading-none text-white/90">Hands NGO</p>
+              <p className="text-sm font-bold leading-none text-white">Hands</p>
             </div>
           </Link>
 
