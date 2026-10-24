@@ -2,8 +2,6 @@
 
 const mongoose = require('mongoose');
 
-const MONGO_URI = 'mongodb+srv://oneworldhands:LuRs0Qh0gW0SHTjs@cluster0.bpaq2ma.mongodb.net/?appName=Cluster0';
-
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -108,6 +106,14 @@ const programs = [
 
 (async () => {
   try {
+    const { config } = await import('dotenv');
+    config();
+
+    const MONGO_URI = process.env.MONGO_URI;
+    if (!MONGO_URI) {
+      throw new Error('MONGO_URI is not defined in the environment.');
+    }
+
     console.log('🔌 Connecting to MongoDB...');
     await mongoose.connect(MONGO_URI);
     console.log('✅ Connected to MongoDB');
