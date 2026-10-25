@@ -5,20 +5,40 @@ import connectToDatabase from "@/lib/mongoose";
 import Program from "@/lib/models/Program";
 import User from "@/lib/models/User";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import {
+  getSessionUserId,
+  isAuthorizedAdminSession,
+} from "@/lib/auth/session";
 
-async function getUserFromCookie() {
+async function getAdminFromSession() {
   const cookieStore = await cookies();
-  const email = cookieStore.get("owh_email")?.value;
+  const sessionToken = cookieStore.get("owh_session")?.value;
 
-  if (!email) {
+  if (!sessionToken) {
     throw new Error("User not authenticated");
   }
 
+  const userId = getSessionUserId(sessionToken);
+  if (!userId) {
+    throw new Error("Invalid session");
+  }
+
   await connectToDatabase();
-  const user = await User.findOne({ email });
+  const user = await User.findById(userId).select("_id password role");
 
   if (!user) {
     throw new Error("User not found");
+  }
+
+  if (
+    !isAuthorizedAdminSession(sessionToken, {
+      _id: String(user._id),
+      password: user.password,
+      role: user.role,
+    })
+  ) {
+    throw new Error("Administrator authorization required");
   }
 
   return user;
@@ -37,9 +57,16 @@ export async function createProgram(formData: FormData) {
       throw new Error("All fields are required");
     }
 
-    const user = await getUserFromCookie();
+    const user = await getAdminFromSession();
 
     await connectToDatabase();
+    if (
+      title.toLocaleLowerCase("en") === "merit scholarship program" &&
+      (await Program.exists({ title: /^Merit Scholarship Program$/i }))
+    ) {
+      throw new Error("Merit Scholarship Program already exists");
+    }
+
     const newProgram = await Program.create({
       title,
       category,
@@ -70,7 +97,19 @@ export async function updateProgram(formData: FormData) {
       throw new Error("All fields are required");
     }
 
+    await getAdminFromSession();
     await connectToDatabase();
+    const existing = await Program.findById(programId).select("title status");
+    if (
+      existing?.title === "Merit Scholarship Program" &&
+      existing.status === "draft" &&
+      status === "active"
+    ) {
+      throw new Error(
+        "Publish the scholarship through its approved-content publishing control"
+      );
+    }
+
     const updated = await Program.findByIdAndUpdate(
       programId,
       { title, category, location, description, status },
@@ -95,6 +134,7 @@ export async function deleteProgram(programId: string) {
       throw new Error("Program ID is required");
     }
 
+    await getAdminFromSession();
     await connectToDatabase();
     const deleted = await Program.findByIdAndDelete(programId);
 
@@ -108,6 +148,84 @@ export async function deleteProgram(programId: string) {
     console.error("Delete program error:", error);
     throw error;
   }
+}
+
+export async function publishMeritScholarship(
+  programId: string,
+  approvedDescription: string,
+  approvalConfirmed: boolean
+) {
+  if (!approvalConfirmed) {
+    throw new Error("NGO content approval must be confirmed");
+  }
+  if (!/^[a-f\d]{24}$/i.test(programId)) {
+    throw new Error("Invalid program ID");
+  }
+  if (typeof approvedDescription !== "string") {
+    throw new Error("Approved program content is required");
+  }
+
+  const admin = await getAdminFromSession();
+  await connectToDatabase();
+  const published = await Program.findOneAndUpdate(
+    {
+      _id: programId,
+      title: "Merit Scholarship Program",
+      status: "draft",
+      description: approvedDescription,
+    },
+    {
+      $set: {
+        status: "active",
+        approvedBy: admin._id,
+        approvedAt: new Date(),
+      },
+    },
+    { new: true, runValidators: true }
+  );
+
+  if (!published) {
+    throw new Error(
+      "The scholarship draft changed or is no longer publishable; reload and review it again"
+    );
+  }
+
+  revalidatePath("/programs");
+  revalidatePath("/");
+  revalidatePath(`/programs/${programId}`);
+
+  return { success: true };
+}
+
+export async function updateMeritScholarshipDraft(
+  programId: string,
+  description: string
+) {
+  if (!/^[a-f\d]{24}$/i.test(programId)) {
+    throw new Error("Invalid program ID");
+  }
+  if (typeof description !== "string" || !description.trim()) {
+    throw new Error("A draft description is required");
+  }
+
+  await getAdminFromSession();
+  await connectToDatabase();
+  const updated = await Program.findOneAndUpdate(
+    {
+      _id: programId,
+      title: "Merit Scholarship Program",
+      status: "draft",
+    },
+    { $set: { description: description.trim() } },
+    { new: true, runValidators: true }
+  );
+
+  if (!updated) {
+    throw new Error("The scholarship draft is no longer editable");
+  }
+
+  revalidatePath("/dashboard/programs");
+  return { success: true };
 }
 
 function getDefaultPrograms() {
@@ -148,6 +266,8 @@ function getDefaultPrograms() {
 }
 
 export async function getPrograms() {
+  await getAdminFromSession();
+
   try {
     if (!process.env.MONGO_URI && !process.env.MONGODB_URI) {
       return getDefaultPrograms();

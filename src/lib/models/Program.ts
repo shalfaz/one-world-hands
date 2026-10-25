@@ -7,6 +7,8 @@ export interface IProgram extends Document {
   location: string;
   status: "active" | "draft" | "inactive";
   createdBy: mongoose.Types.ObjectId;
+  approvedBy?: mongoose.Types.ObjectId;
+  approvedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -42,6 +44,13 @@ const ProgramSchema = new Schema<IProgram>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    approvedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    approvedAt: {
+      type: Date,
     },
   },
   { timestamps: true }

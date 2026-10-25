@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { hashPassword, needsRehash, verifyPassword } from "@/lib/password";
 import connectToDatabase from "@/lib/mongoose";
 import User from "@/lib/models/User";
+import { createSessionToken } from "@/lib/auth/session";
 
 export async function loginUser(formData: FormData) {
   const email = String(formData.get("email") || "").trim().toLowerCase();
@@ -37,14 +38,14 @@ export async function loginUser(formData: FormData) {
     await user.save();
   }
 
-  const role = String(user.role || "admin").toLowerCase();
+  const role = String(user.role || "user").toLowerCase();
+  const sessionToken = createSessionToken(String(user._id), user.password);
 
   const cookieStore = await cookies();
 
-  // Preserving the old cookies the app relies on
-  cookieStore.set("owh_session", "authenticated", {
+  cookieStore.set("owh_session", sessionToken, {
     httpOnly: true,
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 7,

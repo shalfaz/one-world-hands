@@ -3,6 +3,59 @@ import Program from "@/lib/models/Program";
 import User from "@/lib/models/User";
 import type { Program as ProgramType } from "@/types/ngo";
 
+const programOrder: Record<string, number> = {
+  "food assistance program": 0,
+  "medical assistance program": 1,
+  "medical assistance initiative": 1,
+  "education support program": 2,
+  "education support scholarship": 2,
+  "merit scholarship program": 3,
+  "self-reliance & livelihood program": 4,
+  "skill development training": 4,
+  "women empowerment initiative": 4,
+  "clean water program": 5,
+  "clean water project": 5,
+  "tree plantation program": 6,
+  "tree plantation drive": 6,
+  "winter support program": 7,
+  "ramadan food & iftar program": 8,
+  "ramadan iftar program": 8,
+  "qurbani for everyone (eid project)": 9,
+  "qurbani & eid support": 9,
+};
+
+const displayTitleBySourceTitle: Record<string, string> = {
+  "medical assistance initiative": "Medical Assistance Program",
+  "education support scholarship": "Education Support Program",
+  "skill development training": "Self-Reliance & Livelihood Program",
+  "clean water project": "Clean Water Program",
+  "tree plantation drive": "Tree Plantation Program",
+  "ramadan iftar program": "Ramadan Food & Iftar Program",
+  "qurbani & eid support": "Qurbani for Everyone (Eid Project)",
+};
+
+function normalizeProgramTitle(title: unknown): string {
+  return String(title ?? "")
+    .normalize("NFC")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLocaleLowerCase("en");
+}
+
+export function sortProgramsByOrder<T extends { title: unknown }>(
+  programs: T[]
+): T[] {
+  const orderedPrograms = [...programs].sort((a, b) => {
+    const titleA = normalizeProgramTitle(a.title);
+    const titleB = normalizeProgramTitle(b.title);
+    const priorityA = programOrder[titleA] ?? Number.MAX_SAFE_INTEGER;
+    const priorityB = programOrder[titleB] ?? Number.MAX_SAFE_INTEGER;
+    return priorityA - priorityB || titleA.localeCompare(titleB, "en");
+  });
+
+  return orderedPrograms;
+}
+
 const accentByCategory = {
   health: {
     bg: "bg-red-50",
@@ -203,7 +256,17 @@ export async function getPublishedPrograms() {
       return getDefaultPrograms();
     }
 
-    const programs = await Program.find({ status: "active" })
+    // Expose only this approved demo draft; all other drafts remain private.
+    const programs = await Program.find({
+      $or: [
+        { status: "active" },
+        {
+          title: "Merit Scholarship Program",
+          status: "draft",
+          category: "education",
+        },
+      ],
+    })
       .lean()
       .sort({ createdAt: -1 });
 
@@ -236,7 +299,12 @@ export async function getPublishedPrograms() {
       })
     );
 
-    return programsWithUsers;
+    return sortProgramsByOrder(programsWithUsers).map((program) => ({
+      ...program,
+      title:
+        displayTitleBySourceTitle[normalizeProgramTitle(program.title)] ??
+        program.title,
+    }));
   } catch (error) {
     console.error("Unexpected error in getPublishedPrograms:", error);
     return getDefaultPrograms();
