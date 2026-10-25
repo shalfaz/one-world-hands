@@ -4,6 +4,12 @@ import { redirect } from "next/navigation";
 import { loginUser } from "./actions";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import connectToDatabase from "@/lib/mongoose";
+import User from "@/lib/models/User";
+import {
+  getSessionUserId,
+  isValidSessionToken,
+} from "@/lib/auth/session";
 
 type LoginPageProps = {
   searchParams?: Promise<{
@@ -29,10 +35,28 @@ function getErrorMessage(error?: string) {
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const cookieStore = await cookies();
   const session = cookieStore.get("owh_session")?.value;
-  const role = cookieStore.get("owh_role")?.value;
 
-  if (session === "authenticated" && role) {
-    redirect(getDashboardPathByRole(role));
+  if (session) {
+    const userId = getSessionUserId(session);
+    if (userId) {
+      let role: string | null = null;
+      try {
+        await connectToDatabase();
+        const user = await User.findById(userId).select("_id password role");
+        if (
+          user &&
+          isValidSessionToken(session, String(user._id), user.password)
+        ) {
+          role = String(user.role || "user").toLowerCase();
+        }
+      } catch (error) {
+        console.warn("Unable to validate existing login session:", error);
+      }
+
+      if (role) {
+        redirect(getDashboardPathByRole(role));
+      }
+    }
   }
 
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
