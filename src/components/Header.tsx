@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { logoutUser } from "@/app/login/actions";
+import { FaUser } from "react-icons/fa6";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -22,6 +23,7 @@ export default function Header() {
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [language, setLanguage] = useState<"bn" | "en">("en");
   const pathname = usePathname();
   const userDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -40,12 +42,26 @@ export default function Header() {
     const email = readCookie("owh_email_public");
 
     if (session === "authenticated" && role) {
-      setIsAuthenticated(true);
-      setUserRole(role);
-      setUserName(name || "User");
-      setUserEmail(email || "");
+      const timer = window.setTimeout(() => {
+        setIsAuthenticated(true);
+        setUserRole(role);
+        setUserName(name || "User");
+        setUserEmail(email || "");
+      }, 0);
+      return () => window.clearTimeout(timer);
     }
   }, [pathname]);
+
+  useEffect(() => {
+    const savedLanguage = window.localStorage.getItem("owh_language");
+    const initialLanguage = savedLanguage === "bn" ? "bn" : "en";
+    const timer = window.setTimeout(() => setLanguage(initialLanguage), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = language === "bn" ? "bn" : "en";
+  }, [language]);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -66,10 +82,31 @@ export default function Header() {
     return pathname.startsWith(href);
   };
 
+  const selectLanguage = (nextLanguage: "bn" | "en") => {
+    setLanguage(nextLanguage);
+    window.localStorage.setItem("owh_language", nextLanguage);
+  };
+
+  const languageButton = (value: "bn" | "en", label: string) => (
+    <button
+      type="button"
+      onClick={() => selectLanguage(value)}
+      aria-pressed={language === value}
+      className={`min-w-8 px-2 py-1 text-xs font-bold transition-colors ${
+        language === value
+          ? "bg-white text-slate-800 shadow-sm"
+          : "bg-[#edf8f1] text-slate-600 hover:text-[#078b4f]"
+      }`}
+    >
+      {label}
+    </button>
+  );
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#0074b8] bg-[#0084d1]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full shadow-sm">
+      <div className="border-b border-[#0074b8] bg-[#0084d1]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
             <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden">
@@ -89,12 +126,12 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all xl:px-4 ${
                   isActive(item.href)
                     ? "bg-white text-[#0084d1] font-semibold"
                     : "text-white hover:bg-white/15"
@@ -106,110 +143,68 @@ export default function Header() {
           </nav>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-3 ml-auto">
-            {/* Donate Button */}
-            <Link
-              href="/donation-funds"
-                  className="hidden sm:inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700"
-            >
-              <span>Donate</span>
-            </Link>
+          <div className="flex items-center gap-2 ml-auto">
+            <div className="hidden sm:flex overflow-hidden rounded-md border border-slate-200 bg-[#edf8f1] p-0.5" aria-label="Language">
+              {languageButton("bn", "বাং")}
+              {languageButton("en", "EN")}
+            </div>
 
-            {/* User Dropdown or Auth Buttons */}
             {isAuthenticated ? (
-              <div ref={userDropdownRef} className="relative">
+              <div ref={userDropdownRef} className="relative hidden sm:block">
                 <button
+                  type="button"
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="hidden sm:flex items-center gap-2 rounded-lg border-2 border-white px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
+                  aria-label="Open user menu"
+                  title="Profile"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm transition-colors hover:text-[#078b4f]"
                 >
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                  </svg>
-                  <span>{userName.split(" ")[0]}</span>
-                  <svg className={`h-4 w-4 transition-transform ${userDropdownOpen ? "rotate-180" : ""}`} fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+                  <FaUser className="h-3.5 w-3.5" />
                 </button>
-
-                {/* Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-lg bg-white border border-slate-200 shadow-lg ring-1 ring-slate-100 overflow-hidden">
-                    {/* User Info */}
-                    <div className="px-4 py-3 border-b border-slate-200 bg-slate-50">
+                  <div className="absolute right-0 mt-2 w-48 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg">
+                    <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
                       <p className="text-sm font-semibold text-slate-900">{userName}</p>
                       <p className="text-xs text-slate-600">{userEmail}</p>
-                      <span className="inline-block mt-2 px-2 py-1 bg-sky-100 text-sky-700 text-xs font-semibold rounded capitalize">
+                      <span className="mt-2 inline-block rounded bg-sky-100 px-2 py-1 text-xs font-semibold capitalize text-sky-700">
                         {userRole}
                       </span>
                     </div>
-
-                    {/* Menu Items */}
                     <div className="py-2">
                       {userRole === "admin" && (
-                        <Link
-                          href="/dashboard"
-                          className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
-                          onClick={() => setUserDropdownOpen(false)}
-                        >
-                          Admin Dashboard
-                        </Link>
+                        <Link href="/dashboard" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" onClick={() => setUserDropdownOpen(false)}>Admin Dashboard</Link>
                       )}
                       {userRole === "employee" && (
-                        <Link
-                          href="/employee-dashboard"
-                          className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
-                          onClick={() => setUserDropdownOpen(false)}
-                        >
-                          Employee Dashboard
-                        </Link>
+                        <Link href="/employee-dashboard" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" onClick={() => setUserDropdownOpen(false)}>Employee Dashboard</Link>
                       )}
                       {userRole === "volunteer" && (
-                        <Link
-                          href="/volunteer-dashboard"
-                          className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
-                          onClick={() => setUserDropdownOpen(false)}
-                        >
-                          Volunteer Dashboard
-                        </Link>
+                        <Link href="/volunteer-dashboard" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" onClick={() => setUserDropdownOpen(false)}>Volunteer Dashboard</Link>
                       )}
-                      <Link
-                        href="/profile"
-                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
-                        onClick={() => setUserDropdownOpen(false)}
-                      >
-                        Profile
-                      </Link>
-                      <form action={logoutUser} className="block">
-                        <button
-                          type="submit"
-                          className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium"
-                        >
-                          Sign Out
-                        </button>
+                      <Link href="/profile" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" onClick={() => setUserDropdownOpen(false)}>Profile</Link>
+                      <form action={logoutUser}>
+                        <button type="submit" className="w-full px-4 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50">Sign Out</button>
                       </form>
                     </div>
                   </div>
                 )}
               </div>
             ) : (
-              <>
-                {/* Login Button */}
-                <Link
-                  href="/login"
-                  className="hidden sm:inline-flex rounded-lg border-2 border-white px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
-                >
-                  Login
-                </Link>
-
-                {/* Sign Up Button */}
-                <Link
-                  href="/signup"
-                  className="hidden sm:inline-flex rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#0084d1] transition-colors hover:bg-sky-50"
-                >
-                  Join Us
-                </Link>
-              </>
+              <Link
+                href="/login"
+                aria-label="Account"
+                title="Account"
+                className="hidden sm:inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm transition-colors hover:text-[#078b4f]"
+              >
+                <FaUser className="h-3.5 w-3.5" />
+              </Link>
             )}
+
+            {/* Donate Button */}
+            <Link
+              href="/donation-funds"
+              className="hidden sm:inline-flex h-8 items-center rounded-md bg-[#078b4f] px-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-[#067744]"
+            >
+              <span>Donate</span>
+            </Link>
 
             {/* Mobile Menu Button */}
             <button
@@ -265,10 +260,16 @@ export default function Header() {
               ))}
 
               <div className="border-t border-slate-200 pt-3 mt-3 space-y-2">
+                <div className="flex justify-center">
+                  <div className="flex overflow-hidden rounded-md border border-slate-200 bg-[#edf8f1] p-0.5" aria-label="Language">
+                    {languageButton("bn", "বাং")}
+                    {languageButton("en", "EN")}
+                  </div>
+                </div>
                 <Link
                   href="/donation-funds"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold w-full hover:bg-red-700 transition-colors"
+                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#078b4f] text-white text-sm font-semibold w-full hover:bg-[#067744] transition-colors"
                 >
                   <span>Donate</span>
                 </Link>
@@ -318,29 +319,12 @@ export default function Header() {
                       </button>
                     </form>
                   </>
-                ) : (
-                  <>
-                    <Link
-                      href="/login"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center px-4 py-2 rounded-lg border-2 border-white bg-white text-[#0084d1] text-sm font-semibold w-full hover:bg-sky-50 transition-colors shadow-sm"
-                    >
-                      Login
-                    </Link>
-
-                    <Link
-                      href="/signup"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center px-4 py-2 rounded-lg border-2 border-white bg-white text-[#0084d1] text-sm font-semibold w-full hover:bg-sky-50 transition-colors shadow-sm"
-                    >
-                      Join Us
-                    </Link>
-                  </>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
         )}
+      </div>
       </div>
     </header>
   );
