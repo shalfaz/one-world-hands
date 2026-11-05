@@ -7,7 +7,10 @@ export async function getActiveFunds() {
     await connectToDatabase();
 
     // Get only active funds with user information
-    const funds = await Fund.find({ status: "active" })
+    const funds = await Fund.find({
+      status: "active",
+      $or: [{ published: true }, { published: { $exists: false } }],
+    })
       .lean()
       .sort({ createdAt: -1 });
 
@@ -35,6 +38,7 @@ export async function getActiveFunds() {
           targetAmount: fund.targetAmount,
           raisedAmount: fund.raisedAmount,
           status: fund.status,
+          imageUrl: fund.imageUrl || "",
           createdBy: createdByUser,
           createdAt: fund.createdAt,
           updatedAt: fund.updatedAt,

@@ -30,6 +30,7 @@ export async function GET(
       targetAmount: fund.targetAmount,
       raisedAmount: fund.raisedAmount,
       status: fund.status,
+      imageUrl: fund.imageUrl || "",
       createdAt: fund.createdAt,
       updatedAt: fund.updatedAt,
     });

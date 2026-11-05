@@ -51,6 +51,11 @@ export async function createProgram(formData: FormData) {
     const location = String(formData.get("location") || "").trim();
     const description = String(formData.get("description") || "").trim();
     const status = String(formData.get("status") || "draft").trim();
+    const imageUrl = String(formData.get("imageUrl") || "").trim();
+    const objectives = String(formData.get("objectives") || "").trim();
+    const startDate = String(formData.get("startDate") || "").trim();
+    const endDate = String(formData.get("endDate") || "").trim();
+    const published = String(formData.get("published") || "false") === "true";
 
     if (!title || !category || !location) {
       console.log("Missing required fields");
@@ -73,6 +78,11 @@ export async function createProgram(formData: FormData) {
       location,
       description,
       status,
+      imageUrl,
+      objectives,
+      startDate: startDate ? new Date(startDate) : undefined,
+      endDate: endDate ? new Date(endDate) : undefined,
+      published,
       createdBy: user._id,
     });
 
@@ -92,6 +102,11 @@ export async function updateProgram(formData: FormData) {
     const location = String(formData.get("location") || "").trim();
     const description = String(formData.get("description") || "").trim();
     const status = String(formData.get("status") || "draft").trim();
+    const imageUrl = String(formData.get("imageUrl") || "").trim();
+    const objectives = String(formData.get("objectives") || "").trim();
+    const startDate = String(formData.get("startDate") || "").trim();
+    const endDate = String(formData.get("endDate") || "").trim();
+    const published = String(formData.get("published") || "false") === "true";
 
     if (!programId || !title || !category || !location) {
       throw new Error("All fields are required");
@@ -112,7 +127,7 @@ export async function updateProgram(formData: FormData) {
 
     const updated = await Program.findByIdAndUpdate(
       programId,
-      { title, category, location, description, status },
+      { title, category, location, description, status, imageUrl, objectives, startDate: startDate ? new Date(startDate) : null, endDate: endDate ? new Date(endDate) : null, published },
       { new: true, runValidators: true }
     );
 
@@ -148,6 +163,20 @@ export async function deleteProgram(programId: string) {
     console.error("Delete program error:", error);
     throw error;
   }
+}
+
+export async function updateProgramStatus(programId: string, status: string, published?: boolean) {
+  await getAdminFromSession();
+  await connectToDatabase();
+  const allowedStatuses = ["active", "inactive", "draft", "completed", "archived"];
+  if (!allowedStatuses.includes(status)) throw new Error("Invalid program status");
+  const update: Record<string, unknown> = { status };
+  if (typeof published === "boolean") update.published = published;
+  const program = await Program.findByIdAndUpdate(programId, update, { new: true, runValidators: true });
+  if (!program) throw new Error("Program not found");
+  revalidatePath("/dashboard/programs");
+  revalidatePath("/programs");
+  return { success: true };
 }
 
 export async function publishMeritScholarship(
@@ -298,6 +327,11 @@ export async function getPrograms() {
           category: program.category,
           location: program.location,
           status: program.status,
+          imageUrl: program.imageUrl || "",
+          objectives: program.objectives || "",
+          startDate: program.startDate instanceof Date ? program.startDate.toISOString() : "",
+          endDate: program.endDate instanceof Date ? program.endDate.toISOString() : "",
+          published: Boolean(program.published ?? program.status === "active"),
           createdBy: {
             _id: user ? String(user._id) : "",
             name: user?.name || "Unknown",
@@ -337,6 +371,11 @@ export async function getProgramById(programId: string) {
       category: program.category,
       location: program.location,
       status: program.status,
+      imageUrl: program.imageUrl || "",
+      objectives: program.objectives || "",
+      startDate: program.startDate instanceof Date ? program.startDate.toISOString() : "",
+      endDate: program.endDate instanceof Date ? program.endDate.toISOString() : "",
+      published: Boolean(program.published ?? program.status === "active"),
       createdBy: {
         _id: user ? String(user._id) : "",
         name: user?.name || "Unknown",

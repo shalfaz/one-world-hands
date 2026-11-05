@@ -8,6 +8,8 @@ const ResourceSchema = new Schema(
       maxlength: [150, "Title cannot exceed 150 characters"],
       trim: true,
     },
+    imageUrl: { type: String, default: "" },
+    published: { type: Boolean, default: false },
     description: {
       type: String,
       default: "",
@@ -19,7 +21,7 @@ const ResourceSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["draft", "published"],
+      enum: ["draft", "published", "active", "inactive", "archived"],
       default: "draft",
     },
     // For documents/PDFs uploaded to Cloudinary

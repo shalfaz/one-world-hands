@@ -1,23 +1,37 @@
-import DashboardSidebar from "../../components/DashboardSidebar";
+import connectToDatabase from "@/lib/mongoose";
+import Fund from "@/lib/models/Fund";
+import Program from "@/lib/models/Program";
+import Resource from "@/lib/models/Resource";
+import Donation from "@/lib/models/Donation";
+import { FiDollarSign, FiHeart, FiHome, FiImage } from "react-icons/fi";
 
 export default async function DashboardPage() {
-  // TODO: Connect to MongoDB for dashboard stats
-  const donationsCount = 0;
-  const donorsCount = 0;
-  const fundsCount = 0;
-  const activeFundsCount = 0;
-  const programsCount = 0;
-  const activeProgramsCount = 0;
-  const resourcesCount = 0;
-  const latestDonations: Array<{ id: string; name: string; email: string; fund_id: string; amount: number; status: string }> = [];
-  const topFunds: Array<{ id: string; name: string; amount: number; category: string; status: string }> = [];
-  const totalDonationsAmount = 0;
+  await connectToDatabase();
+  const [donationsCount, fundsCount, activeFundsCount, programsCount, activeProgramsCount, resourcesCount, totalResult, donations, funds, donorEmails] =
+    await Promise.all([
+      Donation.countDocuments(),
+      Fund.countDocuments(),
+      Fund.countDocuments({ status: "active" }),
+      Program.countDocuments(),
+      Program.countDocuments({ status: "active" }),
+      Resource.countDocuments(),
+      Donation.aggregate([{ $match: { status: "completed" } }, { $group: { _id: null, total: { $sum: "$amount" } } }]),
+      Donation.find().sort({ createdAt: -1 }).limit(6).populate("fund", "name").lean(),
+      Fund.find().sort({ raisedAmount: -1 }).limit(5).lean(),
+      Donation.distinct("email"),
+    ]);
+  const donorsCount = donorEmails.filter(Boolean).length;
+  const totalDonationsAmount = totalResult[0]?.total || 0;
+  const latestDonations = donations.map((donation: Record<string, unknown>) => ({
+    id: String(donation._id), name: String(donation.donorName || "Anonymous"), email: String(donation.email || donation.contact || ""),
+    fund_id: String((donation.fund as Record<string, unknown>)?.name || "General donation"), amount: Number(donation.amount || 0), status: String(donation.status || "pending"),
+  }));
+  const topFunds = funds.map((fund: Record<string, unknown>) => ({
+    id: String(fund._id), name: String(fund.name), amount: Number(fund.raisedAmount || 0), category: String(fund.category), status: String(fund.status),
+  }));
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f9" }}>
-      <DashboardSidebar />
-
-      <main className="flex-1 p-6 lg:p-8">
+    <div>
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
@@ -159,7 +173,6 @@ export default async function DashboardPage() {
             </div>
           </section>
         </div>
-      </main>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Fund from "@/lib/models/Fund";
 import User from "@/lib/models/User";
 import { DONATION_FUNDS } from "@/lib/data/donationFunds";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 async function getUserFromCookie() {
   const cookieStore = await cookies();
@@ -33,6 +34,8 @@ export async function createFund(formData: FormData) {
     const impactSummary = String(formData.get("impactSummary") || "").trim();
     const targetAmount = Number(formData.get("targetAmount") || 0);
     const status = String(formData.get("status") || "draft").trim();
+    const imageUrl = String(formData.get("imageUrl") || "").trim();
+    const published = String(formData.get("published") || "false") === "true";
 
     if (!name || !category) {
       throw new Error("Name and category are required");
@@ -48,6 +51,8 @@ export async function createFund(formData: FormData) {
       impactSummary,
       targetAmount,
       status,
+      imageUrl,
+      published,
       createdBy: user._id,
     });
 
@@ -68,6 +73,8 @@ export async function updateFund(formData: FormData) {
     const impactSummary = String(formData.get("impactSummary") || "").trim();
     const targetAmount = Number(formData.get("targetAmount") || 0);
     const status = String(formData.get("status") || "draft").trim();
+    const imageUrl = String(formData.get("imageUrl") || "").trim();
+    const published = String(formData.get("published") || "false") === "true";
 
     if (!fundId || !name || !category) {
       throw new Error("Fund ID, name and category are required");
@@ -76,7 +83,7 @@ export async function updateFund(formData: FormData) {
     await connectToDatabase();
     const updated = await Fund.findByIdAndUpdate(
       fundId,
-      { name, category, description, impactSummary, targetAmount, status },
+      { name, category, description, impactSummary, targetAmount, status, imageUrl, published },
       { new: true, runValidators: true }
     );
 
@@ -113,6 +120,20 @@ export async function deleteFund(fundId: string) {
   }
 }
 
+export async function updateFundStatus(fundId: string, status: string, published?: boolean) {
+  await getUserFromCookie();
+  await connectToDatabase();
+  const allowedStatuses = ["active", "inactive", "draft", "completed", "paused", "archived"];
+  if (!allowedStatuses.includes(status)) throw new Error("Invalid fund status");
+  const update: Record<string, unknown> = { status };
+  if (typeof published === "boolean") update.published = published;
+  const fund = await Fund.findByIdAndUpdate(fundId, update, { new: true, runValidators: true });
+  if (!fund) throw new Error("Fund not found");
+  revalidatePath("/dashboard/funds");
+  revalidatePath("/donation-funds");
+  return { success: true };
+}
+
 export async function getFunds() {
   try {
     await connectToDatabase();
@@ -133,6 +154,8 @@ export async function getFunds() {
           targetAmount: fund.targetAmount || 0,
           raisedAmount: fund.raisedAmount || 0,
           status: fund.status,
+          imageUrl: fund.imageUrl || "",
+          published: Boolean(fund.published ?? fund.status === "active"),
           createdBy: {
             _id: user ? String(user._id) : "",
             name: user?.name || "Unknown",
