@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import DashboardSidebar from "../../../components/DashboardSidebar";
 import FundForm from "./FundForm";
 import FundList from "./FundList";
 import { getFunds, seedDefaultFunds } from "./actions";
@@ -116,9 +115,7 @@ function FundsContent() {
 
   return (
     <div className="flex min-h-screen bg-slate-100">
-      <DashboardSidebar />
-
-      <main className="flex-1 p-6 lg:p-8">
+      <div className="w-full">
         {/* Header Section */}
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <div className="flex flex-col gap-4">
@@ -158,6 +155,7 @@ function FundsContent() {
                 <p className="mt-1 text-2xl font-bold text-orange-900">
                   {funds.filter((f) => f.status === "draft").length}
                 </p>
+              </div>
               </div>
             </div>
 
@@ -220,7 +218,6 @@ function FundsContent() {
             )}
           </div>
         </div>
-      </main>
     </div>
   );
 }

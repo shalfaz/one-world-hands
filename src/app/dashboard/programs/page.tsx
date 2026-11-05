@@ -1,4 +1,3 @@
-import DashboardSidebar from "../../../components/DashboardSidebar";
 import { getPrograms } from "./actions";
 import ProgramForm from "./ProgramForm";
 import ProgramList from "./ProgramList";
@@ -21,9 +20,7 @@ export default async function ProgramsPage() {
 
   return (
     <div className="flex min-h-screen bg-slate-100">
-      <DashboardSidebar />
-
-      <main className="flex-1 p-6 lg:p-8">
+      <div className="w-full">
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <div className="flex flex-col gap-3">
             <div>
@@ -38,13 +35,13 @@ export default async function ProgramsPage() {
 
             <ProgramForm />
           </div>
+          </div>
         </div>
 
         <div className="mt-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <h2 className="mb-4 text-lg font-semibold text-slate-900">All Programs</h2>
           <ProgramList programs={programs} />
         </div>
-      </main>
     </div>
   );
 }

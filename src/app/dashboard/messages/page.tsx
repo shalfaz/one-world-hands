@@ -1,7 +1,6 @@
 import connectToDatabase from "@/lib/mongoose";
 import Message from "@/lib/models/Message";
 import MessageList, { type Message as MessageType } from "./MessageList";
-import DashboardSidebar from "../../../components/DashboardSidebar";
 
 type MessageData = MessageType;
 
@@ -43,18 +42,16 @@ export default async function MessagesPage() {
   if (error) {
     return (
       <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f9" }}>
-        <DashboardSidebar />
-        <main className="flex-1 p-6 lg:p-8">
+        <div className="w-full">
           <div className="text-red-600">Error loading messages</div>
-        </main>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f9" }}>
-      <DashboardSidebar />
-      <main className="flex-1 p-6 lg:p-8">
+      <div className="w-full">
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <h1 className="text-3xl font-bold">Messages</h1>
           <p className="mt-2 text-slate-600">
@@ -65,7 +62,7 @@ export default async function MessagesPage() {
             <MessageList messages={serializedMessages} />
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import DashboardSidebar from "../../../components/DashboardSidebar";
 import ResourceForm from "./ResourceForm";
 import ResourceList from "./ResourceList";
 import { getResources } from "./actions";
@@ -87,9 +86,7 @@ function ResourcesContent() {
 
   return (
     <div className="flex min-h-screen bg-slate-100">
-      <DashboardSidebar />
-
-      <main className="flex-1 p-6 lg:p-8">
+      <div className="w-full">
         {/* Header Section */}
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <div className="flex flex-col gap-4">
@@ -134,6 +131,7 @@ function ResourcesContent() {
                 <p className="mt-1 text-2xl font-bold text-pink-900">
                   {publishedCount}
                 </p>
+              </div>
               </div>
             </div>
 
@@ -181,7 +179,6 @@ function ResourcesContent() {
             )}
           </div>
         </div>
-      </main>
     </div>
   );
 }

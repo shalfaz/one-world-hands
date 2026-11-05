@@ -1,4 +1,3 @@
-import DashboardSidebar from "@/components/DashboardSidebar";
 import { createUser } from "./actions";
 import User from "@/lib/models/User";
 import connectToDatabase from "@/lib/mongoose";
@@ -35,9 +34,7 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
 
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "#e2e8f0" }}>
-      <DashboardSidebar />
-
-      <main className="flex-1 p-6 lg:p-8">
+      <div className="w-full">
         <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
           <p className="text-sm font-semibold text-sky-600">Users</p>
           <h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-950">
@@ -66,6 +63,7 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
               <p className="text-sm text-slate-500">
                 Total users: {users?.length || 0}
               </p>
+            </div>
             </div>
           </div>
 
@@ -146,7 +144,6 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
             )}
           </div>
         </div>
-      </main>
     </div>
   );
 }

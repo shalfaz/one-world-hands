@@ -31,6 +31,8 @@ const FundSchema = new Schema(
       default: 0,
       min: [0, "Raised amount cannot be negative"],
     },
+    imageUrl: { type: String, default: "" },
+    published: { type: Boolean, default: false },
     slug: {
       type: String,
       unique: true,
@@ -39,7 +41,7 @@ const FundSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["active", "draft", "completed", "paused"],
+      enum: ["active", "inactive", "draft", "completed", "paused", "archived"],
       default: "draft",
     },
     createdBy: {

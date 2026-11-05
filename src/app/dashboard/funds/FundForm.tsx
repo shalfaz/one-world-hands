@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createFund, updateFund } from "./actions";
 import Swal from "sweetalert2";
+import AdminImageField from "@/components/AdminImageField";
 
 export default function FundForm({
   fund,
@@ -49,6 +50,7 @@ export default function FundForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <AdminImageField value={String(fund?.imageUrl || "")} />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <input
           name="name"
@@ -93,8 +95,10 @@ export default function FundForm({
         >
           <option value="draft">Draft</option>
           <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
           <option value="paused">Paused</option>
           <option value="completed">Completed</option>
+          <option value="archived">Archived</option>
         </select>
 
         <div className="md:col-span-2 xl:col-span-4">
@@ -106,6 +110,11 @@ export default function FundForm({
             className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
           />
         </div>
+
+        <label className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 md:col-span-2 xl:col-span-4">
+          <input name="published" type="checkbox" value="true" defaultChecked={Boolean(fund?.published ?? fund?.status === "active")} className="h-4 w-4 rounded border-slate-300 text-sky-600" />
+          Published on the website
+        </label>
 
         <div className="md:col-span-2 xl:col-span-4">
           <textarea

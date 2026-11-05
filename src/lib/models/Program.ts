@@ -6,6 +6,11 @@ export interface IProgram extends Document {
   category: string;
   location: string;
   status: "active" | "draft" | "inactive";
+  objectives?: string;
+  startDate?: Date;
+  endDate?: Date;
+  imageUrl?: string;
+  published?: boolean;
   createdBy: mongoose.Types.ObjectId;
   approvedBy?: mongoose.Types.ObjectId;
   approvedAt?: Date;
@@ -25,6 +30,11 @@ const ProgramSchema = new Schema<IProgram>(
       type: String,
       trim: true,
     },
+    objectives: { type: String, default: "" },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    imageUrl: { type: String, default: "" },
+    published: { type: Boolean, default: false },
     category: {
       type: String,
       required: [true, "Category is required"],
@@ -37,7 +47,7 @@ const ProgramSchema = new Schema<IProgram>(
     },
     status: {
       type: String,
-      enum: ["active", "draft", "inactive"],
+      enum: ["active", "draft", "inactive", "archived", "completed"],
       default: "draft",
     },
     createdBy: {

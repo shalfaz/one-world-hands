@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import connectToDatabase from "@/lib/mongoose";
+import Donation from "@/lib/models/Donation";
+import Fund from "@/lib/models/Fund";
 
 export async function POST(req: Request) {
   try {
@@ -23,8 +26,27 @@ export async function POST(req: Request) {
       );
     }
 
-    // TODO: Save donation to MongoDB
-    return NextResponse.json({ success: true });
+    await connectToDatabase();
+    const fund = await Fund.findById(fundId);
+    if (!fund) return NextResponse.json({ error: "Fund not found." }, { status: 404 });
+
+    const donation = await Donation.create({
+      donorName: contact.includes("@") ? "Website donor" : contact,
+      contact,
+      email: contact.includes("@") ? contact : "",
+      fund: fund._id,
+      amount,
+      paymentMethod: paymentMethod || "cash",
+      status: "completed",
+    });
+    const raised = await Donation.aggregate([
+      { $match: { fund: fund._id, status: "completed" } },
+      { $group: { _id: null, total: { $sum: "$amount" } } },
+    ]);
+    fund.raisedAmount = raised[0]?.total || 0;
+    await fund.save();
+
+    return NextResponse.json({ success: true, id: String(donation._id) });
   } catch (error) {
     console.error("QUICK DONATION ERROR:", error);
     return NextResponse.json(

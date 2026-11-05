@@ -1,15 +1,12 @@
-import DashboardSidebar from "../../../components/DashboardSidebar";
+import connectToDatabase from "@/lib/mongoose";
+import Donation from "@/lib/models/Donation";
 
 export default async function DonationsPage() {
-  // TODO: Connect to MongoDB for donations
-  // @ts-ignore
-  const donations = [];
+  await connectToDatabase();
+  const donations = await Donation.find().sort({ createdAt: -1 }).populate("fund", "name").lean();
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f9" }}>
-      <DashboardSidebar />
-
-      <main className="flex-1 p-6 lg:p-8">
+    <div>
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
@@ -39,12 +36,21 @@ export default async function DonationsPage() {
                 </tr>
               </thead>
               <tbody>
-                {/* Donations will be loaded from MongoDB */}
+                {donations.map((donation: Record<string, unknown>) => (
+                  <tr key={String(donation._id)} className="border-b border-slate-100">
+                    <td className="px-3 py-3 font-mono text-xs text-slate-500">{String(donation._id).slice(-8)}</td>
+                    <td className="px-3 py-3 font-medium text-slate-900">{String(donation.donorName)}</td>
+                    <td className="px-3 py-3 text-slate-600">{String(donation.email || donation.contact || "-")}</td>
+                    <td className="px-3 py-3 text-slate-600">{String((donation.fund as Record<string, unknown>)?.name || "General")}</td>
+                    <td className="px-3 py-3 font-semibold text-slate-900">৳ {Number(donation.amount).toLocaleString()}</td>
+                    <td className="px-3 py-3"><span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold capitalize text-emerald-700">{String(donation.status)}</span></td>
+                    <td className="px-3 py-3 text-slate-500">{new Date(String(donation.createdAt)).toLocaleDateString()}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
-      </main>
     </div>
   );
 }

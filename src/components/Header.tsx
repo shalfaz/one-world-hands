@@ -201,7 +201,7 @@ export default function Header() {
             {/* Donate Button */}
             <Link
               href="/donation-funds"
-              className="hidden sm:inline-flex h-8 items-center rounded-md bg-[#078b4f] px-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-[#067744]"
+              className="hidden sm:inline-flex h-8 items-center rounded-md bg-[#008f47] px-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-[#067744]"
             >
               <span>Donate</span>
             </Link>
