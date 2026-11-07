@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  deleteProgram,
-  publishMeritScholarship,
-  updateMeritScholarshipDraft,
-} from "./actions";
+import { deleteProgram } from "./actions";
 import Swal from "sweetalert2";
 import { useState } from "react";
 
@@ -22,109 +18,16 @@ interface Program {
   createdAt: string;
 }
 
-export default function ProgramList({ programs }: { programs: Program[] }) {
+export default function ProgramList({
+  programs,
+  onEdit,
+  onDelete,
+}: {
+  programs: Program[];
+  onEdit: (program: Program) => void;
+  onDelete: () => void;
+}) {
   const [localPrograms, setLocalPrograms] = useState(programs);
-
-  const handleEditDraft = async (program: Program) => {
-    const edit = await Swal.fire({
-      title: "Edit scholarship draft",
-      input: "textarea",
-      inputValue: program.description || "",
-      inputAttributes: { "aria-label": "Scholarship draft description" },
-      showCancelButton: true,
-      confirmButtonText: "Save draft",
-      cancelButtonText: "Cancel",
-      confirmButtonColor: "#0ea5e9",
-      inputValidator: (value) =>
-        value.trim()
-          ? undefined
-          : "Enter draft content before saving.",
-    });
-
-    if (!edit.isConfirmed || typeof edit.value !== "string") return;
-
-    try {
-      await updateMeritScholarshipDraft(program._id, edit.value);
-      setLocalPrograms((currentPrograms) =>
-        currentPrograms.map((currentProgram) =>
-          currentProgram._id === program._id
-            ? { ...currentProgram, description: edit.value }
-            : currentProgram
-        )
-      );
-      await Swal.fire({
-        icon: "success",
-        title: "Draft Saved",
-        text: "The scholarship remains a draft until approved for publication.",
-        confirmButtonColor: "#0ea5e9",
-      });
-    } catch (error) {
-      console.error("Update draft error:", error);
-      await Swal.fire({
-        icon: "error",
-        title: "Unable to save draft",
-        text:
-          error instanceof Error
-            ? error.message
-            : "Failed to update the scholarship draft.",
-        confirmButtonColor: "#0ea5e9",
-      });
-    }
-  };
-
-  const handlePublish = async (program: Program) => {
-    const approval = await Swal.fire({
-      icon: "warning",
-      title: "Review approved scholarship content",
-      text: program.description || "No description has been provided.",
-      input: "checkbox",
-      inputValue: 0,
-      inputPlaceholder:
-        "I confirm the NGO has approved this exact content for publication.",
-      showCancelButton: true,
-      confirmButtonText: "Publish approved program",
-      cancelButtonText: "Cancel",
-      confirmButtonColor: "#0ea5e9",
-      inputValidator: (value) =>
-        value === "1"
-          ? undefined
-          : "Confirm NGO approval before publishing this draft.",
-    });
-
-    if (!approval.isConfirmed || approval.value !== "1") return;
-
-    try {
-      await publishMeritScholarship(
-        program._id,
-        program.description || "",
-        true
-      );
-      setLocalPrograms((currentPrograms) =>
-        currentPrograms.map((currentProgram) =>
-          currentProgram._id === program._id
-            ? { ...currentProgram, status: "active" }
-            : currentProgram
-        )
-      );
-      await Swal.fire({
-        icon: "success",
-        title: "Program Published",
-        text: "The approved Merit Scholarship Program is now active.",
-        confirmButtonColor: "#0ea5e9",
-      });
-    } catch (error) {
-      console.error("Publish program error:", error);
-      await Swal.fire({
-        icon: "error",
-        title: "Unable to publish",
-        text:
-          error instanceof Error
-            ? error.message
-            : "Failed to publish the scholarship.",
-        confirmButtonColor: "#0ea5e9",
-      });
-    }
-  };
 
   const handleDelete = async (programId: string, title: string) => {
     const confirm = await Swal.fire({
@@ -142,6 +45,7 @@ export default function ProgramList({ programs }: { programs: Program[] }) {
     try {
       await deleteProgram(programId);
       setLocalPrograms(localPrograms.filter((p) => p._id !== programId));
+      onDelete();
 
       Swal.fire({
         icon: "success",
@@ -167,18 +71,6 @@ export default function ProgramList({ programs }: { programs: Program[] }) {
       inactive: "bg-gray-100 text-gray-700",
     };
     return styles[status] || styles.draft;
-  };
-
-  const getCategoryIcon = (category: string) => {
-    const icons: Record<string, string> = {
-      health: "🏥",
-      education: "📚",
-      community: "👥",
-      livelihood: "💼",
-      relief: "🆘",
-      other: "📌",
-    };
-    return icons[category] || "📌";
   };
 
   if (localPrograms.length === 0) {
@@ -208,9 +100,7 @@ export default function ProgramList({ programs }: { programs: Program[] }) {
             <tr key={program._id} className="border-b border-slate-200 hover:bg-slate-50 transition-colors">
               <td className="px-4 py-3 font-medium text-slate-900">{program.title}</td>
               <td className="px-4 py-3">
-                <span className="flex items-center gap-1">
-                  {getCategoryIcon(program.category)} {program.category}
-                </span>
+                <span>{program.category}</span>
               </td>
               <td className="px-4 py-3 text-slate-600">{program.location}</td>
               <td className="px-4 py-3">
@@ -229,28 +119,17 @@ export default function ProgramList({ programs }: { programs: Program[] }) {
               </td>
               <td className="px-4 py-3">
                 <div className="flex gap-2">
-                  {program.title === "Merit Scholarship Program" &&
-                    program.status === "draft" && (
-                      <>
-                        <button
-                          onClick={() => handleEditDraft(program)}
-                          className="px-3 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors text-xs font-medium"
-                        >
-                          Edit Draft
-                        </button>
-                        <button
-                          onClick={() => handlePublish(program)}
-                          className="px-3 py-1 rounded-lg bg-sky-100 text-sky-700 hover:bg-sky-200 transition-colors text-xs font-medium"
-                        >
-                          Review &amp; Publish
-                        </button>
-                      </>
-                    )}
+                  <button
+                    onClick={() => onEdit(program)}
+                    className="px-3 py-1 rounded-lg bg-sky-100 text-sky-700 hover:bg-sky-200 transition-colors text-xs font-medium"
+                  >
+                    Edit
+                  </button>
                   <button
                     onClick={() => handleDelete(program._id, program.title)}
                     className="px-3 py-1 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors text-xs font-medium"
                   >
-                    🗑️ Delete
+                    Delete
                   </button>
                 </div>
               </td>

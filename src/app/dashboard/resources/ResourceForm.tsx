@@ -5,11 +5,11 @@ import { createResource, updateResource } from "./actions";
 import Swal from "sweetalert2";
 
 const typeOptions = [
-  { value: "photo", label: "Photo", icon: "📷" },
-  { value: "document", label: "Document (PDF/Word/Excel)", icon: "📄" },
-  { value: "blog", label: "Blog Post", icon: "📝" },
-  { value: "report", label: "Annual Report", icon: "📊" },
-  { value: "webinar", label: "Webinar (YouTube)", icon: "🎥" },
+  { value: "photo", label: "Photo" },
+  { value: "document", label: "Document (PDF/Word/Excel)" },
+  { value: "blog", label: "Blog Post" },
+  { value: "report", label: "Annual Report" },
+  { value: "webinar", label: "Webinar (YouTube)" },
 ];
 
 export default function ResourceForm({
@@ -104,7 +104,6 @@ export default function ResourceForm({
                 required
               />
               <div className="text-center">
-                <div className="text-xl">{option.icon}</div>
                 <div className="text-xs font-semibold text-slate-700 mt-1">
                   {option.label}
                 </div>
@@ -145,7 +144,7 @@ export default function ResourceForm({
             className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
           />
           {fileName && (
-            <p className="text-xs text-green-600 mt-1">✓ {fileName}</p>
+            <p className="text-xs text-green-600 mt-1">{fileName}</p>
           )}
         </div>
       )}
@@ -200,7 +199,7 @@ export default function ResourceForm({
             className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
           />
           {fileName && (
-            <p className="text-xs text-green-600 mt-1">✓ {fileName} selected</p>
+            <p className="text-xs text-green-600 mt-1">{fileName} selected</p>
           )}
         </div>
       )}
@@ -221,7 +220,7 @@ export default function ResourceForm({
             className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
           />
           {fileName && (
-            <p className="text-xs text-green-600 mt-1">✓ {fileName} selected</p>
+            <p className="text-xs text-green-600 mt-1">{fileName} selected</p>
           )}
         </div>
       )}

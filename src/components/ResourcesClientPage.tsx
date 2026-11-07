@@ -182,7 +182,7 @@ export default function ResourcesClientPage({
       </section>
 
       <div className="mt-10">
-        <div className="grid w-full grid-cols-2 gap-2 rounded-full bg-sky-500 p-2 text-white sm:grid-cols-3 lg:grid-cols-7">
+        <div className="grid w-full grid-cols-2 gap-2 rounded-3xl bg-sky-500 p-2 text-white sm:grid-cols-3 sm:rounded-full lg:grid-cols-7">
           {resourceTypes.map((type) => {
             const isActive = activeType === type.value;
 
@@ -192,7 +192,7 @@ export default function ResourcesClientPage({
                 type="button"
                 onClick={() => setActiveType(type.value)}
                 className={[
-                  "flex items-center justify-center rounded-full px-3 py-2 text-center text-sm font-semibold transition",
+                  "flex min-w-0 items-center justify-center rounded-full px-2 py-2 text-center text-sm font-semibold transition sm:px-3",
                   isActive
                     ? "bg-white text-sky-700 shadow-sm"
                     : "text-white hover:bg-white/15",
