@@ -4,14 +4,6 @@ import { useState } from "react";
 import { deleteResource } from "./actions";
 import Swal from "sweetalert2";
 
-const typeIcons: Record<string, string> = {
-  photo: "📷",
-  document: "📄",
-  blog: "📝",
-  report: "📊",
-  webinar: "🎥",
-};
-
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-100 text-yellow-800",
   published: "bg-green-100 text-green-800",
@@ -93,7 +85,6 @@ export default function ResourceList({
           {resources.map((resource) => {
             const createdBy = resource.createdBy as Record<string, unknown>;
             const createdAt = new Date(String(resource.createdAt));
-            const icon = typeIcons[String(resource.type) || "photo"] || "📌";
             const statusClass = statusColors[String(resource.status) || "draft"];
 
             let contentType = "";
@@ -113,7 +104,7 @@ export default function ResourceList({
                 className="border-b border-slate-100 hover:bg-slate-50"
               >
                 <td className="px-3 py-3 font-medium text-slate-900">
-                  {icon} {String(resource.title)}
+                  {String(resource.title)}
                 </td>
                 <td className="px-3 py-3 text-slate-600">
                   {String(resource.type)

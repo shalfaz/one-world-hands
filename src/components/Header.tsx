@@ -261,9 +261,11 @@ export default function Header() {
 
               <div className="border-t border-slate-200 pt-3 mt-3 space-y-2">
                 <div className="flex justify-center">
-                  <div className="flex overflow-hidden rounded-md border border-slate-200 bg-[#edf8f1] p-0.5" aria-label="Language">
-                    {languageButton("bn", "বাং")}
-                    {languageButton("en", "EN")}
+                  <div className="flex w-full overflow-hidden rounded-md border border-slate-200 bg-[#edf8f1] p-0.5" aria-label="Language">
+                    <div className="[&>button]:w-full [&>button]:flex-1 flex w-full">
+                      {languageButton("bn", "বাং")}
+                      {languageButton("en", "EN")}
+                    </div>
                   </div>
                 </div>
                 <Link
@@ -319,7 +321,15 @@ export default function Header() {
                       </button>
                     </form>
                   </>
-                ) : null}
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 border-white text-white text-sm font-semibold w-full hover:bg-white/10 transition-colors"
+                  >
+                    Account
+                  </Link>
+                )}
               </div>
             </div>
           </div>

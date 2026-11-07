@@ -4,15 +4,6 @@ import { useState } from "react";
 import { deleteFund } from "./actions";
 import Swal from "sweetalert2";
 
-const categoryIcons: Record<string, string> = {
-  education: "📚",
-  health: "🏥",
-  emergency: "🆘",
-  community: "👥",
-  livelihood: "💼",
-  other: "📌",
-};
-
 const statusColors: Record<string, string> = {
   active: "bg-green-100 text-green-800",
   draft: "bg-yellow-100 text-yellow-800",
@@ -94,7 +85,6 @@ export default function FundList({
           {funds.map((fund) => {
             const createdBy = fund.createdBy as Record<string, unknown>;
             const createdAt = new Date(String(fund.createdAt));
-            const icon = categoryIcons[String(fund.category) || "other"] || "📌";
             const statusClass = statusColors[String(fund.status) || "draft"];
 
             return (
@@ -103,7 +93,7 @@ export default function FundList({
                 className="border-b border-slate-100 hover:bg-slate-50"
               >
                 <td className="px-3 py-3 font-medium text-slate-900">
-                  {icon} {String(fund.name)}
+                  {String(fund.name)}
                 </td>
                 <td className="px-3 py-3 text-slate-600">
                   {String(fund.category).charAt(0).toUpperCase() +

@@ -19,7 +19,7 @@ interface Program {
   published?: boolean;
 }
 
-export default function ProgramForm({ program }: { program?: Program }) {
+export default function ProgramForm({ program, onSuccess }: { program?: Program; onSuccess?: () => void }) {
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -44,6 +44,7 @@ export default function ProgramForm({ program }: { program?: Program }) {
           : "New program has been created successfully",
         confirmButtonColor: "#0ea5e9",
       });
+      onSuccess?.();
     } catch (error) {
       console.error("Form error:", error);
       Swal.fire({
