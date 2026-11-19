@@ -1,9 +1,10 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { getPrograms } from "./actions";
 import ProgramForm from "./ProgramForm";
 import ProgramList from "./ProgramList";
+import { getDashboardActionError } from "@/lib/dashboard/errors";
 
 interface Program {
   _id: string;
@@ -11,7 +12,7 @@ interface Program {
   description?: string;
   category: string;
   location: string;
-  status: "active" | "draft" | "inactive";
+  status: string;
   createdBy: { _id: string; name: string; email: string };
   createdAt: string;
   updatedAt: string;
@@ -21,15 +22,35 @@ function ProgramsContent() {
   const [programs, setPrograms] = useState<Program[]>([]);
   const [editingProgram, setEditingProgram] = useState<Program | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
-  const refreshPrograms = async () => {
-    const data = (await getPrograms()) as Program[];
-    setPrograms(data || []);
-  };
+  const refreshPrograms = useCallback(async () => {
+    try {
+      const data = await getPrograms();
+      setPrograms(data);
+      setLoadError("");
+    } catch (error) {
+      console.error("Error loading programs:", error);
+      setLoadError(
+        getDashboardActionError(error, "Could not load programs. Please try again.")
+      );
+    }
+  }, []);
 
   useEffect(() => {
-    refreshPrograms().finally(() => setLoading(false));
-  }, []);
+    let active = true;
+    Promise.resolve()
+      .then(async () => {
+        if (active) await refreshPrograms();
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [refreshPrograms]);
 
   const activeCount = programs.filter((p) => p.status === "active").length;
 
@@ -78,6 +99,11 @@ function ProgramsContent() {
               </button>
             )}
           </div>
+          {loadError && (
+            <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+              {loadError}
+            </p>
+          )}
         </div>
       </div>
 

@@ -3,47 +3,53 @@
 import Swal from "sweetalert2";
 import { createUser } from "./actions";
 import { FormEvent } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function UserCreateForm() {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
+    setLoading(true);
+    try {
+      const result = await createUser(formData);
+      if (!result.success) {
+        await Swal.fire({
+          title: "Could not create user",
+          text: result.error,
+          icon: "error",
+        });
+        return;
+      }
 
-    // Show loading
-    Swal.fire({
-      title: "Creating user...",
-      allowOutsideClick: false,
-      didOpen: async () => {
-        Swal.showLoading();
-        try {
-          await createUser(formData);
-
-          Swal.fire({
-            title: "Success!",
-            text: `User "${name}" created successfully. Email sent to ${email}`,
-            icon: "success",
-            timer: 2000,
-          });
-
-          // Reset form
-          e.currentTarget.reset();
-
-          // Reload after 2 seconds
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        } catch (error) {
-          Swal.fire({
-            title: "Error!",
-            text: "Failed to create user",
-            icon: "error",
-          });
-        }
-      },
-    });
+      form.reset();
+      router.refresh();
+      await Swal.fire({
+        title: result.warning ? "User created" : "Success!",
+        text:
+          result.warning ||
+          `User "${name}" created successfully. Invitation sent to ${email}.`,
+        icon: result.warning ? "warning" : "success",
+        timer: 2500,
+      });
+    } catch (error) {
+      console.error("Create user form error:", error);
+      await Swal.fire({
+        title: "Could not create user",
+        text: error instanceof Error ? error.message : "Please try again.",
+        icon: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -85,9 +91,10 @@ export default function UserCreateForm() {
       <div className="md:col-span-2 xl:col-span-4">
         <button
           type="submit"
-          className="inline-flex h-12 items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700"
+          disabled={loading}
+          className="inline-flex h-12 items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 disabled:cursor-wait disabled:opacity-60"
         >
-          Create User
+          {loading ? "Creating user..." : "Create User"}
         </button>
       </div>
     </form>

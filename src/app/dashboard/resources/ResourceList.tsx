@@ -16,7 +16,7 @@ export default function ResourceList({
 }: {
   resources: Record<string, unknown>[];
   onEdit: (resource: Record<string, unknown>) => void;
-  onDelete: () => void;
+  onDelete: () => void | Promise<void>;
 }) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -38,20 +38,28 @@ export default function ResourceList({
     if (result.isConfirmed) {
       setDeletingId(resourceId);
       try {
-        await deleteResource(resourceId);
+        const result = await deleteResource(resourceId);
+        if (!result.success) {
+          await Swal.fire({
+            icon: "error",
+            title: "Could not delete resource",
+            text: result.error,
+          });
+          return;
+        }
         Swal.fire({
           icon: "success",
           title: "Deleted!",
           text: "Resource deleted successfully",
           timer: 1500,
         });
-        onDelete();
+        await onDelete();
       } catch (error) {
         console.error("Delete error:", error);
         Swal.fire({
           icon: "error",
-          title: "Error",
-          text: "Failed to delete resource",
+          title: "Could not delete resource",
+          text: error instanceof Error ? error.message : "Please try again.",
         });
       } finally {
         setDeletingId(null);
@@ -178,7 +186,7 @@ export default function ResourceList({
                           String(resource.title)
                         )
                       }
-                      disabled={deletingId === String(resource._id)}
+                      disabled={deletingId !== null}
                       className="rounded-lg bg-red-100 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-200 disabled:opacity-50 transition-colors"
                     >
                       {deletingId === String(resource._id)

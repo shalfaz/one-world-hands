@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const categoryColors: Record<
   string,
@@ -60,14 +61,24 @@ export default function ProgramCard({
     <Link href={`/programs/${program._id}`}>
       <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-shadow hover:shadow-md">
         <div className="relative aspect-4/3 w-full overflow-hidden bg-neutral-100">
-          <div
-            aria-hidden="true"
-            className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br ${colors.gradientFrom} ${colors.gradientTo}`}
-          >
-            <div className="absolute -right-12 -top-16 h-44 w-44 rounded-full border border-white/25" />
-            <div className="absolute -bottom-24 -left-10 h-56 w-56 rounded-full border border-white/20" />
-            <div className="h-20 w-20 rounded-full border border-white/35 bg-white/10" />
-          </div>
+          {program.imageUrl ? (
+            <Image
+              src={String(program.imageUrl)}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+            />
+          ) : (
+            <div
+              aria-hidden="true"
+              className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br ${colors.gradientFrom} ${colors.gradientTo}`}
+            >
+              <div className="absolute -right-12 -top-16 h-44 w-44 rounded-full border border-white/25" />
+              <div className="absolute -bottom-24 -left-10 h-56 w-56 rounded-full border border-white/20" />
+              <div className="h-20 w-20 rounded-full border border-white/35 bg-white/10" />
+            </div>
+          )}
         </div>
 
         <div className="flex flex-1 flex-col p-5 text-center">

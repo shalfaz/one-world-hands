@@ -6,6 +6,7 @@ import ResourceList from "./ResourceList";
 import { getResources } from "./actions";
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
+import { getDashboardActionError } from "@/lib/dashboard/errors";
 
 function ResourcesContent() {
   const [resources, setResources] = useState<Record<string, unknown>[]>([]);
@@ -50,8 +51,8 @@ function ResourcesContent() {
         console.error("Error loading resources:", err);
         Swal.fire({
           icon: "error",
-          title: "Error",
-          text: "Failed to load resources",
+          title: "Could not load resources",
+          text: getDashboardActionError(err, "Please refresh the page and try again."),
         });
       } finally {
         setLoading(false);
@@ -68,6 +69,11 @@ function ResourcesContent() {
       setResources(data || []);
     } catch (err) {
       console.error("Error refreshing resources:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Could not refresh resources",
+        text: getDashboardActionError(err, "Please refresh the page and try again."),
+      });
     } finally {
       setLoading(false);
     }

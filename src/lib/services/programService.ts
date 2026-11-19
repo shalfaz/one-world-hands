@@ -109,6 +109,7 @@ function transformToCarouselProgram(program: Record<string, unknown>): ProgramTy
     id: String(program._id || program.id || ""),
     title: String(program.title || ""),
     description: String(program.description || ""),
+    imageUrl: String(program.imageUrl || ""),
     category,
     location: String(program.location || "Global"),
     duration: String(program.duration || "Ongoing"),
@@ -122,144 +123,16 @@ function transformToCarouselProgram(program: Record<string, unknown>): ProgramTy
   };
 }
 
-function getDefaultPrograms() {
-  const now = new Date().toISOString();
-
-  return [
-    {
-      _id: "food-assistance",
-      title: "Food Assistance Program",
-      description: "Providing food aid to vulnerable families.",
-      category: "relief",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "medical-assistance",
-      title: "Medical Assistance Program",
-      description: "Healthcare and medical support for communities.",
-      category: "health",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "education-support",
-      title: "Education Support Program",
-      description: "Access to education and learning materials.",
-      category: "education",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "merit-scholarship",
-      title: "Merit Scholarship Program",
-      description: "Scholarships for high-achieving students.",
-      category: "education",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "self-reliance",
-      title: "Self-Reliance & Livelihood Program",
-      description: "Skills training and livelihood support.",
-      category: "livelihood",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "clean-water",
-      title: "Clean Water Program",
-      description: "Safe water and sanitation projects.",
-      category: "community",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "tree-plantation",
-      title: "Tree Plantation Program",
-      description: "Planting trees and environmental restoration.",
-      category: "community",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "winter-support",
-      title: "Winter Support Program",
-      description: "Winter clothing and heating assistance.",
-      category: "relief",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "ramadan-iftar",
-      title: "Ramadan Food & Iftar Program",
-      description: "Iftar distributions and Ramadan food support.",
-      category: "relief",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "qurbani-eid",
-      title: "Qurbani for Everyone (Eid Project)",
-      description: "Qurbani meat distribution for families during Eid.",
-      category: "relief",
-      location: "Global",
-      status: "active",
-      createdBy: { _id: "", name: "One World Hands", email: "" },
-      createdAt: now,
-      updatedAt: now,
-    },
-  ];
-}
-
 export async function getPublishedPrograms() {
   try {
-    if (!process.env.MONGO_URI && !process.env.MONGODB_URI) {
-      console.log("No MongoDB URI configured, using default programs");
-      return getDefaultPrograms();
-    }
+    await connectToDatabase();
 
-    try {
-      await connectToDatabase();
-    } catch (dbError) {
-      console.warn(
-        "Database connection failed, falling back to default programs:",
-        dbError instanceof Error ? dbError.message : String(dbError)
-      );
-      return getDefaultPrograms();
-    }
-
-    // Expose only this approved demo draft; all other drafts remain private.
     const programs = await Program.find({
       $or: [
-        { status: "active" },
+        {
+          status: "active",
+          $or: [{ published: true }, { published: { $exists: false } }],
+        },
         {
           title: "Merit Scholarship Program",
           status: "draft",
@@ -270,12 +143,8 @@ export async function getPublishedPrograms() {
       .lean()
       .sort({ createdAt: -1 });
 
-    if (!programs || programs.length === 0) {
-      console.log("No active programs in database, using defaults");
-      return getDefaultPrograms();
-    }
+    if (!programs.length) return [];
 
-    // Manually fetch user data and convert to plain objects
     const programsWithUsers = await Promise.all(
       programs.map(async (program: Record<string, unknown>) => {
         const user = await User.findById(program.createdBy)
@@ -288,6 +157,8 @@ export async function getPublishedPrograms() {
           category: program.category,
           location: program.location,
           status: program.status,
+          imageUrl: program.imageUrl || "",
+          published: Boolean(program.published ?? program.status === "active"),
           createdBy: {
             _id: user ? String(user._id) : "",
             name: user?.name || "Unknown",
@@ -307,7 +178,7 @@ export async function getPublishedPrograms() {
     }));
   } catch (error) {
     console.error("Unexpected error in getPublishedPrograms:", error);
-    return getDefaultPrograms();
+    throw error;
   }
 }
 

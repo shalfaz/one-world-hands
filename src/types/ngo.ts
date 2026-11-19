@@ -2,6 +2,7 @@ export type Program = {
   id: string;
   title: string;
   description: string;
+  imageUrl?: string;
   fundingSources?: string[]; // Used on the Programs page
   category: string;
   location: string;

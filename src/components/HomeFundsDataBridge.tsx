@@ -5,9 +5,11 @@ import {
   getQuickDonationFunds,
 } from "@/lib/data/donationFunds";
 
-export default function HomeFundsDataBridge() {
-  const funds = getPublicDonationFunds();
-  const quickDonationFunds = getQuickDonationFunds();
+export default async function HomeFundsDataBridge() {
+  const [funds, quickDonationFunds] = await Promise.all([
+    getPublicDonationFunds(),
+    getQuickDonationFunds(),
+  ]);
 
   return (
     <>

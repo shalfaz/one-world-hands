@@ -3,9 +3,10 @@ import Fund from "@/lib/models/Fund";
 import Program from "@/lib/models/Program";
 import Resource from "@/lib/models/Resource";
 import Donation from "@/lib/models/Donation";
-import { FiDollarSign, FiHeart, FiHome, FiImage } from "react-icons/fi";
+import { requireAdminUser } from "@/lib/auth/admin";
 
 export default async function DashboardPage() {
+  await requireAdminUser();
   await connectToDatabase();
   const [donationsCount, fundsCount, activeFundsCount, programsCount, activeProgramsCount, resourcesCount, totalResult, donations, funds, donorEmails] =
     await Promise.all([

@@ -1,4 +1,5 @@
 import type { DonationFund } from "@/types/ngo";
+import { getActiveFunds } from "@/lib/services/fundService";
 
 export type FundCategory =
   | "education"
@@ -245,14 +246,46 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
   },
 ];
 
-export function getQuickDonationFunds() {
-  return DONATION_FUNDS.map(({ id, name }) => ({ id, name }));
+export async function getQuickDonationFunds() {
+  const funds = await getPublicDonationFunds();
+  return funds.map(({ id, name }) => ({ id, name }));
 }
 
-export function getPublicDonationFunds() {
-  return DONATION_FUNDS;
+export async function getPublicDonationFunds(): Promise<DonationFundRecord[]> {
+  const activeFunds = await getActiveFunds();
+
+  return activeFunds.map((fund) => {
+    const id = String(fund._id);
+    const slug = String(fund.slug || id);
+    const template = DONATION_FUNDS.find(
+      (item) => item.slug === slug || item.id === slug
+    );
+    const category = (
+      typeof fund.category === "string" && fund.category in accent
+        ? fund.category
+        : template?.category || "other"
+    ) as FundCategory;
+
+    return {
+      ...(template || {}),
+      id,
+      slug,
+      category,
+      name: String(fund.name),
+      description: String(fund.description || ""),
+      impactSummary: String(fund.impactSummary || ""),
+      href: `/donation-funds/${slug}`,
+      image: String(fund.imageUrl || template?.image || ""),
+      accent: template?.accent || accent[category],
+      suggestedAmounts: template?.suggestedAmounts || [500, 1000, 2500],
+      categoryLabel:
+        template?.categoryLabel ||
+        category.charAt(0).toUpperCase() + category.slice(1),
+    };
+  });
 }
 
-export function getDonationFundBySlug(slug: string) {
-  return DONATION_FUNDS.find((fund) => fund.slug === slug || fund.id === slug);
+export async function getDonationFundBySlug(slug: string) {
+  const funds = await getPublicDonationFunds();
+  return funds.find((fund) => fund.slug === slug || fund.id === slug);
 }

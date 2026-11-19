@@ -18,7 +18,7 @@ export default function FundList({
 }: {
   funds: Record<string, unknown>[];
   onEdit: (fund: Record<string, unknown>) => void;
-  onDelete: () => void;
+  onDelete: () => void | Promise<void>;
 }) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -37,20 +37,28 @@ export default function FundList({
     if (result.isConfirmed) {
       setDeletingId(fundId);
       try {
-        await deleteFund(fundId);
+        const result = await deleteFund(fundId);
+        if (!result.success) {
+          await Swal.fire({
+            icon: "error",
+            title: "Could not delete fund",
+            text: result.error,
+          });
+          return;
+        }
         Swal.fire({
           icon: "success",
           title: "Deleted!",
           text: "Fund deleted successfully",
           timer: 1500,
         });
-        onDelete();
+        await onDelete();
       } catch (error) {
         console.error("Delete error:", error);
         Swal.fire({
           icon: "error",
-          title: "Error",
-          text: "Failed to delete fund",
+          title: "Could not delete fund",
+          text: error instanceof Error ? error.message : "Please try again.",
         });
       } finally {
         setDeletingId(null);
@@ -139,7 +147,7 @@ export default function FundList({
                       onClick={() =>
                         handleDelete(String(fund._id), String(fund.name))
                       }
-                      disabled={deletingId === String(fund._id)}
+                      disabled={deletingId !== null}
                       className="rounded-lg bg-red-100 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-200 disabled:opacity-50 transition-colors"
                     >
                       {deletingId === String(fund._id)

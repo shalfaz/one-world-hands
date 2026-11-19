@@ -6,6 +6,7 @@ import FundList from "./FundList";
 import { getFunds, seedDefaultFunds } from "./actions";
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
+import { getDashboardActionError } from "@/lib/dashboard/errors";
 
 function FundsContent() {
   const [funds, setFunds] = useState<Record<string, unknown>[]>([]);
@@ -49,8 +50,8 @@ function FundsContent() {
         console.error("Error loading funds:", err);
         Swal.fire({
           icon: "error",
-          title: "Error",
-          text: "Failed to load funds",
+          title: "Could not load funds",
+          text: getDashboardActionError(err, "Please refresh the page and try again."),
         });
       } finally {
         setLoading(false);
@@ -105,6 +106,11 @@ function FundsContent() {
       setFunds(data || []);
     } catch (err) {
       console.error("Error refreshing funds:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Could not refresh funds",
+        text: getDashboardActionError(err, "Please refresh the page and try again."),
+      });
     } finally {
       setLoading(false);
     }

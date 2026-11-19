@@ -2,19 +2,22 @@
 
 import Swal from "sweetalert2";
 import { updateUserRole, deleteUser } from "./actions";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function UserActions({ userId, currentRole }: { userId: string; currentRole: string }) {
+  const [role, setRole] = useState(currentRole);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const handleRoleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newRole = e.target.value;
 
-    if (newRole === currentRole) {
-      return;
-    }
+    if (newRole === role || loading) return;
 
-    // Show confirmation dialog
     const result = await Swal.fire({
       title: "Update Role?",
-      text: `Change role from "${currentRole}" to "${newRole}"?`,
+      text: `Change role from "${role}" to "${newRole}"?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#0ea5e9",
@@ -23,32 +26,38 @@ export function UserActions({ userId, currentRole }: { userId: string; currentRo
     });
 
     if (result.isConfirmed) {
+      setLoading(true);
       try {
         const formData = new FormData();
         formData.append("userId", userId);
         formData.append("role", newRole);
-        await updateUserRole(formData);
+        const updateResult = await updateUserRole(formData);
+        if (!updateResult.success) throw new Error(updateResult.error);
 
-        Swal.fire({
+        setRole(newRole);
+        router.refresh();
+        await Swal.fire({
           title: "Success!",
           text: "Role updated successfully",
           icon: "success",
           timer: 2000,
         });
       } catch (error) {
-        Swal.fire({
+        await Swal.fire({
           title: "Error!",
-          text: "Failed to update role",
+          text: error instanceof Error ? error.message : "Please try again.",
           icon: "error",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
-      // Reset select to current role
-      e.target.value = currentRole;
+      setRole(role);
     }
   };
 
   const handleDelete = async () => {
+    if (loading) return;
     const result = await Swal.fire({
       title: "Delete User?",
       text: "This action cannot be undone!",
@@ -60,28 +69,29 @@ export function UserActions({ userId, currentRole }: { userId: string; currentRo
     });
 
     if (result.isConfirmed) {
+      setLoading(true);
       try {
         const formData = new FormData();
         formData.append("userId", userId);
-        await deleteUser(formData);
+        const deleteResult = await deleteUser(formData);
+        if (!deleteResult.success) throw new Error(deleteResult.error);
 
-        Swal.fire({
+        await Swal.fire({
           title: "Deleted!",
           text: "User deleted successfully",
           icon: "success",
           timer: 2000,
         });
 
-        // Reload page after 2 seconds
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        router.refresh();
       } catch (error) {
-        Swal.fire({
+        await Swal.fire({
           title: "Error!",
-          text: "Failed to delete user",
+          text: error instanceof Error ? error.message : "Please try again.",
           icon: "error",
         });
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -89,8 +99,9 @@ export function UserActions({ userId, currentRole }: { userId: string; currentRo
   return (
     <div className="flex gap-2 items-center">
       <select
-        defaultValue={currentRole}
+        value={role}
         onChange={handleRoleChange}
+        disabled={loading}
         className="h-8 rounded-md border border-slate-300 bg-white px-2 text-xs"
       >
         <option value="user">User</option>
@@ -100,9 +111,10 @@ export function UserActions({ userId, currentRole }: { userId: string; currentRo
       </select>
       <button
         onClick={handleDelete}
-        className="text-red-600 hover:text-red-700 font-semibold text-xs"
+        disabled={loading}
+        className="text-red-600 hover:text-red-700 font-semibold text-xs disabled:opacity-50"
       >
-        Delete
+        {loading ? "Saving..." : "Delete"}
       </button>
     </div>
   );

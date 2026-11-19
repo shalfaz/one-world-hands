@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { markMessageAsRead, replyToMessage } from "./actions";
 
 export type Message = {
   _id: string;
@@ -16,36 +17,92 @@ export type Message = {
 };
 
 export default function MessageList({ messages }: { messages: Message[] }) {
+  const [messageRows, setMessageRows] = useState(messages);
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [replyText, setReplyText] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const handleSelect = async (message: Message) => {
+    if (saving) return;
+    setSelectedMessage(message);
+    if (message.status !== "unread") return;
+
+    setSaving(true);
+    try {
+      const result = await markMessageAsRead(message._id);
+      if (!result.success) throw new Error(result.error);
+
+      const updatedMessage = { ...message, status: "read" as const };
+      setMessageRows((currentRows) =>
+        currentRows.map((row) =>
+          row._id === message._id ? updatedMessage : row
+        )
+      );
+      setSelectedMessage(updatedMessage);
+    } catch (error) {
+      console.error("Could not mark message as read:", error);
+      await Swal.fire({
+        icon: "error",
+        title: "Could not update message",
+        text: error instanceof Error ? error.message : "Please try again.",
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const handleReply = async () => {
-    if (!selectedMessage || !replyText.trim()) return;
+    if (!selectedMessage || !replyText.trim() || saving) return;
 
-    // TODO: Implement reply functionality
-    Swal.fire({
-      icon: "success",
-      title: "Reply Sent",
-      text: "Your reply has been sent successfully.",
-    });
-    setReplyText("");
-    setSelectedMessage(null);
+    setSaving(true);
+    try {
+      const result = await replyToMessage(selectedMessage._id, replyText);
+      if (!result.success) throw new Error(result.error);
+
+      const updatedMessage: Message = {
+        ...selectedMessage,
+        reply: replyText.trim(),
+        repliedAt: result.repliedAt || new Date().toISOString(),
+        status: "replied",
+      };
+      setMessageRows((currentRows) =>
+        currentRows.map((row) =>
+          row._id === updatedMessage._id ? updatedMessage : row
+        )
+      );
+      setSelectedMessage(updatedMessage);
+      setReplyText("");
+      await Swal.fire({
+        icon: "success",
+        title: "Reply saved",
+        text: "The reply is saved in the dashboard. It has not been emailed to the sender.",
+      });
+    } catch (error) {
+      console.error("Could not save message reply:", error);
+      await Swal.fire({
+        icon: "error",
+        title: "Could not save reply",
+        text: error instanceof Error ? error.message : "Please try again.",
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_400px]">
       {/* Messages List */}
       <div className="rounded-2xl border border-slate-200 overflow-hidden">
-        {messages.length === 0 ? (
+        {messageRows.length === 0 ? (
           <div className="p-6 text-center text-slate-600">
             <p>No messages yet.</p>
           </div>
         ) : (
           <div className="divide-y">
-            {messages.map((msg) => (
+            {messageRows.map((msg) => (
               <div
                 key={msg._id}
-                onClick={() => setSelectedMessage(msg)}
+                onClick={() => void handleSelect(msg)}
                 className={`p-4 cursor-pointer transition hover:bg-slate-50 ${
                   selectedMessage?._id === msg._id ? "bg-sky-50" : ""
                 } ${msg.status === "unread" ? "bg-blue-50" : ""}`}
@@ -108,14 +165,15 @@ export default function MessageList({ messages }: { messages: Message[] }) {
             placeholder="Type your reply..."
             className="mt-4 w-full rounded-lg border border-slate-200 p-2 text-sm"
             rows={4}
+            disabled={saving}
           />
 
           <button
             onClick={handleReply}
-            disabled={!replyText.trim()}
+            disabled={!replyText.trim() || saving}
             className="mt-2 w-full rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 disabled:bg-slate-300"
           >
-            Send Reply
+            {saving ? "Saving..." : "Save Reply"}
           </button>
         </div>
       )}

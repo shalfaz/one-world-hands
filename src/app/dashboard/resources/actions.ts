@@ -1,11 +1,17 @@
 "use server";
 
-import { cookies } from "next/headers";
 import connectToDatabase from "@/lib/mongoose";
 import Resource from "@/lib/models/Resource";
 import User from "@/lib/models/User";
-import { redirect } from "next/navigation";
 import { v2 as cloudinary } from "cloudinary";
+import { revalidatePath } from "next/cache";
+import { requireAdminUser } from "@/lib/auth/admin";
+import {
+  DashboardActionError,
+  getDashboardActionError,
+} from "@/lib/dashboard/errors";
+
+type ActionResult = { success: true } | { success: false; error: string };
 
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -13,26 +19,31 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-async function getUserFromCookie() {
-  const cookieStore = await cookies();
-  const email = cookieStore.get("owh_email")?.value;
-
-  if (!email) {
-    throw new Error("User not authenticated");
-  }
-
-  await connectToDatabase();
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    throw new Error("User not found");
-  }
-
-  return user;
-}
-
-async function uploadToCloudinary(file: File): Promise<string> {
+async function uploadToCloudinary(file: File, isPhoto = false): Promise<string> {
   try {
+    if (
+      !process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
+      !process.env.CLOUDINARY_API_KEY ||
+      !process.env.CLOUDINARY_API_SECRET
+    ) {
+      throw new DashboardActionError(
+        "File storage is not configured. Set the Cloudinary environment variables."
+      );
+    }
+
+    if (file.size > (isPhoto ? 5 : 10) * 1024 * 1024) {
+      throw new DashboardActionError(
+        isPhoto ? "Photos must be smaller than 5 MB." : "Files must be smaller than 10 MB."
+      );
+    }
+
+    if (
+      isPhoto &&
+      !["image/jpeg", "image/png", "image/webp"].includes(file.type)
+    ) {
+      throw new DashboardActionError("Photos must be JPG, PNG, or WebP images.");
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
@@ -45,7 +56,8 @@ async function uploadToCloudinary(file: File): Promise<string> {
         },
         (error: unknown, result: Record<string, unknown> | undefined) => {
           if (error) reject(error);
-          else resolve((result?.secure_url as string) || "");
+          else if (typeof result?.secure_url === "string") resolve(result.secure_url);
+          else reject(new Error("Cloudinary returned no file URL."));
         }
       );
 
@@ -53,11 +65,16 @@ async function uploadToCloudinary(file: File): Promise<string> {
     });
   } catch (error) {
     console.error("Cloudinary upload error:", error);
-    throw error;
+    if (error instanceof DashboardActionError) {
+      throw error;
+    }
+    throw new DashboardActionError(
+      "Cloudinary could not store the file. Verify the credentials and storage permissions."
+    );
   }
 }
 
-export async function createResource(formData: FormData) {
+export async function createResource(formData: FormData): Promise<ActionResult> {
   try {
     const title = String(formData.get("title") || "").trim();
     const type = String(formData.get("type") || "").trim();
@@ -68,10 +85,10 @@ export async function createResource(formData: FormData) {
     const file = formData.get("file") as File | null;
 
     if (!title || !type) {
-      throw new Error("Title and type are required");
+      throw new DashboardActionError("Resource title and type are required.");
     }
 
-    const user = await getUserFromCookie();
+    const user = await requireAdminUser();
 
     await connectToDatabase();
 
@@ -84,12 +101,12 @@ export async function createResource(formData: FormData) {
         fileUrl = await uploadToCloudinary(file);
         fileType = file.type.split("/").pop() || "file";
       } else if (type === "photo") {
-        fileUrl = await uploadToCloudinary(file);
+        fileUrl = await uploadToCloudinary(file, true);
         fileType = "image";
       }
     }
 
-    const newResource = await Resource.create({
+    await Resource.create({
       title,
       type,
       description,
@@ -101,15 +118,18 @@ export async function createResource(formData: FormData) {
       createdBy: user._id,
     });
 
-    console.log("Resource created:", newResource);
-    redirect("/dashboard/resources?success=created");
+    revalidateResourcePaths();
+    return { success: true };
   } catch (error) {
     console.error("Create resource error:", error);
-    redirect("/dashboard/resources?error=failed");
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not create the resource. Please try again."),
+    };
   }
 }
 
-export async function updateResource(formData: FormData) {
+export async function updateResource(formData: FormData): Promise<ActionResult> {
   try {
     const resourceId = String(formData.get("resourceId") || "").trim();
     const title = String(formData.get("title") || "").trim();
@@ -121,9 +141,10 @@ export async function updateResource(formData: FormData) {
     const file = formData.get("file") as File | null;
 
     if (!resourceId || !title || !type) {
-      throw new Error("Resource ID, title and type are required");
+      throw new DashboardActionError("Resource ID, title, and type are required.");
     }
 
+    await requireAdminUser();
     await connectToDatabase();
 
     let updateData: Record<string, unknown> = {
@@ -142,7 +163,7 @@ export async function updateResource(formData: FormData) {
         const fileType = file.type.split("/").pop() || "file";
         updateData = { ...updateData, fileUrl, fileType };
       } else if (type === "photo") {
-        const fileUrl = await uploadToCloudinary(file);
+        const fileUrl = await uploadToCloudinary(file, true);
         const fileType = "image";
         updateData = { ...updateData, fileUrl, fileType };
       }
@@ -154,83 +175,80 @@ export async function updateResource(formData: FormData) {
     });
 
     if (!updated) {
-      throw new Error("Resource not found");
+      throw new DashboardActionError("Resource not found.");
     }
 
-    console.log("Resource updated:", updated);
-    redirect("/dashboard/resources?success=updated");
+    revalidateResourcePaths();
+    return { success: true };
   } catch (error) {
     console.error("Update resource error:", error);
-    redirect("/dashboard/resources?error=failed");
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not save the resource. Please try again."),
+    };
   }
 }
 
-export async function deleteResource(resourceId: string) {
+export async function deleteResource(resourceId: string): Promise<ActionResult> {
   try {
     if (!resourceId) {
-      throw new Error("Resource ID is required");
+      throw new DashboardActionError("Resource ID is required.");
     }
 
+    await requireAdminUser();
     await connectToDatabase();
     const deleted = await Resource.findByIdAndDelete(resourceId);
 
     if (!deleted) {
-      throw new Error("Resource not found");
+      throw new DashboardActionError("Resource not found.");
     }
 
-    console.log("Resource deleted:", deleted);
-    return { success: true, message: "Resource deleted successfully" };
+    revalidateResourcePaths();
+    return { success: true };
   } catch (error) {
     console.error("Delete resource error:", error);
-    throw error;
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not delete the resource. Please try again."),
+    };
   }
 }
 
 export async function getResources() {
-  try {
-    await connectToDatabase();
-    const resources = await Resource.find()
-      .lean()
-      .sort({ createdAt: -1 });
+  await requireAdminUser();
+  await connectToDatabase();
+  const resources = await Resource.find().lean().sort({ createdAt: -1 });
 
-    // Manually fetch user data and convert to plain objects
-    const resourcesWithUsers = await Promise.all(
-      resources.map(async (resource: Record<string, unknown>) => {
-        const user = await User.findById(resource.createdBy)
-          .select("name email")
-          .lean();
-        return {
-          _id: String(resource._id),
-          title: resource.title,
-          description: resource.description || "",
-          type: resource.type,
-          status: resource.status,
-          youtubeLink: resource.youtubeLink || "",
-          content: resource.content || "",
-          fileUrl: resource.fileUrl || "",
-          fileType: resource.fileType || "",
-          createdBy: {
-            _id: user ? String(user._id) : "",
-            name: user?.name || "Unknown",
-            email: user?.email || "unknown@example.com",
-          },
-          createdAt: String(resource.createdAt),
-          updatedAt: String(resource.updatedAt),
-        };
-      })
-    );
-
-    return resourcesWithUsers;
-  } catch (error) {
-    console.error("Get resources error:", error);
-    return [];
-  }
+  return Promise.all(
+    resources.map(async (resource: Record<string, unknown>) => {
+      const user = await User.findById(resource.createdBy).select("name email").lean();
+      return {
+        _id: String(resource._id),
+        title: resource.title,
+        description: resource.description || "",
+        type: resource.type,
+        status: resource.status,
+        youtubeLink: resource.youtubeLink || "",
+        content: resource.content || "",
+        fileUrl: resource.fileUrl || "",
+        fileType: resource.fileType || "",
+        createdBy: {
+          _id: user ? String(user._id) : "",
+          name: user?.name || "Unknown",
+          email: user?.email || "unknown@example.com",
+        },
+        createdAt: String(resource.createdAt),
+        updatedAt: String(resource.updatedAt),
+      };
+    })
+  );
 }
 
 export async function getResourceById(resourceId: string) {
   try {
+    await requireAdminUser();
     if (!resourceId) {
-      throw new Error("Resource ID is required");
+      throw new DashboardActionError("Resource ID is required.");
     }
 
     await connectToDatabase();
@@ -266,4 +284,10 @@ export async function getResourceById(resourceId: string) {
     console.error("Get resource error:", error);
     return null;
   }
+}
+
+function revalidateResourcePaths() {
+  revalidatePath("/dashboard/resources");
+  revalidatePath("/resources");
+  revalidatePath("/");
 }

@@ -1,8 +1,17 @@
-import { createUser } from "./actions";
 import User from "@/lib/models/User";
 import connectToDatabase from "@/lib/mongoose";
 import { UserActions } from "./UserActions";
 import UserCreateForm from "./UserCreateForm";
+import { requireAdminUser } from "@/lib/auth/admin";
+import { getDashboardActionError } from "@/lib/dashboard/errors";
+
+type UserRecord = {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+};
 
 interface PageProps {
   searchParams: Promise<{ page?: string }>;
@@ -14,20 +23,31 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const currentPage = parseInt(params.page || "1", 10);
   
-  let users: any[] = [];
+  let users: UserRecord[] = [];
   let totalUsers = 0;
+  let loadError = "";
   
   try {
+    await requireAdminUser();
     await connectToDatabase();
     totalUsers = await User.countDocuments();
     const skip = (currentPage - 1) * USERS_PER_PAGE;
-    users = await User.find()
+    const userDocuments = await User.find()
+      .select("name email role createdAt")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(USERS_PER_PAGE)
       .lean();
+    users = userDocuments.map((user) => ({
+      _id: String(user._id),
+      name: String(user.name),
+      email: String(user.email),
+      role: String(user.role),
+      createdAt: new Date(user.createdAt).toISOString(),
+    }));
   } catch (error) {
     console.error("Error fetching users:", error);
+    loadError = getDashboardActionError(error, "Could not load users. Please try again.");
   }
 
   const totalPages = Math.ceil(totalUsers / USERS_PER_PAGE);
@@ -52,6 +72,11 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
           </h2>
 
           <UserCreateForm />
+          {loadError && (
+            <p role="alert" className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+              {loadError}
+            </p>
+          )}
         </div>
 
         <div className="mt-6 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
@@ -61,7 +86,7 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
                 Existing Users
               </h2>
               <p className="text-sm text-slate-500">
-                Total users: {users?.length || 0}
+                Total users: {totalUsers}
               </p>
             </div>
             </div>
@@ -78,24 +103,18 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
                         <th className="px-4 py-3 text-left font-semibold text-slate-700">Email</th>
                         <th className="px-4 py-3 text-left font-semibold text-slate-700">Role</th>
                         <th className="px-4 py-3 text-left font-semibold text-slate-700">Created</th>
-                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {users.map((user: any) => (
-                        <tr key={user._id.toString()} className="border-b border-slate-200 hover:bg-slate-50">
+                      {users.map((user) => (
+                        <tr key={user._id} className="border-b border-slate-200 hover:bg-slate-50">
                           <td className="px-4 py-3 text-slate-900">{user.name}</td>
                           <td className="px-4 py-3 text-slate-600">{user.email}</td>
                           <td className="px-4 py-3">
-                            <UserActions userId={user._id.toString()} currentRole={user.role} />
+                            <UserActions userId={user._id} currentRole={user.role} />
                           </td>
                           <td className="px-4 py-3 text-slate-600">
                             {new Date(user.createdAt).toLocaleDateString()}
-                          </td>
-                          <td className="px-4 py-3">
-                            <button className="text-red-600 hover:text-red-700 font-semibold text-xs">
-                              Delete
-                            </button>
                           </td>
                         </tr>
                       ))}
