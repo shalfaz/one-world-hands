@@ -1,10 +1,12 @@
 import connectToDatabase from "@/lib/mongoose";
 import Message from "@/lib/models/Message";
 import MessageList, { type Message as MessageType } from "./MessageList";
+import { requireAdminUser } from "@/lib/auth/admin";
 
 type MessageData = MessageType;
 
 export default async function MessagesPage() {
+  await requireAdminUser();
   let serializedMessages: MessageData[] = [];
   let error = false;
 

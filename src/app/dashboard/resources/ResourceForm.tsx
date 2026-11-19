@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createResource, updateResource } from "./actions";
 import Swal from "sweetalert2";
+import { getDashboardActionError } from "@/lib/dashboard/errors";
 
 const typeOptions = [
   { value: "photo", label: "Photo" },
@@ -27,16 +28,27 @@ export default function ResourceForm({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
 
     try {
       const formData = new FormData(e.currentTarget);
+      let result;
 
       if (resource) {
         formData.append("resourceId", String(resource._id || ""));
-        await updateResource(formData);
+        result = await updateResource(formData);
       } else {
-        await createResource(formData);
+        result = await createResource(formData);
+      }
+
+      if (!result.success) {
+        await Swal.fire({
+          icon: "error",
+          title: "Could not save resource",
+          text: result.error,
+        });
+        return;
       }
 
       Swal.fire({
@@ -53,8 +65,8 @@ export default function ResourceForm({
       console.error("Form error:", error);
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "Something went wrong. Please try again.",
+        title: "Could not save resource",
+        text: getDashboardActionError(error, "Please try again."),
       });
     } finally {
       setLoading(false);

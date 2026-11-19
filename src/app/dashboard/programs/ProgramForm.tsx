@@ -4,6 +4,7 @@ import { createProgram, updateProgram } from "./actions";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import AdminImageField from "@/components/AdminImageField";
+import { getDashboardActionError } from "@/lib/dashboard/errors";
 
 interface Program {
   _id: string;
@@ -21,19 +22,32 @@ interface Program {
 
 export default function ProgramForm({ program, onSuccess }: { program?: Program; onSuccess?: () => void }) {
   const [loading, setLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (loading || imageUploading) return;
     setLoading(true);
 
     try {
       const formData = new FormData(e.currentTarget);
+      let result;
 
       if (program) {
         formData.append("programId", program._id);
-        await updateProgram(formData);
+        result = await updateProgram(formData);
       } else {
-        await createProgram(formData);
+        result = await createProgram(formData);
+      }
+
+      if (!result.success) {
+        await Swal.fire({
+          icon: "error",
+          title: "Could not save program",
+          text: result.error,
+          confirmButtonColor: "#0ea5e9",
+        });
+        return;
       }
 
       Swal.fire({
@@ -49,8 +63,8 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
       console.error("Form error:", error);
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "Failed to save program",
+        title: "Could not save program",
+        text: getDashboardActionError(error, "Please try again."),
         confirmButtonColor: "#0ea5e9",
       });
     } finally {
@@ -60,7 +74,7 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-4">
-      <div className="md:col-span-4"><AdminImageField value={program?.imageUrl} /></div>
+      <div className="md:col-span-4"><AdminImageField value={program?.imageUrl} onUploadingChange={setImageUploading} /></div>
       <input
         name="title"
         placeholder="Program title"
@@ -133,10 +147,10 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
       <div className="md:col-span-4">
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || imageUploading}
           className="rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700 disabled:opacity-50 transition-colors"
         >
-          {loading ? "Saving..." : program ? "Update Program" : "+ Add New Program"}
+          {imageUploading ? "Uploading image..." : loading ? "Saving..." : program ? "Update Program" : "+ Add New Program"}
         </button>
       </div>
     </form>

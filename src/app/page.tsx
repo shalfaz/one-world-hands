@@ -44,9 +44,11 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const publicFunds = getPublicDonationFunds();
-  const quickDonationFunds = getQuickDonationFunds();
-  const programs = await getPublishedProgramsForCarousel();
+  const [publicFunds, quickDonationFunds, programs] = await Promise.all([
+    getPublicDonationFunds(),
+    getQuickDonationFunds(),
+    getPublishedProgramsForCarousel(),
+  ]);
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans text-foreground">

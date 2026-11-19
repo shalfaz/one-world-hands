@@ -1,6 +1,7 @@
 import { connectToDatabase } from '@/lib/mongoose';
-import { User } from '@/lib/models/User';
 import Program from '@/lib/models/Program';
+import { requireAdminUser } from '@/lib/auth/admin';
+import { DashboardActionError } from '@/lib/dashboard/errors';
 
 const PROGRAMS_DATA = [
   {
@@ -85,16 +86,8 @@ export async function POST() {
       );
     }
 
+    const admin = await requireAdminUser();
     await connectToDatabase();
-
-    // Get admin user
-    const admin = await User.findOne({ email: 'admin@example.com' });
-    if (!admin) {
-      return Response.json(
-        { error: 'Admin user not found. Create admin@example.com first.' },
-        { status: 400 }
-      );
-    }
 
     // Clear existing programs
     const deleteResult = await Program.deleteMany({});
@@ -121,10 +114,12 @@ export async function POST() {
     });
   } catch (error) {
     console.error('Error populating programs:', error);
+    if (error instanceof DashboardActionError) {
+      return Response.json({ error: error.message }, { status: 401 });
+    }
     return Response.json(
       {
-        error: 'Failed to populate programs',
-        details: (error as Error).message,
+        error: 'Could not populate programs. Check the database connection and try again.',
       },
       { status: 500 }
     );

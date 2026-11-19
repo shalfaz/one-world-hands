@@ -1,53 +1,63 @@
 "use server";
 
-import { cookies } from "next/headers";
 import connectToDatabase from "@/lib/mongoose";
 import Message from "@/lib/models/Message";
-import User from "@/lib/models/User";
+import { revalidatePath } from "next/cache";
+import { requireAdminUser } from "@/lib/auth/admin";
+import {
+  DashboardActionError,
+  getDashboardActionError,
+} from "@/lib/dashboard/errors";
 
-export async function replyToMessage(messageId: string, replyText: string) {
+type ActionResult = { success: true; repliedAt?: string } | { success: false; error: string };
+
+export async function replyToMessage(
+  messageId: string,
+  replyText: string
+): Promise<ActionResult> {
   try {
-    const cookieStore = await cookies();
-    const email = cookieStore.get("owh_email")?.value;
-
-    if (!email) {
-      throw new Error("Not authenticated");
+    const user = await requireAdminUser();
+    if (!/^[a-f\d]{24}$/i.test(messageId)) {
+      throw new DashboardActionError("Select a valid message.");
+    }
+    if (!replyText.trim()) {
+      throw new DashboardActionError("Enter a reply before saving.");
     }
 
     await connectToDatabase();
-
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw new Error("User not found");
-    }
-
     const message = await Message.findByIdAndUpdate(
       messageId,
       {
-        reply: replyText,
+        reply: replyText.trim(),
         repliedBy: user._id,
         repliedAt: new Date(),
         status: "replied",
       },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!message) {
-      throw new Error("Message not found");
+      throw new DashboardActionError("Message not found. Refresh and try again.");
     }
 
-    return {
-      success: true,
-      message: "Reply sent successfully",
-    };
+    revalidatePath("/dashboard/messages");
+    return { success: true, repliedAt: message.repliedAt?.toISOString() };
   } catch (error) {
     console.error("Error replying to message:", error);
-    throw error;
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not save your reply. Please try again."),
+    };
   }
 }
 
-export async function markMessageAsRead(messageId: string) {
+export async function markMessageAsRead(messageId: string): Promise<ActionResult> {
   try {
+    await requireAdminUser();
+    if (!/^[a-f\d]{24}$/i.test(messageId)) {
+      throw new DashboardActionError("Select a valid message.");
+    }
+
     await connectToDatabase();
 
     const message = await Message.findByIdAndUpdate(
@@ -57,15 +67,16 @@ export async function markMessageAsRead(messageId: string) {
     );
 
     if (!message) {
-      throw new Error("Message not found");
+      throw new DashboardActionError("Message not found. Refresh and try again.");
     }
 
-    return {
-      success: true,
-      message: "Message marked as read",
-    };
+    revalidatePath("/dashboard/messages");
+    return { success: true };
   } catch (error) {
     console.error("Error marking message as read:", error);
-    throw error;
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not update the message. Please try again."),
+    };
   }
 }

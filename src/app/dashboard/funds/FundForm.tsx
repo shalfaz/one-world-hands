@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createFund, updateFund } from "./actions";
 import Swal from "sweetalert2";
 import AdminImageField from "@/components/AdminImageField";
+import { getDashboardActionError } from "@/lib/dashboard/errors";
 
 export default function FundForm({
   fund,
@@ -13,19 +14,31 @@ export default function FundForm({
   onSuccess?: () => void;
 }) {
   const [loading, setLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading || imageUploading) return;
     setLoading(true);
 
     try {
       const formData = new FormData(e.currentTarget);
+      let result;
 
       if (fund) {
         formData.append("fundId", String(fund._id || ""));
-        await updateFund(formData);
+        result = await updateFund(formData);
       } else {
-        await createFund(formData);
+        result = await createFund(formData);
+      }
+
+      if (!result.success) {
+        await Swal.fire({
+          icon: "error",
+          title: "Could not save fund",
+          text: result.error,
+        });
+        return;
       }
 
       Swal.fire({
@@ -40,8 +53,8 @@ export default function FundForm({
       console.error("Form error:", error);
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "Something went wrong. Please try again.",
+        title: "Could not save fund",
+        text: getDashboardActionError(error, "Please try again."),
       });
     } finally {
       setLoading(false);
@@ -50,7 +63,7 @@ export default function FundForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <AdminImageField value={String(fund?.imageUrl || "")} />
+      <AdminImageField value={String(fund?.imageUrl || "")} onUploadingChange={setImageUploading} />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <input
           name="name"
@@ -129,11 +142,13 @@ export default function FundForm({
         <div className="md:col-span-2 xl:col-span-4">
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || imageUploading}
             className="w-full rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700 disabled:opacity-50"
           >
             {loading
               ? "Processing..."
+              : imageUploading
+                ? "Uploading image..."
               : fund
                 ? "Update Fund"
                 : "+ Add New Fund"}

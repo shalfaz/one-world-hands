@@ -1,32 +1,19 @@
 "use server";
 
-import { cookies } from "next/headers";
 import connectToDatabase from "@/lib/mongoose";
 import Fund from "@/lib/models/Fund";
 import User from "@/lib/models/User";
 import { DONATION_FUNDS } from "@/lib/data/donationFunds";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { requireAdminUser } from "@/lib/auth/admin";
+import {
+  DashboardActionError,
+  getDashboardActionError,
+} from "@/lib/dashboard/errors";
 
-async function getUserFromCookie() {
-  const cookieStore = await cookies();
-  const email = cookieStore.get("owh_email")?.value;
+type ActionResult = { success: true } | { success: false; error: string };
 
-  if (!email) {
-    throw new Error("User not authenticated");
-  }
-
-  await connectToDatabase();
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    throw new Error("User not found");
-  }
-
-  return user;
-}
-
-export async function createFund(formData: FormData) {
+export async function createFund(formData: FormData): Promise<ActionResult> {
   try {
     const name = String(formData.get("name") || "").trim();
     const category = String(formData.get("category") || "").trim();
@@ -38,10 +25,10 @@ export async function createFund(formData: FormData) {
     const published = String(formData.get("published") || "false") === "true";
 
     if (!name || !category) {
-      throw new Error("Name and category are required");
+      throw new DashboardActionError("Fund name and category are required.");
     }
 
-    const user = await getUserFromCookie();
+    const user = await requireAdminUser();
 
     await connectToDatabase();
     const newFund = await Fund.create({
@@ -56,15 +43,18 @@ export async function createFund(formData: FormData) {
       createdBy: user._id,
     });
 
-    console.log("Fund created:", newFund);
-    redirect("/dashboard/funds?success=created");
+    revalidateFundPaths(String(newFund.slug || newFund._id));
+    return { success: true };
   } catch (error) {
     console.error("Create fund error:", error);
-    redirect("/dashboard/funds?error=failed");
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not create the fund. Please try again."),
+    };
   }
 }
 
-export async function updateFund(formData: FormData) {
+export async function updateFund(formData: FormData): Promise<ActionResult> {
   try {
     const fundId = String(formData.get("fundId") || "").trim();
     const name = String(formData.get("name") || "").trim();
@@ -77,9 +67,10 @@ export async function updateFund(formData: FormData) {
     const published = String(formData.get("published") || "false") === "true";
 
     if (!fundId || !name || !category) {
-      throw new Error("Fund ID, name and category are required");
+      throw new DashboardActionError("Fund ID, name, and category are required.");
     }
 
+    await requireAdminUser();
     await connectToDatabase();
     const updated = await Fund.findByIdAndUpdate(
       fundId,
@@ -88,40 +79,47 @@ export async function updateFund(formData: FormData) {
     );
 
     if (!updated) {
-      throw new Error("Fund not found");
+      throw new DashboardActionError("Fund not found.");
     }
 
-    console.log("Fund updated:", updated);
-    redirect("/dashboard/funds?success=updated");
+    revalidateFundPaths(String(updated.slug || updated._id));
+    return { success: true };
   } catch (error) {
     console.error("Update fund error:", error);
-    redirect("/dashboard/funds?error=failed");
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not save the fund. Please try again."),
+    };
   }
 }
 
-export async function deleteFund(fundId: string) {
+export async function deleteFund(fundId: string): Promise<ActionResult> {
   try {
     if (!fundId) {
-      throw new Error("Fund ID is required");
+      throw new DashboardActionError("Fund ID is required.");
     }
 
+    await requireAdminUser();
     await connectToDatabase();
     const deleted = await Fund.findByIdAndDelete(fundId);
 
     if (!deleted) {
-      throw new Error("Fund not found");
+      throw new DashboardActionError("Fund not found.");
     }
 
-    console.log("Fund deleted:", deleted);
-    return { success: true, message: "Fund deleted successfully" };
+    revalidateFundPaths(String(deleted.slug || deleted._id));
+    return { success: true };
   } catch (error) {
     console.error("Delete fund error:", error);
-    throw error;
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not delete the fund. Please try again."),
+    };
   }
 }
 
 export async function updateFundStatus(fundId: string, status: string, published?: boolean) {
-  await getUserFromCookie();
+  await requireAdminUser();
   await connectToDatabase();
   const allowedStatuses = ["active", "inactive", "draft", "completed", "paused", "archived"];
   if (!allowedStatuses.includes(status)) throw new Error("Invalid fund status");
@@ -131,52 +129,45 @@ export async function updateFundStatus(fundId: string, status: string, published
   if (!fund) throw new Error("Fund not found");
   revalidatePath("/dashboard/funds");
   revalidatePath("/donation-funds");
+  revalidatePath("/");
   return { success: true };
 }
 
 export async function getFunds() {
-  try {
-    await connectToDatabase();
-    const funds = await Fund.find()
-      .lean()
-      .sort({ createdAt: -1 });
+  await requireAdminUser();
+  await connectToDatabase();
+  const funds = await Fund.find().lean().sort({ createdAt: -1 });
 
-    // Manually fetch user data and convert to plain objects
-    const fundsWithUsers = await Promise.all(
-      funds.map(async (fund: Record<string, unknown>) => {
-        const user = await User.findById(fund.createdBy).select("name email").lean();
-        return {
-          _id: String(fund._id),
-          name: fund.name,
-          description: fund.description || "",
-          category: fund.category,
-          impactSummary: fund.impactSummary || "",
-          targetAmount: fund.targetAmount || 0,
-          raisedAmount: fund.raisedAmount || 0,
-          status: fund.status,
-          imageUrl: fund.imageUrl || "",
-          published: Boolean(fund.published ?? fund.status === "active"),
-          createdBy: {
-            _id: user ? String(user._id) : "",
-            name: user?.name || "Unknown",
-            email: user?.email || "unknown@example.com",
-          },
-          createdAt: String(fund.createdAt),
-          updatedAt: String(fund.updatedAt),
-        };
-      })
-    );
-
-    return fundsWithUsers;
-  } catch (error) {
-    console.error("Get funds error:", error);
-    return [];
-  }
+  return Promise.all(
+    funds.map(async (fund: Record<string, unknown>) => {
+      const user = await User.findById(fund.createdBy).select("name email").lean();
+      return {
+        _id: String(fund._id),
+        slug: fund.slug || "",
+        name: fund.name,
+        description: fund.description || "",
+        category: fund.category,
+        impactSummary: fund.impactSummary || "",
+        targetAmount: fund.targetAmount || 0,
+        raisedAmount: fund.raisedAmount || 0,
+        status: fund.status,
+        imageUrl: fund.imageUrl || "",
+        published: Boolean(fund.published ?? fund.status === "active"),
+        createdBy: {
+          _id: user ? String(user._id) : "",
+          name: user?.name || "Unknown",
+          email: user?.email || "unknown@example.com",
+        },
+        createdAt: String(fund.createdAt),
+        updatedAt: String(fund.updatedAt),
+      };
+    })
+  );
 }
 
 export async function seedDefaultFunds() {
   try {
-    const user = await getUserFromCookie();
+    const user = await requireAdminUser();
     await connectToDatabase();
 
     let created = 0;
@@ -192,6 +183,7 @@ export async function seedDefaultFunds() {
         targetAmount: 0,
         raisedAmount: 0,
         status: "active",
+        published: true,
       };
 
       const existing = await Fund.findOne({ slug: fund.slug });
@@ -210,6 +202,7 @@ export async function seedDefaultFunds() {
       }
     }
 
+    revalidateFundPaths("");
     return {
       success: true,
       created,
@@ -224,8 +217,9 @@ export async function seedDefaultFunds() {
 
 export async function getFundById(fundId: string) {
   try {
+    await requireAdminUser();
     if (!fundId) {
-      throw new Error("Fund ID is required");
+      throw new DashboardActionError("Fund ID is required.");
     }
 
     await connectToDatabase();
@@ -256,5 +250,14 @@ export async function getFundById(fundId: string) {
   } catch (error) {
     console.error("Get fund error:", error);
     return null;
+  }
+}
+
+function revalidateFundPaths(identifier: string) {
+  revalidatePath("/dashboard/funds");
+  revalidatePath("/donation-funds");
+  revalidatePath("/");
+  if (identifier) {
+    revalidatePath(`/donation-funds/${identifier}`);
   }
 }

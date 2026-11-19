@@ -2,8 +2,8 @@ import Link from "next/link";
 import FundCard from "@/components/FundCard";
 import { getPublicDonationFunds } from "@/lib/data/donationFunds";
 
-export default function HomeDonationFundsSection() {
-  const featuredFunds = getPublicDonationFunds().slice(0, 6);
+export default async function HomeDonationFundsSection() {
+  const featuredFunds = (await getPublicDonationFunds()).slice(0, 6);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

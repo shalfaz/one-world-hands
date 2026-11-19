@@ -1,50 +1,36 @@
 "use server";
 
-import { cookies } from "next/headers";
 import connectToDatabase from "@/lib/mongoose";
 import Program from "@/lib/models/Program";
 import User from "@/lib/models/User";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { requireAdminUser } from "@/lib/auth/admin";
 import {
-  getSessionUserId,
-  isAuthorizedAdminSession,
-} from "@/lib/auth/session";
+  DashboardActionError,
+  getDashboardActionError,
+} from "@/lib/dashboard/errors";
 
-async function getAdminFromSession() {
-  const cookieStore = await cookies();
-  const sessionToken = cookieStore.get("owh_session")?.value;
+type ActionResult = { success: true } | { success: false; error: string };
+type ProgramStatus = "active" | "inactive" | "draft" | "completed" | "archived";
 
-  if (!sessionToken) {
-    throw new Error("User not authenticated");
-  }
+type ProgramRecord = {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  location: string;
+  status: ProgramStatus;
+  imageUrl: string;
+  objectives: string;
+  startDate: string;
+  endDate: string;
+  published: boolean;
+  createdBy: { _id: string; name: string; email: string };
+  createdAt: string;
+  updatedAt: string;
+};
 
-  const userId = getSessionUserId(sessionToken);
-  if (!userId) {
-    throw new Error("Invalid session");
-  }
-
-  await connectToDatabase();
-  const user = await User.findById(userId).select("_id password role");
-
-  if (!user) {
-    throw new Error("User not found");
-  }
-
-  if (
-    !isAuthorizedAdminSession(sessionToken, {
-      _id: String(user._id),
-      password: user.password,
-      role: user.role,
-    })
-  ) {
-    throw new Error("Administrator authorization required");
-  }
-
-  return user;
-}
-
-export async function createProgram(formData: FormData) {
+export async function createProgram(formData: FormData): Promise<ActionResult> {
   try {
     const title = String(formData.get("title") || "").trim();
     const category = String(formData.get("category") || "").trim();
@@ -58,18 +44,17 @@ export async function createProgram(formData: FormData) {
     const published = String(formData.get("published") || "false") === "true";
 
     if (!title || !category || !location) {
-      console.log("Missing required fields");
-      throw new Error("All fields are required");
+      throw new DashboardActionError("Title, category, and location are required.");
     }
 
-    const user = await getAdminFromSession();
+    const user = await requireAdminUser();
 
     await connectToDatabase();
     if (
       title.toLocaleLowerCase("en") === "merit scholarship program" &&
       (await Program.exists({ title: /^Merit Scholarship Program$/i }))
     ) {
-      throw new Error("Merit Scholarship Program already exists");
+      throw new DashboardActionError("Merit Scholarship Program already exists.");
     }
 
     const newProgram = await Program.create({
@@ -86,15 +71,18 @@ export async function createProgram(formData: FormData) {
       createdBy: user._id,
     });
 
-    console.log("Program created:", newProgram);
-    redirect("/dashboard/programs?success=created");
+    revalidateProgramPaths(String(newProgram._id));
+    return { success: true };
   } catch (error) {
     console.error("Create program error:", error);
-    redirect("/dashboard/programs?error=failed");
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not create the program. Please try again."),
+    };
   }
 }
 
-export async function updateProgram(formData: FormData) {
+export async function updateProgram(formData: FormData): Promise<ActionResult> {
   try {
     const programId = String(formData.get("programId") || "").trim();
     const title = String(formData.get("title") || "").trim();
@@ -109,64 +97,80 @@ export async function updateProgram(formData: FormData) {
     const published = String(formData.get("published") || "false") === "true";
 
     if (!programId || !title || !category || !location) {
-      throw new Error("All fields are required");
+      throw new DashboardActionError("Program ID, title, category, and location are required.");
     }
 
-    await getAdminFromSession();
+    await requireAdminUser();
     await connectToDatabase();
-    const existing = await Program.findById(programId).select("title status");
+
+    const parsedStartDate = startDate ? new Date(startDate) : null;
+    const parsedEndDate = endDate ? new Date(endDate) : null;
     if (
-      existing?.title === "Merit Scholarship Program" &&
-      existing.status === "draft" &&
-      status === "active"
+      (parsedStartDate && Number.isNaN(parsedStartDate.getTime())) ||
+      (parsedEndDate && Number.isNaN(parsedEndDate.getTime()))
     ) {
-      throw new Error(
-        "Publish the scholarship through its approved-content publishing control"
-      );
+      throw new DashboardActionError("Enter valid program dates.");
     }
 
     const updated = await Program.findByIdAndUpdate(
       programId,
-      { title, category, location, description, status, imageUrl, objectives, startDate: startDate ? new Date(startDate) : null, endDate: endDate ? new Date(endDate) : null, published },
+      {
+        title,
+        category,
+        location,
+        description,
+        status,
+        imageUrl,
+        objectives,
+        startDate: parsedStartDate,
+        endDate: parsedEndDate,
+        published,
+      },
       { new: true, runValidators: true }
     );
 
     if (!updated) {
-      throw new Error("Program not found");
+      throw new DashboardActionError("Program not found.");
     }
 
-    console.log("Program updated:", updated);
-    redirect("/dashboard/programs?success=updated");
+    revalidateProgramPaths(programId);
+    return { success: true };
   } catch (error) {
     console.error("Update program error:", error);
-    redirect("/dashboard/programs?error=failed");
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not save the program. Please try again."),
+    };
   }
 }
 
-export async function deleteProgram(programId: string) {
+export async function deleteProgram(programId: string): Promise<ActionResult> {
   try {
     if (!programId) {
-      throw new Error("Program ID is required");
+      throw new DashboardActionError("Program ID is required.");
     }
 
-    await getAdminFromSession();
+    await requireAdminUser();
     await connectToDatabase();
     const deleted = await Program.findByIdAndDelete(programId);
 
     if (!deleted) {
-      throw new Error("Program not found");
+      throw new DashboardActionError("Program not found.");
     }
 
-    console.log("Program deleted:", deleted);
-    return { success: true, message: "Program deleted successfully" };
+    revalidateProgramPaths(programId);
+    return { success: true };
   } catch (error) {
     console.error("Delete program error:", error);
-    throw error;
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not delete the program. Please try again."),
+    };
   }
 }
 
 export async function updateProgramStatus(programId: string, status: string, published?: boolean) {
-  await getAdminFromSession();
+  await requireAdminUser();
   await connectToDatabase();
   const allowedStatuses = ["active", "inactive", "draft", "completed", "archived"];
   if (!allowedStatuses.includes(status)) throw new Error("Invalid program status");
@@ -176,6 +180,7 @@ export async function updateProgramStatus(programId: string, status: string, pub
   if (!program) throw new Error("Program not found");
   revalidatePath("/dashboard/programs");
   revalidatePath("/programs");
+  revalidatePath("/");
   return { success: true };
 }
 
@@ -194,7 +199,7 @@ export async function publishMeritScholarship(
     throw new Error("Approved program content is required");
   }
 
-  const admin = await getAdminFromSession();
+  const admin = await requireAdminUser();
   await connectToDatabase();
   const published = await Program.findOneAndUpdate(
     {
@@ -206,6 +211,7 @@ export async function publishMeritScholarship(
     {
       $set: {
         status: "active",
+        published: true,
         approvedBy: admin._id,
         approvedAt: new Date(),
       },
@@ -219,6 +225,7 @@ export async function publishMeritScholarship(
     );
   }
 
+  revalidatePath("/dashboard/programs");
   revalidatePath("/programs");
   revalidatePath("/");
   revalidatePath(`/programs/${programId}`);
@@ -237,7 +244,7 @@ export async function updateMeritScholarshipDraft(
     throw new Error("A draft description is required");
   }
 
-  await getAdminFromSession();
+  await requireAdminUser();
   await connectToDatabase();
   const updated = await Program.findOneAndUpdate(
     {
@@ -257,103 +264,50 @@ export async function updateMeritScholarshipDraft(
   return { success: true };
 }
 
-function getDefaultPrograms() {
-  const now = new Date().toISOString();
+export async function getPrograms(): Promise<ProgramRecord[]> {
+  await requireAdminUser();
+  await connectToDatabase();
+  const programs = await Program.find().lean().sort({ createdAt: -1 });
 
-  return [
-    {
-      _id: "food-assistance",
-      title: "Food Assistance Program",
-      description: "Providing food aid to vulnerable families.",
-      category: "relief",
-      location: "Global",
-      status: "active",
-      createdBy: {
-        _id: "",
-        name: "One World Hands",
-        email: "",
-      },
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      _id: "medical-assistance",
-      title: "Medical Assistance Program",
-      description: "Healthcare and medical support for communities.",
-      category: "health",
-      location: "Global",
-      status: "active",
-      createdBy: {
-        _id: "",
-        name: "One World Hands",
-        email: "",
-      },
-      createdAt: now,
-      updatedAt: now,
-    },
-  ];
-}
-
-export async function getPrograms() {
-  await getAdminFromSession();
-
-  try {
-    if (!process.env.MONGO_URI && !process.env.MONGODB_URI) {
-      return getDefaultPrograms();
-    }
-
-    try {
-      await connectToDatabase();
-    } catch (dbError) {
-      console.warn(
-        "Database connection failed in getPrograms, falling back to defaults:",
-        dbError instanceof Error ? dbError.message : String(dbError)
-      );
-      return getDefaultPrograms();
-    }
-
-    const programs = await Program.find()
-      .lean()
-      .sort({ createdAt: -1 });
-
-    // Manually fetch user data and convert to plain objects
-    const programsWithUsers = await Promise.all(
-      programs.map(async (program: Record<string, unknown>) => {
-        const user = await User.findById(program.createdBy).select("name email").lean();
-        return {
-          _id: String(program._id),
-          title: program.title,
-          description: program.description || "",
-          category: program.category,
-          location: program.location,
-          status: program.status,
-          imageUrl: program.imageUrl || "",
-          objectives: program.objectives || "",
-          startDate: program.startDate instanceof Date ? program.startDate.toISOString() : "",
-          endDate: program.endDate instanceof Date ? program.endDate.toISOString() : "",
-          published: Boolean(program.published ?? program.status === "active"),
-          createdBy: {
-            _id: user ? String(user._id) : "",
-            name: user?.name || "Unknown",
-            email: user?.email || "unknown@example.com",
-          },
-          createdAt: String(program.createdAt),
-          updatedAt: String(program.updatedAt),
-        };
-      })
-    );
-
-    return programsWithUsers;
-  } catch (error) {
-    console.error("Unexpected error in getPrograms:", error);
-    return getDefaultPrograms();
-  }
+  return Promise.all(
+    programs.map(async (program: Record<string, unknown>) => {
+      const user = await User.findById(program.createdBy).select("name email").lean();
+      return {
+        _id: String(program._id),
+        title: String(program.title || ""),
+        description: String(program.description || ""),
+        category: String(program.category || ""),
+        location: String(program.location || ""),
+        status:
+          program.status === "active" ||
+          program.status === "inactive" ||
+          program.status === "draft" ||
+          program.status === "completed" ||
+          program.status === "archived"
+            ? program.status
+            : "draft",
+        imageUrl: String(program.imageUrl || ""),
+        objectives: String(program.objectives || ""),
+        startDate: program.startDate instanceof Date ? program.startDate.toISOString() : "",
+        endDate: program.endDate instanceof Date ? program.endDate.toISOString() : "",
+        published: Boolean(program.published ?? program.status === "active"),
+        createdBy: {
+          _id: user ? String(user._id) : "",
+          name: String(user?.name || "Unknown"),
+          email: String(user?.email || "unknown@example.com"),
+        },
+        createdAt: String(program.createdAt),
+        updatedAt: String(program.updatedAt),
+      };
+    })
+  );
 }
 
 export async function getProgramById(programId: string) {
   try {
+    await requireAdminUser();
     if (!programId) {
-      throw new Error("Program ID is required");
+      throw new DashboardActionError("Program ID is required.");
     }
 
     await connectToDatabase();
@@ -388,4 +342,11 @@ export async function getProgramById(programId: string) {
     console.error("Get program error:", error);
     return null;
   }
+}
+
+function revalidateProgramPaths(programId: string) {
+  revalidatePath("/dashboard/programs");
+  revalidatePath("/programs");
+  revalidatePath(`/programs/${programId}`);
+  revalidatePath("/");
 }

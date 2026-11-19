@@ -4,6 +4,16 @@ import { hashPassword } from "@/lib/password";
 import User from "@/lib/models/User";
 import connectToDatabase from "@/lib/mongoose";
 import nodemailer from "nodemailer";
+import { revalidatePath } from "next/cache";
+import { requireAdminUser } from "@/lib/auth/admin";
+import {
+  DashboardActionError,
+  getDashboardActionError,
+} from "@/lib/dashboard/errors";
+
+type ActionResult =
+  | { success: true; warning?: string }
+  | { success: false; error: string };
 
 // Configure email transporter
 const transporter = nodemailer.createTransport({
@@ -14,37 +24,30 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function createUser(formData: FormData) {
+export async function createUser(formData: FormData): Promise<ActionResult> {
   try {
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const role = formData.get("role") as string;
-
-    console.log("Creating user:", { name, email, role });
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim().toLowerCase();
+    const password = String(formData.get("password") || "");
+    const role = String(formData.get("role") || "").trim();
 
     if (!name || !email || !password || !role) {
-      console.error("All fields are required");
-      return;
+      throw new DashboardActionError("Name, email, password, and role are required.");
     }
 
-    // Connect to MongoDB
-    console.log("Connecting to MongoDB...");
-    await connectToDatabase();
-    console.log("MongoDB connected");
+    await requireAdminUser();
+    if (!["user", "admin", "employee", "volunteer"].includes(role)) {
+      throw new DashboardActionError("Select a valid account role.");
+    }
 
-    // Check if user already exists
+    await connectToDatabase();
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      console.error("User already exists:", email);
-      return;
+      throw new DashboardActionError("An account with this email already exists.");
     }
 
-    // Hash password
     const hashedPassword = hashPassword(password);
-    console.log("Password hashed");
-
-    // Create user
     const newUser = new User({
       name,
       email,
@@ -53,89 +56,98 @@ export async function createUser(formData: FormData) {
     });
 
     await newUser.save();
-    console.log("User saved to database");
 
-    // Send email with login details
-    console.log("Sending email to:", email);
-    await transporter.sendMail({
-      from: process.env.APP_EMAIL,
-      to: email,
-      subject: "Your Account Created - One World Hands NGO",
-      html: `
-        <h2>Welcome to One World Hands NGO!</h2>
-        <p>Dear ${name},</p>
-        <p>Your account has been created successfully. Here are your login details:</p>
-        <ul>
-          <li><strong>Email:</strong> ${email}</li>
-          <li><strong>Password:</strong> ${password}</li>
-          <li><strong>Role:</strong> ${role}</li>
-          <li><strong>Login URL:</strong> <a href="http://localhost:3000/login">http://localhost:3000/login</a></li>
-        </ul>
-        <p><strong>Please change your password after your first login.</strong></p>
-        <p>Best regards,<br>One World Hands Team</p>
-      `,
-    });
+    let warning: string | undefined;
+    try {
+      await transporter.sendMail({
+        from: process.env.APP_EMAIL,
+        to: email,
+        subject: "Your Account Created - One World Hands NGO",
+        html: `
+          <h2>Welcome to One World Hands NGO!</h2>
+          <p>Dear ${name},</p>
+          <p>Your account has been created successfully. Your login email is ${email} and your role is ${role}.</p>
+          <p>Please contact your administrator for your temporary password and change it after signing in.</p>
+          <p><a href="${process.env.NEXTAUTH_URL || "https://oneworldhands.org"}/login">Sign in</a></p>
+          <p>Best regards,<br>One World Hands Team</p>
+        `,
+      });
+    } catch (error) {
+      console.error("User invitation email error:", error);
+      warning = "The account was created, but the invitation email could not be sent.";
+    }
 
-    console.log("User created and email sent successfully");
+    revalidatePath("/dashboard/users");
+    return { success: true, warning };
   } catch (error) {
     console.error("Error creating user:", error);
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not create the user. Please try again."),
+    };
   }
 }
 
-export async function updateUserRole(formData: FormData) {
+export async function updateUserRole(formData: FormData): Promise<ActionResult> {
   try {
-    const userId = formData.get("userId") as string;
-    const role = formData.get("role") as string;
-
-    console.log("Updating user role:", { userId, role });
+    const userId = String(formData.get("userId") || "").trim();
+    const role = String(formData.get("role") || "").trim();
 
     if (!userId || !role) {
-      console.error("User ID and role are required");
-      return;
+      throw new DashboardActionError("User ID and role are required.");
     }
 
-    // Connect to MongoDB
+    await requireAdminUser();
+    if (!/^[a-f\d]{24}$/i.test(userId) || !["user", "admin", "employee", "volunteer"].includes(role)) {
+      throw new DashboardActionError("Select a valid user and role.");
+    }
     await connectToDatabase();
-
-    // Update user role
     const result = await User.updateOne(
       { _id: userId },
-      { role }
+      { $set: { role } },
+      { runValidators: true }
     );
 
-    if (result.modifiedCount > 0) {
-      console.log("User role updated successfully");
-    } else {
-      console.error("User not found or role not changed");
+    if (result.matchedCount === 0) {
+      throw new DashboardActionError("User not found.");
     }
+    revalidatePath("/dashboard/users");
+    return { success: true };
   } catch (error) {
     console.error("Error updating user role:", error);
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not update the user role. Please try again."),
+    };
   }
 }
 
-export async function deleteUser(formData: FormData) {
+export async function deleteUser(formData: FormData): Promise<ActionResult> {
   try {
-    const userId = formData.get("userId") as string;
-
-    console.log("Deleting user:", userId);
-
+    const userId = String(formData.get("userId") || "").trim();
     if (!userId) {
-      console.error("User ID is required");
-      return;
+      throw new DashboardActionError("User ID is required.");
     }
 
-    // Connect to MongoDB
+    const admin = await requireAdminUser();
+    if (!/^[a-f\d]{24}$/i.test(userId)) {
+      throw new DashboardActionError("Select a valid user.");
+    }
+    if (String(admin._id) === userId) {
+      throw new DashboardActionError("You cannot delete your own administrator account.");
+    }
     await connectToDatabase();
-
-    // Delete user
     const result = await User.deleteOne({ _id: userId });
-
-    if (result.deletedCount > 0) {
-      console.log("User deleted successfully");
-    } else {
-      console.error("User not found");
+    if (!result.deletedCount) {
+      throw new DashboardActionError("User not found.");
     }
+    revalidatePath("/dashboard/users");
+    return { success: true };
   } catch (error) {
     console.error("Error deleting user:", error);
+    return {
+      success: false,
+      error: getDashboardActionError(error, "Could not delete the user. Please try again."),
+    };
   }
 }

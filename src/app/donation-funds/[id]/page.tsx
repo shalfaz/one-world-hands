@@ -11,7 +11,7 @@ type FundPageProps = {
 
 export async function generateMetadata({ params }: FundPageProps) {
   const { id } = await params;
-  const fund = getDonationFundBySlug(id);
+  const fund = await getDonationFundBySlug(id);
 
   return {
     title: fund ? `Donate to ${fund.name} | One World Hands` : "Fund Not Found",
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: FundPageProps) {
 
 export default async function FundDetailPage({ params }: FundPageProps) {
   const { id } = await params;
-  const fund = getDonationFundBySlug(id);
+  const fund = await getDonationFundBySlug(id);
 
   if (!fund) notFound();
 

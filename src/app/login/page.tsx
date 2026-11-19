@@ -25,6 +25,7 @@ function getDashboardPathByRole(role: string) {
 }
 
 function getErrorMessage(error?: string) {
+  if (error === "unauthorized") return "Your session expired. Please sign in with an administrator account.";
   if (error === "missing") return "Please enter your email and password.";
   if (error === "user") return "No account found with this email.";
   if (error === "password") return "Incorrect password.";

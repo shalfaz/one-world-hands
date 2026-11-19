@@ -251,7 +251,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
           </fieldset>
 
           <p className="mt-4 text-xs leading-5 text-neutral-500">
-            Payment processing is not enabled. Submitting sends your selected method with the donation details, but they are not saved yet and no payment will be taken.
+            Payment processing is not enabled. Submitting records a pending donation request; no payment will be taken.
           </p>
           {error && <p className="mt-4 text-sm font-medium text-red-700" role="alert">{error}</p>}
           <div className="mt-6 flex gap-3">

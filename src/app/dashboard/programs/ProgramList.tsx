@@ -10,7 +10,7 @@ interface Program {
   description?: string;
   category: string;
   location: string;
-  status: "active" | "draft" | "inactive";
+  status: string;
   createdBy: {
     name: string;
     email: string;
@@ -25,9 +25,9 @@ export default function ProgramList({
 }: {
   programs: Program[];
   onEdit: (program: Program) => void;
-  onDelete: () => void;
+  onDelete: () => void | Promise<void>;
 }) {
-  const [localPrograms, setLocalPrograms] = useState(programs);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleDelete = async (programId: string, title: string) => {
     const confirm = await Swal.fire({
@@ -42,10 +42,20 @@ export default function ProgramList({
 
     if (!confirm.isConfirmed) return;
 
+    setDeletingId(programId);
     try {
-      await deleteProgram(programId);
-      setLocalPrograms(localPrograms.filter((p) => p._id !== programId));
-      onDelete();
+      const result = await deleteProgram(programId);
+      if (!result.success) {
+        await Swal.fire({
+          icon: "error",
+          title: "Could not delete program",
+          text: result.error,
+          confirmButtonColor: "#0ea5e9",
+        });
+        return;
+      }
+
+      await onDelete();
 
       Swal.fire({
         icon: "success",
@@ -57,10 +67,12 @@ export default function ProgramList({
       console.error("Delete error:", error);
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "Failed to delete program",
+        title: "Could not delete program",
+        text: error instanceof Error ? error.message : "Please try again.",
         confirmButtonColor: "#0ea5e9",
       });
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -73,7 +85,7 @@ export default function ProgramList({
     return styles[status] || styles.draft;
   };
 
-  if (localPrograms.length === 0) {
+  if (programs.length === 0) {
     return (
       <div className="text-center py-8">
         <p className="text-slate-500">No programs found. Create your first program!</p>
@@ -96,7 +108,7 @@ export default function ProgramList({
           </tr>
         </thead>
         <tbody>
-          {localPrograms.map((program) => (
+          {programs.map((program) => (
             <tr key={program._id} className="border-b border-slate-200 hover:bg-slate-50 transition-colors">
               <td className="px-4 py-3 font-medium text-slate-900">{program.title}</td>
               <td className="px-4 py-3">
@@ -127,9 +139,10 @@ export default function ProgramList({
                   </button>
                   <button
                     onClick={() => handleDelete(program._id, program.title)}
-                    className="px-3 py-1 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors text-xs font-medium"
+                    disabled={deletingId !== null}
+                    className="px-3 py-1 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 disabled:opacity-50 transition-colors text-xs font-medium"
                   >
-                    Delete
+                    {deletingId === program._id ? "Deleting..." : "Delete"}
                   </button>
                 </div>
               </td>

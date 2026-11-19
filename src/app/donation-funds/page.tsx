@@ -17,8 +17,8 @@ export const metadata = {
   },
 };
 
-export default function DonationFundsPage() {
-  const funds = getPublicDonationFunds();
+export default async function DonationFundsPage() {
+  const funds = await getPublicDonationFunds();
 
   return (
     <PageShell>

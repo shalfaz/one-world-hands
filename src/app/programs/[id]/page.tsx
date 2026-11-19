@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import PageShell from "@/components/PageShell";
 import { getPublishedPrograms } from "@/lib/services/programService";
@@ -106,6 +107,19 @@ export default async function ProgramDetailPage({
               </div>
             </div>
           </div>
+
+          {program.imageUrl && (
+            <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100">
+              <Image
+                src={String(program.imageUrl)}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 896px"
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
 
           {/* Meta Information */}
           <div className="grid gap-6 md:grid-cols-2 mb-8">
