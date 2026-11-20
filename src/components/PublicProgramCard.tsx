@@ -21,11 +21,11 @@ const categoryColors: Record<
     gradientTo: "to-sky-600",
   },
   community: {
-    bg: "bg-green-50",
-    text: "text-green-700",
-    border: "border-green-200",
-    gradientFrom: "from-green-400",
-    gradientTo: "to-green-600",
+    bg: "bg-[#EAF6FB]",
+    text: "text-[#174A70]",
+    border: "border-[#D9E2EC]",
+    gradientFrom: "from-[#009EDB]",
+    gradientTo: "to-[#174A70]",
   },
   livelihood: {
     bg: "bg-purple-50",
@@ -60,8 +60,8 @@ export default function ProgramCard({
 
   return (
     <Link href={`/programs/${program._id}`}>
-      <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-[#dce5de] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#c5d8c8] hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.38)]">
-        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#edf2ed]">
+      <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-[#D9E2EC] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#009EDB] hover:shadow-[0_18px_42px_-30px_rgba(23,74,112,0.25)]">
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EAF6FB]">
           {program.imageUrl ? (
             <Image
               src={String(program.imageUrl)}
@@ -83,7 +83,7 @@ export default function ProgramCard({
         </div>
 
         <div className="flex flex-1 flex-col p-5 text-left sm:p-6">
-          <h3 className="text-lg font-semibold leading-snug tracking-tight text-[#183b2c]">
+          <h3 className="text-lg font-semibold leading-snug tracking-tight text-[#174A70]">
             {String(program.title)}
           </h3>
 
@@ -95,12 +95,12 @@ export default function ProgramCard({
             </span>
           </div>
 
-          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-6 text-[#5b6d62]">
+          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-6 text-[#475569]">
             {String(program.description)}
           </p>
 
           <p className="mt-3 flex items-center gap-2 text-xs font-medium text-neutral-500">
-            <FaLocationDot aria-hidden="true" className="text-[#668570]" />
+            <FaLocationDot aria-hidden="true" className="text-[#009EDB]" />
             {String(program.location)}
           </p>
 
@@ -109,7 +109,7 @@ export default function ProgramCard({
           </p>
 
           <div className="mt-5 pt-1">
-            <span             className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors group-hover:bg-[#104b34]">
+            <span             className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors group-hover:bg-[#0088be]">
               Learn More →
             </span>
           </div>

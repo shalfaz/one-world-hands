@@ -20,13 +20,13 @@ export default function AboutUsPage() {
     <PageShell>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           {/* Hero intro */}
-          <section className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
+          <section className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
                   Who we are
                 </p>
-                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
+                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
                   About One World Hands
                 </h1>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
@@ -40,13 +40,13 @@ export default function AboutUsPage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/donation-funds"
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
                 >
                   Donate Now
                 </Link>
                 <Link
                   href="/programs"
-                  className="inline-flex h-11 items-center justify-center rounded-full border border-[#dce5de] bg-white px-6 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-6 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
                 >
                   Explore Programs
                 </Link>
@@ -57,7 +57,7 @@ export default function AboutUsPage() {
           {/* Organization overview */}
           <section className="mt-10">
             <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
-              <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-8">
+              <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-8">
                 <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
                   How we support people
                 </h2>
@@ -76,7 +76,7 @@ export default function AboutUsPage() {
                         <svg
                           aria-hidden="true"
                           viewBox="0 0 24 24"
-                          className="h-5 w-5 text-[#176345]"
+                          className="h-5 w-5 text-[#009EDB]"
                           fill="none"
                         >
                           <path
@@ -95,7 +95,7 @@ export default function AboutUsPage() {
                         <svg
                           aria-hidden="true"
                           viewBox="0 0 24 24"
-                          className="h-5 w-5 text-[#176345]"
+                          className="h-5 w-5 text-[#009EDB]"
                           fill="none"
                         >
                           <path
@@ -120,7 +120,7 @@ export default function AboutUsPage() {
                         <svg
                           aria-hidden="true"
                           viewBox="0 0 24 24"
-                          className="h-5 w-5 text-[#176345]"
+                          className="h-5 w-5 text-[#009EDB]"
                           fill="none"
                         >
                           <path
@@ -157,7 +157,7 @@ export default function AboutUsPage() {
                         <svg
                           aria-hidden="true"
                           viewBox="0 0 24 24"
-                          className="h-5 w-5 text-[#176345]"
+                          className="h-5 w-5 text-[#009EDB]"
                           fill="none"
                         >
                           <path
@@ -172,7 +172,7 @@ export default function AboutUsPage() {
                   ].map((c) => (
                     <div
                       key={c.title}
-                      className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4"
+                      className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4"
                     >
                       <div className="flex items-center gap-3">
                         <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white ring-1 ring-neutral-200">
@@ -190,7 +190,7 @@ export default function AboutUsPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#dce5de] bg-[#f1f5f0] p-6 sm:p-8">
+              <div className="rounded-2xl border border-[#D9E2EC] bg-[#F7FAFC] p-6 sm:p-8">
                 <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
                   Our promise
                 </h3>
@@ -231,7 +231,7 @@ export default function AboutUsPage() {
           {/* Vision & Mission */}
           <section className="mt-10">
             <div className="grid gap-5 lg:grid-cols-2">
-              <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-8">
+              <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-8">
                 <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
                   Vision
                 </h2>
@@ -239,7 +239,7 @@ export default function AboutUsPage() {
                   {`A world where every human being has opportunity, dignity, and support to live a better life.`}
                 </p>
               </div>
-              <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-8">
+              <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-8">
                 <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
                   Mission
                 </h2>
@@ -268,30 +268,30 @@ export default function AboutUsPage() {
                   title: "Dignity and Safety",
                   body: "We design support that respects people’s choices and protects wellbeing.",
                   icon: "heart",
-                  cls: "bg-[#edf5ef] ring-[#d6e3d8] text-[#176345]",
+                  cls: "bg-[#EAF6FB] ring-[#D9E2EC] text-[#009EDB]",
                 },
                 {
                   title: "Transparent Giving",
                   body: "We share clear updates and learning notes so supporters can follow progress.",
                   icon: "report",
-                  cls: "bg-[#edf5ef] ring-[#d6e3d8] text-[#176345]",
+                  cls: "bg-[#EAF6FB] ring-[#D9E2EC] text-[#009EDB]",
                 },
                 {
                   title: "Community Partnership",
                   body: "Local people guide priorities, delivery, and feedback.",
                   icon: "users",
-                  cls: "bg-[#edf5ef] ring-[#d6e3d8] text-[#176345]",
+                  cls: "bg-[#EAF6FB] ring-[#D9E2EC] text-[#009EDB]",
                 },
                 {
                   title: "Sustainable Change",
                   body: "We support practices that endure—skills, stewardship, and community ownership.",
                   icon: "leaf",
-                  cls: "bg-[#edf5ef] ring-[#d6e3d8] text-[#176345]",
+                  cls: "bg-[#EAF6FB] ring-[#D9E2EC] text-[#17634B]",
                 },
               ].map((v) => (
                 <div
                   key={v.title}
-                  className="rounded-xl border border-[#dce5de] bg-white p-6 transition-shadow hover:shadow-md"
+                  className="rounded-xl border border-[#D9E2EC] bg-white p-6 transition-shadow hover:shadow-md"
                 >
                   <div className="flex items-center gap-3">
                     <span
@@ -401,7 +401,7 @@ export default function AboutUsPage() {
           </section>
 
           {/* Why One World Hands exists */}
-          <section className="mt-10 rounded-2xl border border-[#dce5de] bg-[#f1f5f0] p-6 sm:p-10">
+          <section className="mt-10 rounded-2xl border border-[#D9E2EC] bg-[#F7FAFC] p-6 sm:p-10">
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
               <div>
                 <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
@@ -431,7 +431,7 @@ export default function AboutUsPage() {
                         <svg
                           aria-hidden="true"
                           viewBox="0 0 24 24"
-                          className="h-3.5 w-3.5 text-[#176345]"
+                          className="h-3.5 w-3.5 text-[#009EDB]"
                           fill="none"
                         >
                           <path
@@ -455,7 +455,7 @@ export default function AboutUsPage() {
 
           {/* Optional timeline / future goal */}
           <section className="mt-10">
-            <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
+            <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
               <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
                 Looking Ahead
               </h2>
@@ -481,7 +481,7 @@ export default function AboutUsPage() {
                 ].map((step) => (
                   <div
                     key={step.title}
-                    className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-5"
+                    className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-5"
                   >
                     <p className="text-sm font-semibold text-neutral-950">
                       {step.title}

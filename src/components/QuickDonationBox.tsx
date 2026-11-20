@@ -121,7 +121,7 @@ export default function QuickDonationBox({
   return (
     <section aria-labelledby="quick-donate-title" id="quick-donation">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-[#174b37] bg-[#2698C8] p-6 shadow-[0_20px_55px_-35px_rgba(23,61,48,0.65)] sm:p-8">
+        <div className="rounded-2xl border border-[#174A70] bg-[#009EDB] p-6 shadow-[0_20px_55px_-35px_rgba(23,74,112,0.35)] sm:p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h2
@@ -138,22 +138,22 @@ export default function QuickDonationBox({
 
           {status.kind === "success" ? (
             <div
-              className="mt-6 rounded-2xl border border-green-200 bg-green-50 p-6"
+              className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-6"
               role="status"
               aria-live="polite"
             >
-              <p className="text-sm font-semibold text-green-900">
+              <p className="text-sm font-semibold text-[#17634B]">
                 Thank you for your support.
               </p>
-              <p className="mt-2 text-sm leading-6 text-green-800">
+              <p className="mt-2 text-sm leading-6 text-[#174A70]">
                 Donation saved:{" "}
                 <span className="font-semibold">৳ {status.amount}</span> to{" "}
                 <span className="font-semibold">{status.fundName}</span>.
               </p>
-              <p className="mt-2 text-sm leading-6 text-green-800">
+              <p className="mt-2 text-sm leading-6 text-[#174A70]">
                 Contact: <span className="font-semibold">{status.contact}</span>
               </p>
-              <p className="mt-2 text-xs leading-5 text-green-700">
+              <p className="mt-2 text-xs leading-5 text-[#17634B]">
                 Your donation request has been recorded in the system with
                 pending status.
               </p>
@@ -182,7 +182,7 @@ export default function QuickDonationBox({
                     name="donationFund"
                     value={fundId}
                     onChange={(e) => setFundId(e.target.value)}
-                    className="h-12 rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-[#9bc6a7]"
+                    className="h-12 rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-[#174A70]"
                   >
                     <option value="" disabled>
                       Select a fund
@@ -209,7 +209,7 @@ export default function QuickDonationBox({
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
                     placeholder="Type mobile/email"
-                    className="h-12 w-full rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#9bc6a7]"
+                    className="h-12 w-full rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#174A70]"
                   />
                 </div>
 
@@ -232,7 +232,7 @@ export default function QuickDonationBox({
                       min={1}
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
-                      className="h-12 w-full rounded-lg border border-white/15 bg-white pl-8 pr-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-[#9bc6a7]"
+                      className="h-12 w-full rounded-lg border border-white/15 bg-white pl-8 pr-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-[#174A70]"
                       aria-describedby="donation-hint"
                     />
                   </div>
@@ -245,7 +245,7 @@ export default function QuickDonationBox({
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex h-12 items-center justify-center rounded-full bg-[#dcebdd] px-6 text-sm font-semibold text-[#173d30] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                    className="inline-flex h-12 items-center justify-center rounded-full bg-[#EAF6FB] px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
                   >
                     {submitting ? "Saving..." : "Donate Now"}
                   </button>

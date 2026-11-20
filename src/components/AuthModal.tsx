@@ -53,7 +53,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             <div>
               <h2
                 id="auth-modal-title"
-                className="text-2xl font-semibold tracking-tight text-[#183b2c]"
+                className="text-2xl font-semibold tracking-tight text-[#174A70]"
               >
                 {mode === "login" ? "Welcome Back" : "Create an Account"}
               </h2>
@@ -67,7 +67,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#dce5de] bg-white text-neutral-700 transition-colors hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#D9E2EC] bg-white text-neutral-700 transition-colors hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
               aria-label="Close authentication modal"
             >
               <svg
@@ -86,14 +86,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             </button>
           </div>
 
-          <div className="mt-5 inline-flex rounded-xl border border-[#dce5de] bg-[#f7faf7] p-1">
+          <div className="mt-5 inline-flex rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-1">
             <button
               type="button"
               onClick={() => setMode("login")}
               className={[
                 "rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
                 mode === "login"
-                  ? "bg-white text-[#176345] shadow-sm"
+                  ? "bg-white text-[#009EDB] shadow-sm"
                   : "text-neutral-600 hover:text-neutral-900",
               ].join(" ")}
             >
@@ -106,7 +106,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
               className={[
                 "rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
                 mode === "signup"
-                  ? "bg-white text-[#176345] shadow-sm"
+                  ? "bg-white text-[#009EDB] shadow-sm"
                   : "text-neutral-600 hover:text-neutral-900",
               ].join(" ")}
             >
@@ -128,7 +128,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                   name="email"
                   type="email"
                   placeholder="Enter your email"
-                  className="h-11 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+                  className="h-11 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                   required
                 />
               </div>
@@ -145,14 +145,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                   name="password"
                   type="password"
                   placeholder="Enter your password"
-                  className="h-11 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+                  className="h-11 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                   required
                 />
               </div>
 
               <button
                 type="submit"
-                className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#176345] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+                className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#009EDB] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
               >
                 Sign In
               </button>
@@ -163,8 +163,8 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             </form>
           ) : (
             <div className="mt-5 space-y-4">
-              <div className="rounded-xl border border-[#dce5de] bg-[#f6f8f5] p-4">
-                <p className="text-sm leading-6 text-[#52645a]">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
+                <p className="text-sm leading-6 text-[#475569]">
                   Public sign-up is currently disabled. Account creation should be
                   managed by your organization.
                 </p>

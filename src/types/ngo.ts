@@ -14,7 +14,7 @@ export type Program = {
     ring: string; // Tailwind ring utility (e.g. "ring-sky-200")
     text: string; // Tailwind text utility (e.g. "text-sky-700")
     gradientFrom: string; // e.g. "from-sky-500"
-    gradientTo: string; // e.g. "to-green-500")
+    gradientTo: string; // e.g. "to-blue-500")
   };
 };
 
@@ -27,11 +27,11 @@ export type DonationFund = {
   categoryLabel?: string; // Optional label shown on Donation Funds page
   href: string;
   accent: {
-    bg: string; // e.g. "bg-green-50"
-    ring: string; // e.g. "ring-green-200")
-    text: string; // e.g. "text-green-700")
-    gradientFrom: string; // e.g. "from-green-500")
-    gradientTo: string; // e.g. "to-sky-500")
+    bg: string; // e.g. "bg-sky-50"
+    ring: string; // e.g. "ring-sky-200")
+    text: string; // e.g. "text-sky-700")
+    gradientFrom: string; // e.g. "from-sky-500")
+    gradientTo: string; // e.g. "to-blue-500")
   };
 };
 

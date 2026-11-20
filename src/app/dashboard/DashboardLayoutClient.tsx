@@ -13,10 +13,10 @@ export default function DashboardLayoutClient({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#f1f5f0] text-slate-950">
+    <div className="min-h-screen bg-[#F7FAFC] text-slate-950">
       <DashboardSidebar open={mobileOpen} onClose={() => setMobileOpen(false)} />
       <div className="min-w-0 lg:pl-[276px]">
-        <header className="sticky top-0 z-30 flex h-[72px] items-center border-b border-[#dce5de] bg-white/95 px-4 backdrop-blur lg:px-8">
+        <header className="sticky top-0 z-30 flex h-[72px] items-center border-b border-[#D9E2EC] bg-white/95 px-4 backdrop-blur lg:px-8">
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
@@ -26,12 +26,12 @@ export default function DashboardLayoutClient({
             <FiMenu className="text-xl" />
           </button>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">Administration</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">Administration</p>
             <p className="text-sm font-semibold text-slate-900">One World Hands</p>
           </div>
           <Link
             href="/"
-            className="ml-auto rounded-lg border border-[#dce5de] px-3 py-2 text-sm font-semibold text-[#365b47] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1]"
+            className="ml-auto rounded-lg border border-[#D9E2EC] px-3 py-2 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
           >
             View website
           </Link>

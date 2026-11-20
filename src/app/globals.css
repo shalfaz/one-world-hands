@@ -2,15 +2,15 @@
 
 :root {
   color-scheme: light;
-  --background: #f8faf8;
-  --foreground: #172b22;
-  --brand: #176345;
-  --brand-strong: #104b34;
-  --brand-soft: #edf5ef;
+  --background: #F7FAFC;
+  --foreground: #102a43;
+  --brand: #009EDB;
+  --brand-strong: #174A70;
+  --brand-soft: #EAF6FB;
   --surface: #ffffff;
-  --muted: #64736a;
-  --border: #dce5de;
-  --accent: #c99a53;
+  --muted: #475569;
+  --border: #D9E2EC;
+  --accent: #17634B;
 }
 
 @theme inline {
@@ -41,8 +41,8 @@ body {
 }
 
 ::selection {
-  background: #d9e9dc;
-  color: #173c2a;
+  background: #EAF6FB;
+  color: #174A70;
 }
 
 a,

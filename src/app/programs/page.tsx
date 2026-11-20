@@ -32,13 +32,13 @@ export default async function ProgramsPage() {
     <PageShell>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           {/* Hero intro */}
-          <section className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
+          <section className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
                   What we do
                 </p>
-                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
+                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
                   Programs
                 </h1>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
@@ -53,13 +53,13 @@ export default async function ProgramsPage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/donation-funds"
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
                 >
                   Donate Now
                 </Link>
                 <Link
                   href="/resources"
-                  className="inline-flex h-11 items-center justify-center rounded-full border border-[#dce5de] bg-white px-6 text-sm font-semibold text-[#365b47] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-6 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
                 >
                   Explore Resources
                 </Link>
@@ -76,7 +76,7 @@ export default async function ProgramsPage() {
                 ))}
               </div>
             ) : (
-              <div className="rounded-2xl border border-dashed border-[#cbd8cd] bg-white p-12 text-center">
+              <div className="rounded-2xl border border-dashed border-[#D9E2EC] bg-white p-12 text-center">
                 <p className="text-neutral-600 text-lg font-semibold">
                   No programs available at the moment
                 </p>
@@ -89,8 +89,8 @@ export default async function ProgramsPage() {
 
           {/* Category explanation */}
           {programs.length > 0 && (
-            <section className="mt-12 rounded-2xl border border-[#dce5de] bg-[#f1f5f0] p-6 sm:p-8">
-              <h2 className="text-xl font-semibold tracking-tight text-[#183b2c]">
+            <section className="mt-12 rounded-2xl border border-[#D9E2EC] bg-[#F7FAFC] p-6 sm:p-8">
+              <h2 className="text-xl font-semibold tracking-tight text-[#174A70]">
                 Program Categories
               </h2>
               <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -102,13 +102,13 @@ export default async function ProgramsPage() {
                   { title: "Emergency Relief", description: "Crisis response and disaster aid", icon: FaLifeRing },
                   { title: "Other", description: "Special initiatives and projects", icon: FaTag },
                 ].map(({ title, description, icon: Icon }) => (
-                  <div key={title} className="flex items-start gap-3 rounded-xl border border-[#dce5de] bg-white p-4">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#edf5ef] text-[#176345]">
+                  <div key={title} className="flex items-start gap-3 rounded-xl border border-[#D9E2EC] bg-white p-4">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#EAF6FB] text-[#009EDB]">
                       <Icon aria-hidden="true" />
                     </span>
                     <div>
-                      <h3 className="text-sm font-semibold text-[#234333]">{title}</h3>
-                      <p className="mt-1 text-xs leading-5 text-[#65766b]">{description}</p>
+                      <h3 className="text-sm font-semibold text-[#174A70]">{title}</h3>
+                      <p className="mt-1 text-xs leading-5 text-[#627D98]">{description}</p>
                     </div>
                   </div>
                 ))}

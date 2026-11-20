@@ -33,11 +33,11 @@ export default async function DashboardPage() {
 
   return (
     <div>
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">Overview</p>
-              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#183b2c]">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">Overview</p>
+              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#174A70]">
                 NGO Admin Dashboard
               </h1>
               <p className="mt-2 text-sm text-slate-600">
@@ -48,28 +48,28 @@ export default async function DashboardPage() {
         </div>
 
         <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-6">
-          <div className="rounded-xl border border-[#dce5de] bg-white p-5">
+          <div className="rounded-xl border border-[#D9E2EC] bg-white p-5">
             <p className="text-sm text-slate-500">Total Amount</p>
             <h3 className="mt-3 text-3xl font-bold text-slate-950">
               ৳ {totalDonationsAmount.toLocaleString()}
             </h3>
           </div>
 
-          <div className="rounded-xl border border-[#dce5de] bg-white p-5">
+          <div className="rounded-xl border border-[#D9E2EC] bg-white p-5">
             <p className="text-sm text-slate-500">Total Donations</p>
             <h3 className="mt-3 text-3xl font-bold text-slate-950">
               {donationsCount || 0}
             </h3>
           </div>
 
-          <div className="rounded-xl border border-[#dce5de] bg-white p-5">
+          <div className="rounded-xl border border-[#D9E2EC] bg-white p-5">
             <p className="text-sm text-slate-500">Total Donors</p>
             <h3 className="mt-3 text-3xl font-bold text-slate-950">
               {donorsCount || 0}
             </h3>
           </div>
 
-          <div className="rounded-xl border border-[#dce5de] bg-white p-5">
+          <div className="rounded-xl border border-[#D9E2EC] bg-white p-5">
             <p className="text-sm text-slate-500">Funds</p>
             <h3 className="mt-3 text-3xl font-bold text-slate-950">
               {fundsCount || 0}
@@ -79,7 +79,7 @@ export default async function DashboardPage() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-[#dce5de] bg-white p-5">
+          <div className="rounded-xl border border-[#D9E2EC] bg-white p-5">
             <p className="text-sm text-slate-500">Programs</p>
             <h3 className="mt-3 text-3xl font-bold text-slate-950">
               {programsCount || 0}
@@ -89,7 +89,7 @@ export default async function DashboardPage() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-[#dce5de] bg-white p-5">
+          <div className="rounded-xl border border-[#D9E2EC] bg-white p-5">
             <p className="text-sm text-slate-500">Resources</p>
             <h3 className="mt-3 text-3xl font-bold text-slate-950">
               {resourcesCount || 0}
@@ -98,8 +98,8 @@ export default async function DashboardPage() {
         </div>
 
         <div className="mt-6 grid gap-6 xl:grid-cols-[1.3fr_1fr]">
-          <section className="rounded-2xl border border-[#dce5de] bg-white p-6">
-            <h2 className="text-lg font-semibold text-[#183b2c]">Recent Donations</h2>
+          <section className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
+            <h2 className="text-lg font-semibold text-[#174A70]">Recent Donations</h2>
             <p className="mt-1 text-sm text-slate-500">
               Latest donation records from database.
             </p>
@@ -144,8 +144,8 @@ export default async function DashboardPage() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-[#dce5de] bg-white p-6">
-            <h2 className="text-lg font-semibold text-[#183b2c]">Latest Funds</h2>
+          <section className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
+            <h2 className="text-lg font-semibold text-[#174A70]">Latest Funds</h2>
             <p className="mt-1 text-sm text-slate-500">
               Real funds from database.
             </p>
@@ -154,14 +154,14 @@ export default async function DashboardPage() {
               {topFunds?.map((fund) => (
                 <div
                   key={fund.id}
-                  className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4"
+                  className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <h3 className="font-semibold text-slate-900">{fund.name}</h3>
                       <p className="mt-1 text-sm text-slate-500">{fund.category}</p>
                     </div>
-                    <span className="rounded-full bg-[#edf5ef] px-3 py-1 text-xs font-semibold text-[#45624e]">
+                    <span className="rounded-full bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70]">
                       {fund.status}
                     </span>
                   </div>

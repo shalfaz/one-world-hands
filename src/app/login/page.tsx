@@ -65,12 +65,12 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
   return (
     <PageShell>
-    <div className="flex min-h-[calc(100vh-120px)] items-center justify-center bg-[#f1f5f0] px-4 py-12">
+    <div className="flex min-h-[calc(100vh-120px)] items-center justify-center bg-[#F7FAFC] px-4 py-12">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="mb-8 text-center">
           <div className="mb-4 flex justify-center">
-            <div className="rounded-xl bg-[#176345] p-3">
+            <div className="rounded-xl bg-[#009EDB] p-3">
               <svg
                 className="h-8 w-8 text-white"
                 fill="none"
@@ -86,7 +86,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               </svg>
             </div>
           </div>
-          <h1 className="text-3xl font-semibold tracking-tight text-[#183b2c]">
+          <h1 className="text-3xl font-semibold tracking-tight text-[#174A70]">
             Welcome Back
           </h1>
           <p className="mt-2 text-sm text-slate-600">
@@ -117,7 +117,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         )}
 
         {/* Login Form */}
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-7 sm:p-8">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-7 sm:p-8">
           <form action={loginUser} className="space-y-4">
             <div>
               <label
@@ -131,7 +131,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 name="email"
                 type="email"
                 placeholder="you@example.com"
-                className="h-12 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+                className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 required
               />
             </div>
@@ -148,7 +148,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 name="password"
                 type="password"
                 placeholder="Enter your password"
-                className="h-12 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+                className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 required
               />
             </div>
@@ -157,18 +157,18 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  className="h-4 w-4 rounded border-slate-300 text-[#176345] focus:ring-[#176345]"
+                  className="h-4 w-4 rounded border-slate-300 text-[#009EDB] focus:ring-[#009EDB]"
                 />
                 <span className="text-sm text-slate-600">Remember me</span>
               </label>
-              <a href="/forgot-password" className="text-sm font-semibold text-[#176345] hover:text-[#104b34]">
+              <a href="/forgot-password" className="text-sm font-semibold text-[#174A70] hover:text-[#009EDB]">
                 Forgot password?
               </a>
             </div>
 
             <button
               type="submit"
-              className="mt-6 h-12 w-full rounded-full bg-[#176345] font-semibold text-white transition-colors hover:bg-[#104b34]"
+              className="mt-6 h-12 w-full rounded-full bg-[#009EDB] font-semibold text-white transition-colors hover:bg-[#0088be]"
             >
               Sign In
             </button>
@@ -184,7 +184,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           {/* Signup Link */}
           <Link
             href="/signup"
-            className="block rounded-full border border-[#b8d2c0] py-3 text-center font-semibold text-[#176345] transition-colors hover:bg-[#f1f6f1]"
+            className="block rounded-full border border-[#D9E2EC] py-3 text-center font-semibold text-[#009EDB] transition-colors hover:bg-[#EAF6FB]"
           >
             Create an Account
           </Link>
@@ -194,17 +194,17 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <div className="mt-6 text-center">
           <Link
             href="/"
-            className="text-sm font-medium text-slate-600 transition-colors hover:text-[#176345]"
+            className="text-sm font-medium text-slate-600 transition-colors hover:text-[#009EDB]"
           >
             ← Back to Website
           </Link>
         </div>
 
         {/* Security Info */}
-        <div className="mt-8 rounded-xl border border-[#dce5de] bg-white p-4">
+        <div className="mt-8 rounded-xl border border-[#D9E2EC] bg-white p-4">
           <div className="flex gap-3">
             <svg
-              className="h-5 w-5 shrink-0 text-green-600"
+              className="h-5 w-5 shrink-0 text-[#009EDB]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

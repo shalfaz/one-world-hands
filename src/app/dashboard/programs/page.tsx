@@ -55,25 +55,25 @@ function ProgramsContent() {
   const activeCount = programs.filter((p) => p.status === "active").length;
 
   return (
-    <div className="flex min-h-screen w-full flex-col gap-6 bg-[#f1f5f0]">
-      <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+    <div className="flex min-h-screen w-full flex-col gap-6 bg-[#F7FAFC]">
+      <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
         <div className="flex flex-col gap-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">Programs</p>
-            <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#183b2c]">Programs Management</h1>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">Programs</p>
+            <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#174A70]">Programs Management</h1>
             <p className="mt-2 text-sm text-slate-500">
               Total programs: {programs.length} | Active: {activeCount}
             </p>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+            <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
               <p className="text-xs font-medium text-neutral-500">Total Programs</p>
-              <p className="mt-1 text-2xl font-semibold text-[#183b2c]">{programs.length}</p>
+              <p className="mt-1 text-2xl font-semibold text-[#174A70]">{programs.length}</p>
             </div>
-            <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+            <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
               <p className="text-xs font-medium text-neutral-500">Active</p>
-              <p className="mt-1 text-2xl font-semibold text-[#183b2c]">{activeCount}</p>
+              <p className="mt-1 text-2xl font-semibold text-[#174A70]">{activeCount}</p>
             </div>
           </div>
 
@@ -107,7 +107,7 @@ function ProgramsContent() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+      <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
         <h2 className="mb-4 text-lg font-semibold text-slate-900">All Programs</h2>
         {loading ? (
           <div className="flex h-40 items-center justify-center text-slate-500">Loading programs...</div>

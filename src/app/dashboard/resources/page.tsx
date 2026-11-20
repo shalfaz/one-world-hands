@@ -91,13 +91,13 @@ function ResourcesContent() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col gap-6 bg-[#f1f5f0]">
+    <div className="flex min-h-screen w-full flex-col gap-6 bg-[#F7FAFC]">
         {/* Header Section */}
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <div className="flex flex-col gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">Resources</p>
-              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#183b2c]">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">Resources</p>
+              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#174A70]">
                 Resources Management
               </h1>
               <p className="mt-2 text-sm text-slate-500">
@@ -107,33 +107,33 @@ function ResourcesContent() {
 
             {/* Statistics Cards */}
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Total</p>
-                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-2xl font-semibold text-[#174A70]">
                   {resources.length}
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Photos</p>
-                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-2xl font-semibold text-[#174A70]">
                   {typeBreakdown.photo}
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Docs</p>
-                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-2xl font-semibold text-[#174A70]">
                   {typeBreakdown.document}
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Webinars</p>
-                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-2xl font-semibold text-[#174A70]">
                   {typeBreakdown.webinar}
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Published</p>
-                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-2xl font-semibold text-[#174A70]">
                   {publishedCount}
                 </p>
               </div>
@@ -165,7 +165,7 @@ function ResourcesContent() {
         </div>
 
         {/* List Section */}
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 mb-4">
               All Resources

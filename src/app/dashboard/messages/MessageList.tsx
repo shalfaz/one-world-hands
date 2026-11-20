@@ -104,8 +104,8 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                 key={msg._id}
                 onClick={() => void handleSelect(msg)}
                 className={`p-4 cursor-pointer transition hover:bg-slate-50 ${
-                  selectedMessage?._id === msg._id ? "bg-[#f1f6f1]" : ""
-                } ${msg.status === "unread" ? "bg-[#f1f6f1]" : ""}`}
+                  selectedMessage?._id === msg._id ? "bg-[#EAF6FB]" : ""
+                } ${msg.status === "unread" ? "bg-[#EAF6FB]" : ""}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
@@ -114,9 +114,9 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                       <span
                         className={`text-xs px-2 py-1 rounded-full ${
                           msg.status === "unread"
-                            ? "bg-[#dcebdd] text-[#365b47]"
+                            ? "bg-[#EAF6FB] text-[#174A70]"
                             : msg.status === "replied"
-                            ? "bg-green-200 text-green-800"
+                            ? "bg-emerald-50 text-[#17634B]"
                             : "bg-gray-200 text-gray-800"
                         }`}
                       >
@@ -151,9 +151,9 @@ export default function MessageList({ messages }: { messages: Message[] }) {
           </div>
 
           {selectedMessage.reply && (
-            <div className="mt-4 rounded-lg bg-green-50 p-3">
-              <p className="text-xs font-semibold text-green-800">Your Reply</p>
-              <p className="text-sm text-green-700 whitespace-pre-wrap mt-1">
+            <div className="mt-4 rounded-lg bg-[#EAF6FB] p-3">
+              <p className="text-xs font-semibold text-[#174A70]">Your Reply</p>
+              <p className="text-sm text-[#475569] whitespace-pre-wrap mt-1">
                 {selectedMessage.reply}
               </p>
             </div>
@@ -171,7 +171,7 @@ export default function MessageList({ messages }: { messages: Message[] }) {
           <button
             onClick={handleReply}
             disabled={!replyText.trim() || saving}
-            className="mt-2 w-full rounded-lg bg-[#176345] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:bg-slate-300"
+            className="mt-2 w-full rounded-lg bg-[#009EDB] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:bg-slate-300"
           >
             {saving ? "Saving..." : "Save Reply"}
           </button>

@@ -45,7 +45,7 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
           icon: "error",
           title: "Could not save program",
           text: result.error,
-          confirmButtonColor: "#0ea5e9",
+          confirmButtonColor: "#009EDB",
         });
         return;
       }
@@ -56,7 +56,7 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
         text: program
           ? "Program has been updated successfully"
           : "New program has been created successfully",
-        confirmButtonColor: "#0ea5e9",
+        confirmButtonColor: "#009EDB",
       });
       onSuccess?.();
     } catch (error) {
@@ -65,7 +65,7 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
         icon: "error",
         title: "Could not save program",
         text: getDashboardActionError(error, "Please try again."),
-        confirmButtonColor: "#0ea5e9",
+        confirmButtonColor: "#009EDB",
       });
     } finally {
       setLoading(false);
@@ -79,14 +79,14 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
         name="title"
         placeholder="Program title"
         defaultValue={program?.title || ""}
-        className="h-11 rounded-lg border border-[#dce5de] px-4 text-sm outline-none focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+        className="h-11 rounded-lg border border-[#D9E2EC] px-4 text-sm outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
         required
       />
       <select
         name="category"
         defaultValue={program?.category || ""}
         aria-label="Select program category"
-        className="h-11 rounded-lg border border-[#dce5de] px-4 text-sm outline-none focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+        className="h-11 rounded-lg border border-[#D9E2EC] px-4 text-sm outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
         required
       >
         <option value="">Select Category</option>
@@ -101,14 +101,14 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
         name="location"
         placeholder="Location"
         defaultValue={program?.location || ""}
-        className="h-11 rounded-lg border border-[#dce5de] px-4 text-sm outline-none focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+        className="h-11 rounded-lg border border-[#D9E2EC] px-4 text-sm outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
         required
       />
       <select
         name="status"
         defaultValue={program?.status || "draft"}
         aria-label="Select program status"
-        className="h-11 rounded-lg border border-[#dce5de] px-4 text-sm outline-none focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+        className="h-11 rounded-lg border border-[#D9E2EC] px-4 text-sm outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
       >
         <option value="draft">Draft</option>
         <option value="active">Active</option>
@@ -122,7 +122,7 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
         placeholder="Description (optional)"
         defaultValue={program?.description || ""}
         rows={2}
-        className="md:col-span-4 rounded-lg border border-[#dce5de] px-4 py-2 text-sm outline-none focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+        className="md:col-span-4 rounded-lg border border-[#D9E2EC] px-4 py-2 text-sm outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
       />
 
       <textarea
@@ -130,7 +130,7 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
         placeholder="Program objectives"
         defaultValue={program?.objectives || ""}
         rows={2}
-        className="md:col-span-4 rounded-lg border border-[#dce5de] px-4 py-2 text-sm outline-none focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+        className="md:col-span-4 rounded-lg border border-[#D9E2EC] px-4 py-2 text-sm outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
       />
 
       <label className="text-xs font-semibold text-slate-600">Start date
@@ -140,7 +140,7 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
         <input name="endDate" type="date" defaultValue={program?.endDate?.slice(0, 10)} className="mt-2 h-11 w-full rounded-xl border border-slate-200 px-4 text-sm" />
       </label>
       <label className="flex items-end gap-3 pb-3 text-sm font-semibold text-slate-700 md:col-span-2">
-        <input name="published" type="checkbox" value="true" defaultChecked={Boolean(program?.published ?? program?.status === "active")} className="h-4 w-4 rounded text-[#176345]" />
+        <input name="published" type="checkbox" value="true" defaultChecked={Boolean(program?.published ?? program?.status === "active")} className="h-4 w-4 rounded text-[#009EDB]" />
         Published on the website
       </label>
 
@@ -148,7 +148,7 @@ export default function ProgramForm({ program, onSuccess }: { program?: Program;
         <button
           type="submit"
           disabled={loading || imageUploading}
-          className="rounded-full bg-[#176345] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:opacity-50"
+          className="rounded-full bg-[#009EDB] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:opacity-50"
         >
           {imageUploading ? "Uploading image..." : loading ? "Saving..." : program ? "Update Program" : "+ Add New Program"}
         </button>

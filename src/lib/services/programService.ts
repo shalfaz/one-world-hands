@@ -72,11 +72,11 @@ const accentByCategory = {
     gradientTo: "to-blue-600",
   },
   community: {
-    bg: "bg-emerald-50",
-    ring: "ring-emerald-200",
-    text: "text-emerald-700",
-    gradientFrom: "from-emerald-400",
-    gradientTo: "to-emerald-600",
+    bg: "bg-sky-50",
+    ring: "ring-sky-200",
+    text: "text-sky-700",
+    gradientFrom: "from-sky-400",
+    gradientTo: "to-blue-600",
   },
   livelihood: {
     bg: "bg-purple-50",

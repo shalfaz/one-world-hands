@@ -19,7 +19,7 @@ import type { IconType } from "react-icons";
 const categoryColors: Record<string, { bg: string; text: string }> = {
   health: { bg: "bg-rose-50", text: "text-rose-700" },
   education: { bg: "bg-sky-50", text: "text-sky-700" },
-  community: { bg: "bg-[#edf5ef]", text: "text-[#45624e]" },
+  community: { bg: "bg-[#EAF6FB]", text: "text-[#174A70]" },
   livelihood: { bg: "bg-amber-50", text: "text-amber-700" },
   relief: { bg: "bg-orange-50", text: "text-orange-700" },
   other: { bg: "bg-neutral-100", text: "text-neutral-700" },
@@ -98,21 +98,21 @@ export default async function ProgramDetailPage({
         {/* Back Link */}
         <Link
           href="/programs"
-          className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#52715e] transition-colors hover:text-[#176345]"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#174A70] transition-colors hover:text-[#009EDB]"
         >
           ← Back to Programs
         </Link>
 
         {/* Main Content */}
-        <article className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-9">
+        <article className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-9">
           {/* Header */}
-          <div className="mb-8 rounded-xl bg-[#f1f5f0] p-6 sm:p-8">
+          <div className="mb-8 rounded-xl bg-[#F7FAFC] p-6 sm:p-8">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#176345] shadow-sm">
+                <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#009EDB] shadow-sm">
                   <CategoryIcon aria-hidden="true" className="text-lg" />
                 </span>
-                <h1 className="text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
+                <h1 className="text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
                   {String(program.title)}
                 </h1>
               </div>
@@ -123,7 +123,7 @@ export default async function ProgramDetailPage({
           </div>
 
           {program.imageUrl && (
-            <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl bg-[#edf2ed]">
+            <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl bg-[#EAF6FB]">
               <Image
                 src={String(program.imageUrl)}
                 alt=""
@@ -137,16 +137,16 @@ export default async function ProgramDetailPage({
 
           {/* Meta Information */}
           <div className="mb-8 grid gap-3 md:grid-cols-2">
-            <div className="rounded-xl border border-[#e5ebe5] bg-[#fafcf9] p-4">
+            <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Location</p>
               <p className="mt-2 flex items-center gap-2 text-sm font-medium text-neutral-900">
-                <FaLocationDot aria-hidden="true" className="text-[#668570]" />
+                <FaLocationDot aria-hidden="true" className="text-[#009EDB]" />
                 {String(program.location)}
               </p>
             </div>
-            <div className="rounded-xl border border-[#e5ebe5] bg-[#fafcf9] p-4">
+            <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Status</p>
-              <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#176345]">
+              <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#009EDB]">
                 <FaCircleCheck aria-hidden="true" />
                 Active Program
               </p>
@@ -155,17 +155,17 @@ export default async function ProgramDetailPage({
 
           {/* Description */}
           <section className="mb-10">
-            <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#183b2c]">
+            <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#174A70]">
               About This Program
             </h2>
-            <p className="text-base leading-7 text-[#52645a] whitespace-pre-wrap">
+            <p className="text-base leading-7 text-[#475569] whitespace-pre-wrap">
               {String(program.description)}
             </p>
           </section>
 
           {/* Creator Info */}
-          <section className="mb-10 rounded-xl border border-[#dce5de] bg-[#f6f8f5] p-6">
-            <h3 className="mb-4 text-base font-semibold text-[#183b2c]">
+          <section className="mb-10 rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-6">
+            <h3 className="mb-4 text-base font-semibold text-[#174A70]">
               Program Information
             </h3>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -189,7 +189,7 @@ export default async function ProgramDetailPage({
           </section>
 
           {/* CTA Section */}
-          <section className="mb-10 rounded-xl bg-[#173d30] p-6 text-white sm:p-8">
+          <section className="mb-10 rounded-xl bg-[#174A70] p-6 text-white sm:p-8">
             <h2 className="mb-3 text-xl font-semibold">Support This Program</h2>
             <p className="mb-6 max-w-2xl text-sm leading-6 text-white/75">
               Your donation directly helps us continue this vital work and expand
@@ -197,24 +197,24 @@ export default async function ProgramDetailPage({
             </p>
             <Link
               href="/donation-funds"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#dcebdd] px-6 text-sm font-semibold text-[#173d30] transition-colors hover:bg-white"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#EAF6FB] px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-white"
             >
               Donate Now <FaArrowRight aria-hidden="true" className="text-xs" />
             </Link>
           </section>
 
           {/* Resources Link */}
-          <section className="rounded-xl border border-[#dce5de] p-6 sm:p-8">
-            <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#183b2c]">
+          <section className="rounded-xl border border-[#D9E2EC] p-6 sm:p-8">
+            <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#174A70]">
               Learn More
             </h2>
-            <p className="mb-5 text-sm leading-6 text-[#52645a]">
+            <p className="mb-5 text-sm leading-6 text-[#475569]">
               Check out our resources section for more information, case studies, and
               impact reports related to this program.
             </p>
             <Link
               href="/resources"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-[#dce5de] px-5 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1]"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-[#D9E2EC] px-5 text-sm font-semibold text-[#174A70] transition-colors hover:bg-[#EAF6FB]"
             >
               View Resources <FaArrowRight aria-hidden="true" className="text-xs" />
             </Link>
@@ -224,7 +224,7 @@ export default async function ProgramDetailPage({
         {/* Related Programs */}
         {relatedPrograms.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-6 text-2xl font-semibold tracking-tight text-[#183b2c]">
+            <h2 className="mb-6 text-2xl font-semibold tracking-tight text-[#174A70]">
               Similar Programs
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
@@ -235,15 +235,15 @@ export default async function ProgramDetailPage({
                   <Link
                     key={String(relatedProgram._id)}
                     href={`/programs/${relatedProgram._id}`}
-                    className="group rounded-xl border border-[#dce5de] bg-white p-5 transition-all hover:border-[#b8d2c0] hover:shadow-md"
+                    className="group rounded-xl border border-[#D9E2EC] bg-white p-5 transition-all hover:border-[#009EDB] hover:shadow-md"
                   >
-                    <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#edf5ef] text-[#176345]">
+                    <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#EAF6FB] text-[#009EDB]">
                       <RelatedIcon aria-hidden="true" />
                     </span>
-                    <h3 className="font-semibold text-[#183b2c] transition-colors group-hover:text-[#176345]">
+                    <h3 className="font-semibold text-[#174A70] transition-colors group-hover:text-[#009EDB]">
                       {String(relatedProgram.title)}
                     </h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#5b6d62]">
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#475569]">
                       {String(relatedProgram.description)}
                     </p>
                   </Link>
@@ -257,7 +257,7 @@ export default async function ProgramDetailPage({
         <div className="mt-12 text-center">
           <Link
             href="/programs"
-            className="inline-flex items-center gap-2 rounded-full border border-[#dce5de] bg-white px-6 py-3 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
           >
             ← Explore All Programs
           </Link>

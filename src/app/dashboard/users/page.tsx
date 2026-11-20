@@ -53,11 +53,11 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
   const totalPages = Math.ceil(totalUsers / USERS_PER_PAGE);
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f0" }}>
+    <div className="flex min-h-screen" style={{ backgroundColor: "#F7FAFC" }}>
       <div className="w-full">
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">Users</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c]">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">Users</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70]">
             User Management
           </h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
@@ -66,8 +66,8 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
           </p>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-[#dce5de] bg-white p-6">
-          <h2 className="text-lg font-semibold text-[#183b2c]">
+        <div className="mt-6 rounded-2xl border border-[#D9E2EC] bg-white p-6">
+          <h2 className="text-lg font-semibold text-[#174A70]">
             Create New User
           </h2>
 
@@ -79,7 +79,7 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
           )}
         </div>
 
-        <div className="mt-6 rounded-2xl border border-[#dce5de] bg-white p-6">
+        <div className="mt-6 rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-xl font-semibold text-slate-950">
@@ -139,7 +139,7 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
                         href={`?page=${page}`}
                         className={`rounded-md px-3 py-2 text-sm font-semibold ${
                           page === currentPage
-                            ? "bg-[#176345] text-white"
+                            ? "bg-[#009EDB] text-white"
                             : "border border-slate-300 text-slate-700 hover:bg-slate-50"
                         }`}
                       >

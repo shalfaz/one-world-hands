@@ -24,11 +24,11 @@ export default async function DonationsPage() {
 
   return (
     <div>
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">Donations</p>
-              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#183b2c]">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">Donations</p>
+              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#174A70]">
                 Donations Management
               </h1>
               <p className="mt-2 text-sm text-slate-500">
@@ -38,7 +38,7 @@ export default async function DonationsPage() {
           </div>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-[#dce5de] bg-white p-6">
+        <div className="mt-6 rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <DonationList donations={serializedDonations} />
         </div>
     </div>

@@ -94,8 +94,8 @@ export default function Header() {
       aria-pressed={language === value}
       className={`min-w-9 rounded-md px-2 py-1.5 text-xs font-bold transition-colors ${
         language === value
-          ? "bg-white text-[#174b37] shadow-sm"
-          : "text-neutral-500 hover:text-[#174b37]"
+          ? "bg-white text-[#174A70] shadow-sm"
+          : "text-white/85 hover:text-white"
       }`}
     >
       {label}
@@ -103,7 +103,7 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#e1e9e2] bg-[#2698C8] backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-white/20 bg-[#009EDB] backdrop-blur">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-[76px] items-center justify-between gap-5">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
@@ -131,8 +131,8 @@ export default function Header() {
                 aria-current={isActive(item.href) ? "page" : undefined}
                 className={`rounded-lg px-3 py-2.5 text-sm transition-colors xl:px-3.5 ${
                   isActive(item.href)
-                    ? "bg-[#edf5ef] font-semibold text-[#176345]"
-                    : "font-medium text-white hover:bg-neutral-50 hover:text-[#176345]"
+                    ? "bg-[#EAF6FB] font-semibold text-[#174A70]"
+                    : "font-medium text-white hover:bg-white/15 hover:text-white"
                 }`}
               >
                 {item.label}
@@ -141,7 +141,7 @@ export default function Header() {
           </nav>
 
           <div className="ml-auto flex shrink-0 items-center gap-2.5 lg:ml-0">
-            <div className="hidden overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 p-0.5 sm:flex" aria-label="Language">
+            <div className="hidden overflow-hidden rounded-lg border border-white/30 bg-white/15 p-0.5 sm:flex" aria-label="Language">
               {languageButton("bn", "বাং")}
               {languageButton("en", "EN")}
             </div>
@@ -154,16 +154,16 @@ export default function Header() {
                   aria-label="Open user menu"
                   title="Profile"
                   aria-expanded={userDropdownOpen}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 transition-colors hover:border-[#b8d2c0] hover:text-[#176345]"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:border-white/60 hover:bg-white/20 hover:text-white"
                 >
                   <FaUser className="h-3.5 w-3.5" />
                 </button>
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-3 w-56 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xl shadow-[#183b2c]/10">
-                    <div className="border-b border-neutral-100 bg-[#f7faf7] px-4 py-3">
+                  <div className="absolute right-0 mt-3 w-56 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xl shadow-[#174A70]/10">
+                    <div className="border-b border-neutral-100 bg-[#F7FAFC] px-4 py-3">
                       <p className="text-sm font-semibold text-neutral-900">{userName}</p>
                       <p className="mt-0.5 text-xs text-neutral-500">{userEmail}</p>
-                      <span className="mt-2 inline-block rounded-full bg-[#edf5ef] px-2.5 py-1 text-xs font-semibold capitalize text-[#176345]">
+                      <span className="mt-2 inline-block rounded-full bg-[#EAF6FB] px-2.5 py-1 text-xs font-semibold capitalize text-[#174A70]">
                         {userRole}
                       </span>
                     </div>
@@ -190,7 +190,7 @@ export default function Header() {
                 href="/login"
                 aria-label="Account"
                 title="Account"
-                className="hidden h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 transition-colors hover:border-[#b8d2c0] hover:text-[#176345] sm:inline-flex"
+                className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:border-white/60 hover:bg-white/20 hover:text-white sm:inline-flex"
               >
                 <FaUser className="h-3.5 w-3.5" />
               </Link>
@@ -198,7 +198,7 @@ export default function Header() {
 
             <Link
               href="/donation-funds"
-              className="hidden h-10 items-center rounded-full bg-[#176345] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2 sm:inline-flex"
+              className="hidden h-10 items-center rounded-full bg-[#174A70] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#103652] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#174A70] focus-visible:ring-offset-2 sm:inline-flex"
             >
               <span>Donate</span>
             </Link>
@@ -206,7 +206,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors hover:bg-[#edf5ef] lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors hover:bg-white/15 lg:hidden"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -239,7 +239,7 @@ export default function Header() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="border-t border-neutral-100 py-4 lg:hidden">
+          <div className="border-t border-white/20 py-4 lg:hidden">
             <div className="space-y-1">
               {navItems.map((item) => (
                 <Link
@@ -249,17 +249,17 @@ export default function Header() {
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={`block rounded-lg px-4 py-3 text-sm transition-colors ${
                     isActive(item.href)
-                      ? "bg-[#edf5ef] font-semibold text-[#176345]"
-                      : "font-medium text-neutral-700 hover:bg-neutral-50"
+                      ? "bg-[#EAF6FB] font-semibold text-[#174A70]"
+                      : "font-medium text-white hover:bg-white/15"
                   }`}
                 >
                   {item.label}
                 </Link>
               ))}
 
-              <div className="mt-3 space-y-2 border-t border-neutral-100 pt-4">
+              <div className="mt-3 space-y-2 border-t border-white/20 pt-4">
                 <div className="flex">
-                  <div className="flex w-full overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 p-0.5" aria-label="Language">
+                  <div className="flex w-full overflow-hidden rounded-lg border border-white/30 bg-white/15 p-0.5" aria-label="Language">
                     <div className="flex w-full [&>button]:flex-1">
                       {languageButton("bn", "বাং")}
                       {languageButton("en", "EN")}
@@ -269,7 +269,7 @@ export default function Header() {
                 <Link
                   href="/donation-funds"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex h-11 w-full items-center justify-center rounded-full bg-[#176345] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#104b34]"
+                  className="flex h-11 w-full items-center justify-center rounded-full bg-[#174A70] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#103652]"
                 >
                   Donate
                 </Link>
@@ -280,7 +280,7 @@ export default function Header() {
                       <Link
                         href="/dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
+                        className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                       >
                         Admin Dashboard
                       </Link>
@@ -289,7 +289,7 @@ export default function Header() {
                       <Link
                         href="/employee-dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
+                        className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                       >
                         Employee Dashboard
                       </Link>
@@ -298,7 +298,7 @@ export default function Header() {
                       <Link
                         href="/volunteer-dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
+                        className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                       >
                         Volunteer Dashboard
                       </Link>
@@ -306,7 +306,7 @@ export default function Header() {
                     <Link
                       href="/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
+                      className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                     >
                       Profile
                     </Link>
@@ -323,7 +323,7 @@ export default function Header() {
                   <Link
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
+                    className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                   >
                     Account
                   </Link>

@@ -23,7 +23,7 @@ export default function DashboardSidebar({ open = false, onClose }: { open?: boo
   const content = (
     <>
       <div className="flex h-[72px] items-center border-b border-white/10 px-5">
-        <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#377b57] text-sm font-bold text-white">OW</div>
+        <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#009EDB] text-sm font-bold text-white">OW</div>
         <div className="ml-3 min-w-0">
           <p className="truncate text-sm font-bold text-white">One World Hands</p>
           <p className="text-xs text-slate-400">Administration</p>
@@ -41,8 +41,8 @@ export default function DashboardSidebar({ open = false, onClose }: { open?: boo
           const active = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href));
           const Icon = item.icon;
           return (
-            <Link key={item.name} href={item.href} onClick={onClose} className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${active ? "bg-[#377b57] text-white" : "text-slate-300 hover:bg-white/[0.07] hover:text-white"}`}>
-              <Icon className={`text-lg ${active ? "text-white" : "text-slate-400 group-hover:text-[#b7d5bd]"}`} />
+            <Link key={item.name} href={item.href} onClick={onClose} className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${active ? "bg-[#009EDB] text-white" : "text-slate-300 hover:bg-white/[0.07] hover:text-white"}`}>
+              <Icon className={`text-lg ${active ? "text-white" : "text-slate-400 group-hover:text-[#009EDB]"}`} />
               {item.name}
             </Link>
           );
@@ -60,11 +60,11 @@ export default function DashboardSidebar({ open = false, onClose }: { open?: boo
 
   return (
     <>
-      <aside className="fixed inset-y-0 left-0 z-50 hidden w-[276px] flex-col bg-[#173d30] lg:flex">{content}</aside>
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-[276px] flex-col bg-[#174A70] lg:flex">{content}</aside>
       {open && (
         <div className="fixed inset-0 z-[60] lg:hidden">
           <button type="button" className="absolute inset-0 bg-slate-950/50" onClick={onClose} aria-label="Close navigation overlay" />
-          <aside className="absolute inset-y-0 left-0 flex w-[276px] flex-col bg-[#173d30] shadow-2xl">{content}</aside>
+          <aside className="absolute inset-y-0 left-0 flex w-[276px] flex-col bg-[#174A70] shadow-2xl">{content}</aside>
         </div>
       )}
     </>

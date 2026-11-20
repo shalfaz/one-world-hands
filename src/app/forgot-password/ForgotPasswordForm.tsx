@@ -41,7 +41,7 @@ export default function ForgotPasswordForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm font-medium text-[#365b47]">
+        <label htmlFor="email" className="mb-1 block text-sm font-medium text-[#174A70]">
           Email Address
         </label>
         <input
@@ -51,14 +51,14 @@ export default function ForgotPasswordForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
           required
-          className="w-full rounded-lg border border-[#dce5de] px-4 py-3 text-sm outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+          className="w-full rounded-lg border border-[#D9E2EC] px-4 py-3 text-sm outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-full bg-[#176345] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:cursor-not-allowed disabled:bg-[#94b7a0]"
+        className="w-full rounded-full bg-[#009EDB] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:cursor-not-allowed disabled:bg-[#009EDB]/40"
       >
         {loading ? 'Sending...' : 'Send Reset Link'}
       </button>
@@ -67,7 +67,7 @@ export default function ForgotPasswordForm() {
         <div
           className={`rounded-lg p-3 text-sm ${
             message.type === 'success'
-              ? 'bg-green-50 text-green-700 border border-green-200'
+              ? 'bg-emerald-50 text-[#17634B] border border-emerald-200'
               : 'bg-red-50 text-red-700 border border-red-200'
           }`}
         >
