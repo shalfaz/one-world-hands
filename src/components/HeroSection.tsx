@@ -36,7 +36,7 @@ export default function HeroSection() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative overflow-hidden border-b border-[#D9E2EC] bg-[#F7FAFC]"
+      className="relative overflow-hidden border-b border-transparent bg-[#F7FAFC]"
     >
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:py-20">
         <div className="max-w-2xl">

@@ -121,7 +121,7 @@ export default function QuickDonationBox({
   return (
     <section aria-labelledby="quick-donate-title" id="quick-donation">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-[#174A70] bg-[#009EDB] p-6 shadow-[0_20px_55px_-35px_rgba(23,74,112,0.35)] sm:p-8">
+        <div className="rounded-2xl border border-[#009EDB] bg-[#009EDB] p-6 shadow-[0_20px_55px_-35px_rgba(23,74,112,0.35)] sm:p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h2
