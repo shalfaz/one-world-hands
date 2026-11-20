@@ -14,8 +14,7 @@ const paymentMethods = [
 ] as const;
 
 export default function DonationCheckout({ fund }: DonationCheckoutProps) {
-  const [amount, setAmount] = useState(String(fund.suggestedAmounts[0] ?? 500));
-  const [customAmount, setCustomAmount] = useState("");
+  const [customAmount, setCustomAmount] = useState(String(fund.suggestedAmounts[0] ?? 500));
   const [donorName, setDonorName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,7 +23,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const selectedAmount = customAmount || amount;
+  const selectedAmount = customAmount;
 
   async function submitDonation(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -118,13 +117,12 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
                 <button
                   key={suggestedAmount}
                   type="button"
-                  aria-pressed={!customAmount && amount === String(suggestedAmount)}
+                  aria-pressed={selectedAmount === String(suggestedAmount)}
                   onClick={() => {
-                    setAmount(String(suggestedAmount));
-                    setCustomAmount("");
+                    setCustomAmount(String(suggestedAmount));
                   }}
                   className={`h-11 rounded-md border text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2 ${
-                    !customAmount && amount === String(suggestedAmount)
+                    selectedAmount === String(suggestedAmount)
                       ? "border-[#009EDB] bg-[#EAF6FB] text-[#174A70]"
                       : "border-neutral-300 bg-white text-neutral-800 hover:border-[#009EDB]"
                   }`}

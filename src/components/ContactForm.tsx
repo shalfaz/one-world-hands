@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import { submitContactMessage } from "@/app/contact/actions";
 
 type Status =
   | { kind: "idle" }
@@ -13,15 +14,14 @@ export default function ContactForm() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
-  const canSubmit = useMemo(() => {
-    return name.trim().length >= 2 && email.trim().length > 3 && message.trim().length >= 10;
-  }, [email, message, name]);
+  const [sending, setSending] = useState(false);
 
   return (
     <form
       className="grid gap-4"
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
+        if (sending) return;
         setStatus({ kind: "idle" });
 
         const trimmedName = name.trim();
@@ -44,13 +44,24 @@ export default function ContactForm() {
           return;
         }
 
-        setStatus({
-          kind: "success",
-          message: "Thanks for reaching out. We will respond within 2-3 days.",
-        });
-        setName("");
-        setEmail("");
-        setMessage("");
+        setSending(true);
+        try {
+          await submitContactMessage(trimmedName, trimmedEmail, trimmedMessage);
+          setStatus({
+            kind: "success",
+            message: "Thanks for reaching out. We will respond within 2-3 days.",
+          });
+          setName("");
+          setEmail("");
+          setMessage("");
+        } catch {
+          setStatus({
+            kind: "error",
+            message: "Something went wrong while sending your message. Please try again.",
+          });
+        } finally {
+          setSending(false);
+        }
       }}
     >
       <div className="grid gap-2 sm:grid-cols-2">
@@ -119,7 +130,7 @@ export default function ContactForm() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="submit"
-          disabled={!canSubmit}
+          disabled={sending}
           className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:cursor-not-allowed disabled:bg-[#009EDB]/40"
         >
           Send Message
