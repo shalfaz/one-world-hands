@@ -128,7 +128,7 @@ export default function ResourceList({
                         href={String(resource.fileUrl)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ml-2 text-sky-600 hover:underline"
+                        className="ml-2 text-[#176345] hover:underline"
                       >
                         (View)
                       </a>
@@ -141,7 +141,7 @@ export default function ResourceList({
                         href={String(resource.youtubeLink)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ml-2 text-sky-600 hover:underline"
+                        className="ml-2 text-[#176345] hover:underline"
                       >
                         (Watch)
                       </a>
@@ -175,7 +175,7 @@ export default function ResourceList({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(resource)}
-                      className="rounded-lg bg-sky-100 px-3 py-1 text-xs font-semibold text-sky-700 hover:bg-sky-200 transition-colors"
+                      className="rounded-lg bg-[#edf5ef] px-3 py-1 text-xs font-semibold text-[#45624e] transition-colors hover:bg-[#dcebdd]"
                     >
                       Edit
                     </button>

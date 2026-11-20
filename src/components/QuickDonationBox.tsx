@@ -121,7 +121,7 @@ export default function QuickDonationBox({
   return (
     <section aria-labelledby="quick-donate-title" id="quick-donation">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[2rem] border border-[#0074b8] bg-[#0084d1] p-6 shadow-sm sm:p-8">
+        <div className="rounded-2xl border border-[#174b37] bg-[#2698C8] p-6 shadow-[0_20px_55px_-35px_rgba(23,61,48,0.65)] sm:p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h2
@@ -130,7 +130,7 @@ export default function QuickDonationBox({
               >
                 Make Your Donation
               </h2>
-              <p className="mt-2 max-w-xl text-base leading-7 text-white/90">
+              <p className="mt-2 max-w-xl text-sm leading-6 text-white/75 sm:text-base">
                 Choose a donation fund and share support in seconds.
               </p>
             </div>
@@ -173,7 +173,7 @@ export default function QuickDonationBox({
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="donation-fund"
-                    className="text-sm font-semibold text-white"
+                    className="text-sm font-medium text-white/90"
                   >
                     Donation Fund <span className="text-red-500">*</span>
                   </label>
@@ -182,7 +182,7 @@ export default function QuickDonationBox({
                     name="donationFund"
                     value={fundId}
                     onChange={(e) => setFundId(e.target.value)}
-                    className="h-11 rounded-2xl border border-neutral-200 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="h-12 rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-[#9bc6a7]"
                   >
                     <option value="" disabled>
                       Select a fund
@@ -198,7 +198,7 @@ export default function QuickDonationBox({
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="donor-contact"
-                    className="text-sm font-semibold text-white"
+                    className="text-sm font-medium text-white/90"
                   >
                     Phone / Email <span className="text-red-500">*</span>
                   </label>
@@ -209,19 +209,19 @@ export default function QuickDonationBox({
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
                     placeholder="Type mobile/email"
-                    className="h-11 w-full rounded-2xl border border-neutral-200 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="h-12 w-full rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#9bc6a7]"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="donation-amount"
-                    className="text-sm font-semibold text-white"
+                    className="text-sm font-medium text-white/90"
                   >
                     Donation Amount <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-neutral-500">
+                    <span                     className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-neutral-500">
                       ৳
                     </span>
                     <input
@@ -232,7 +232,7 @@ export default function QuickDonationBox({
                       min={1}
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
-                      className="h-11 w-full rounded-2xl border border-neutral-200 bg-white pl-8 pr-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      className="h-12 w-full rounded-lg border border-white/15 bg-white pl-8 pr-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-[#9bc6a7]"
                       aria-describedby="donation-hint"
                     />
                   </div>
@@ -245,14 +245,14 @@ export default function QuickDonationBox({
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-[#0084d1] shadow-sm transition-colors hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                    className="inline-flex h-12 items-center justify-center rounded-full bg-[#dcebdd] px-6 text-sm font-semibold text-[#173d30] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
                   >
                     {submitting ? "Saving..." : "Donate Now"}
                   </button>
                 </div>
               </form>
 
-              <p className="mt-4 text-center text-sm text-white/90">
+              <p className="mt-4 text-center text-xs text-white/75">
                 You will receive tax relief when you donate.{" "}
                 <a
                   href="#"

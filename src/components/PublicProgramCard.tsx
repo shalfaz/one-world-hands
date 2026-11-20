@@ -1,23 +1,24 @@
 import Link from "next/link";
 import Image from "next/image";
+import { FaLocationDot } from "react-icons/fa6";
 
 const categoryColors: Record<
   string,
   { bg: string; text: string; border: string; gradientFrom: string; gradientTo: string }
 > = {
   health: {
-    bg: "bg-red-50",
-    text: "text-red-700",
-    border: "border-red-200",
-    gradientFrom: "from-red-400",
-    gradientTo: "to-red-600",
+  bg: "bg-rose-50",
+  text: "text-rose-700",
+  border: "border-rose-200",
+  gradientFrom: "from-rose-400",
+  gradientTo: "to-rose-600",
   },
   education: {
-    bg: "bg-blue-50",
-    text: "text-blue-700",
-    border: "border-blue-200",
-    gradientFrom: "from-blue-400",
-    gradientTo: "to-blue-600",
+    bg: "bg-sky-50",
+    text: "text-sky-700",
+    border: "border-sky-200",
+    gradientFrom: "from-sky-400",
+    gradientTo: "to-sky-600",
   },
   community: {
     bg: "bg-green-50",
@@ -59,15 +60,15 @@ export default function ProgramCard({
 
   return (
     <Link href={`/programs/${program._id}`}>
-      <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-        <div className="relative aspect-4/3 w-full overflow-hidden bg-neutral-100">
+      <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-[#dce5de] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#c5d8c8] hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.38)]">
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#edf2ed]">
           {program.imageUrl ? (
             <Image
               src={String(program.imageUrl)}
               alt=""
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover"
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             />
           ) : (
             <div
@@ -81,8 +82,8 @@ export default function ProgramCard({
           )}
         </div>
 
-        <div className="flex flex-1 flex-col p-5 text-center">
-          <h3 className="text-base font-bold leading-snug text-neutral-950 sm:text-lg">
+        <div className="flex flex-1 flex-col p-5 text-left sm:p-6">
+          <h3 className="text-lg font-semibold leading-snug tracking-tight text-[#183b2c]">
             {String(program.title)}
           </h3>
 
@@ -94,11 +95,12 @@ export default function ProgramCard({
             </span>
           </div>
 
-          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-6 text-neutral-600">
+          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-6 text-[#5b6d62]">
             {String(program.description)}
           </p>
 
-          <p className="mt-3 text-xs font-semibold text-neutral-500">
+          <p className="mt-3 flex items-center gap-2 text-xs font-medium text-neutral-500">
+            <FaLocationDot aria-hidden="true" className="text-[#668570]" />
             {String(program.location)}
           </p>
 
@@ -107,7 +109,7 @@ export default function ProgramCard({
           </p>
 
           <div className="mt-5 pt-1">
-            <span className="inline-flex h-11 w-full items-center justify-center rounded-md bg-[#008744] px-6 text-sm font-bold uppercase tracking-wide text-white transition-colors group-hover:bg-[#006b36]">
+            <span             className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors group-hover:bg-[#104b34]">
               Learn More →
             </span>
           </div>

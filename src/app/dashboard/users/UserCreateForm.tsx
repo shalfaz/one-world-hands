@@ -57,7 +57,7 @@ export default function UserCreateForm() {
       <input
         name="name"
         placeholder="Full name"
-        className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
+        className="h-12 rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
         required
       />
 
@@ -65,7 +65,7 @@ export default function UserCreateForm() {
         name="email"
         type="email"
         placeholder="Email address"
-        className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
+        className="h-12 rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
         required
       />
 
@@ -73,14 +73,14 @@ export default function UserCreateForm() {
         name="password"
         type="password"
         placeholder="Temporary password"
-        className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
+        className="h-12 rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
         required
       />
 
       <select
         name="role"
         defaultValue="user"
-        className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
+        className="h-12 rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
       >
         <option value="user">User</option>
         <option value="admin">Admin</option>
@@ -92,7 +92,7 @@ export default function UserCreateForm() {
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex h-12 items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 disabled:cursor-wait disabled:opacity-60"
+          className="inline-flex h-12 items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:cursor-wait disabled:opacity-60"
         >
           {loading ? "Creating user..." : "Create User"}
         </button>

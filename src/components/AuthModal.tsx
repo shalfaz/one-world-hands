@@ -53,7 +53,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             <div>
               <h2
                 id="auth-modal-title"
-                className="text-2xl font-semibold tracking-tight text-neutral-950"
+                className="text-2xl font-semibold tracking-tight text-[#183b2c]"
               >
                 {mode === "login" ? "Welcome Back" : "Create an Account"}
               </h2>
@@ -67,7 +67,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-700 transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#dce5de] bg-white text-neutral-700 transition-colors hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
               aria-label="Close authentication modal"
             >
               <svg
@@ -86,14 +86,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             </button>
           </div>
 
-          <div className="mt-5 inline-flex rounded-2xl border border-neutral-200 bg-neutral-50 p-1">
+          <div className="mt-5 inline-flex rounded-xl border border-[#dce5de] bg-[#f7faf7] p-1">
             <button
               type="button"
               onClick={() => setMode("login")}
               className={[
                 "rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
                 mode === "login"
-                  ? "bg-white text-neutral-900 shadow-sm"
+                  ? "bg-white text-[#176345] shadow-sm"
                   : "text-neutral-600 hover:text-neutral-900",
               ].join(" ")}
             >
@@ -106,7 +106,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
               className={[
                 "rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
                 mode === "signup"
-                  ? "bg-white text-neutral-900 shadow-sm"
+                  ? "bg-white text-[#176345] shadow-sm"
                   : "text-neutral-600 hover:text-neutral-900",
               ].join(" ")}
             >
@@ -128,7 +128,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                   name="email"
                   type="email"
                   placeholder="Enter your email"
-                  className="h-11 w-full rounded-2xl border border-neutral-200 bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-500"
+                  className="h-11 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
                   required
                 />
               </div>
@@ -145,14 +145,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                   name="password"
                   type="password"
                   placeholder="Enter your password"
-                  className="h-11 w-full rounded-2xl border border-neutral-200 bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-500"
+                  className="h-11 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
                   required
                 />
               </div>
 
               <button
                 type="submit"
-                className="inline-flex h-11 w-full items-center justify-center rounded-2xl bg-sky-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#176345] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
               >
                 Sign In
               </button>
@@ -163,8 +163,8 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             </form>
           ) : (
             <div className="mt-5 space-y-4">
-              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
-                <p className="text-sm leading-6 text-amber-900">
+              <div className="rounded-xl border border-[#dce5de] bg-[#f6f8f5] p-4">
+                <p className="text-sm leading-6 text-[#52645a]">
                   Public sign-up is currently disabled. Account creation should be
                   managed by your organization.
                 </p>

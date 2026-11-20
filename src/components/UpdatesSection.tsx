@@ -52,7 +52,7 @@ export default function UpdatesSection({
             className="group rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
           >
             <div className="flex items-center justify-between gap-4">
-              <span className="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-800 ring-1 ring-sky-200">
+              <span className="inline-flex items-center rounded-full bg-[#edf5ef] px-3 py-1 text-xs font-semibold text-[#45624e] ring-1 ring-[#d6e3d8]">
                 {u.type}
               </span>
               <time
@@ -73,14 +73,14 @@ export default function UpdatesSection({
             <div className="mt-6 flex items-center justify-between">
               <Link
                 href={u.href}
-                className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition-colors hover:bg-sky-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition-colors hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
                 aria-label={`Read ${u.title}`}
               >
                 Read more
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-4 w-4 text-sky-700"
+                  className="h-4 w-4 text-[#176345]"
                   fill="none"
                 >
                   <path
@@ -100,7 +100,7 @@ export default function UpdatesSection({
       <div className="mt-6 sm:hidden">
         <Link
           href="/updates"
-          className="inline-flex w-full items-center justify-center rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+          className="inline-flex w-full items-center justify-center rounded-full bg-[#176345] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
         >
           View all updates
         </Link>

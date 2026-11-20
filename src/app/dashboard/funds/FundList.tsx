@@ -139,7 +139,7 @@ export default function FundList({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(fund)}
-                      className="rounded-lg bg-sky-100 px-3 py-1 text-xs font-semibold text-sky-700 hover:bg-sky-200 transition-colors"
+                      className="rounded-lg bg-[#edf5ef] px-3 py-1 text-xs font-semibold text-[#45624e] transition-colors hover:bg-[#dcebdd]"
                     >
                       Edit
                     </button>

@@ -92,10 +92,10 @@ export default function Header() {
       type="button"
       onClick={() => selectLanguage(value)}
       aria-pressed={language === value}
-      className={`min-w-8 px-2 py-1 text-xs font-bold transition-colors ${
+      className={`min-w-9 rounded-md px-2 py-1.5 text-xs font-bold transition-colors ${
         language === value
-          ? "bg-white text-slate-800 shadow-sm"
-          : "bg-[#edf8f1] text-slate-600 hover:text-[#078b4f]"
+          ? "bg-white text-[#174b37] shadow-sm"
+          : "text-neutral-500 hover:text-[#174b37]"
       }`}
     >
       {label}
@@ -103,13 +103,11 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full shadow-sm">
-      <div className="border-b border-[#0074b8] bg-[#0084d1]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden">
+    <header className="sticky top-0 z-50 w-full border-b border-[#e1e9e2] bg-[#2698C8] backdrop-blur">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-[76px] items-center justify-between gap-5">
+          <Link href="/" className="flex shrink-0 items-center gap-2.5">
+            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden">
               <Image
                 src="/logo1.png"
                 alt="One World Hands"
@@ -120,21 +118,21 @@ export default function Header() {
               />
             </div>
             <div className="block leading-tight">
-              <p className="text-base font-bold leading-none text-white">One World</p>
-              <p className="text-sm font-bold leading-none text-white">Hands</p>
+              <p className="text-base font-bold leading-none tracking-tight text-white">One World</p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-white">Hands</p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
+          <nav aria-label="Main navigation" className="hidden flex-1 items-center justify-center gap-1 lg:flex">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all xl:px-4 ${
+                aria-current={isActive(item.href) ? "page" : undefined}
+                className={`rounded-lg px-3 py-2.5 text-sm transition-colors xl:px-3.5 ${
                   isActive(item.href)
-                    ? "bg-white text-[#0084d1] font-semibold"
-                    : "text-white hover:bg-white/15"
+                    ? "bg-[#edf5ef] font-semibold text-[#176345]"
+                    : "font-medium text-white hover:bg-neutral-50 hover:text-[#176345]"
                 }`}
               >
                 {item.label}
@@ -142,9 +140,8 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA Buttons */}
-          <div className="flex items-center gap-2 ml-auto">
-            <div className="hidden sm:flex overflow-hidden rounded-md border border-slate-200 bg-[#edf8f1] p-0.5" aria-label="Language">
+          <div className="ml-auto flex shrink-0 items-center gap-2.5 lg:ml-0">
+            <div className="hidden overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 p-0.5 sm:flex" aria-label="Language">
               {languageButton("bn", "বাং")}
               {languageButton("en", "EN")}
             </div>
@@ -156,30 +153,31 @@ export default function Header() {
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   aria-label="Open user menu"
                   title="Profile"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm transition-colors hover:text-[#078b4f]"
+                  aria-expanded={userDropdownOpen}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 transition-colors hover:border-[#b8d2c0] hover:text-[#176345]"
                 >
                   <FaUser className="h-3.5 w-3.5" />
                 </button>
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg">
-                    <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
-                      <p className="text-sm font-semibold text-slate-900">{userName}</p>
-                      <p className="text-xs text-slate-600">{userEmail}</p>
-                      <span className="mt-2 inline-block rounded bg-sky-100 px-2 py-1 text-xs font-semibold capitalize text-sky-700">
+                  <div className="absolute right-0 mt-3 w-56 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xl shadow-[#183b2c]/10">
+                    <div className="border-b border-neutral-100 bg-[#f7faf7] px-4 py-3">
+                      <p className="text-sm font-semibold text-neutral-900">{userName}</p>
+                      <p className="mt-0.5 text-xs text-neutral-500">{userEmail}</p>
+                      <span className="mt-2 inline-block rounded-full bg-[#edf5ef] px-2.5 py-1 text-xs font-semibold capitalize text-[#176345]">
                         {userRole}
                       </span>
                     </div>
                     <div className="py-2">
                       {userRole === "admin" && (
-                        <Link href="/dashboard" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" onClick={() => setUserDropdownOpen(false)}>Admin Dashboard</Link>
+                        <Link href="/dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>Admin Dashboard</Link>
                       )}
                       {userRole === "employee" && (
-                        <Link href="/employee-dashboard" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" onClick={() => setUserDropdownOpen(false)}>Employee Dashboard</Link>
+                        <Link href="/employee-dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>Employee Dashboard</Link>
                       )}
                       {userRole === "volunteer" && (
-                        <Link href="/volunteer-dashboard" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" onClick={() => setUserDropdownOpen(false)}>Volunteer Dashboard</Link>
+                        <Link href="/volunteer-dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>Volunteer Dashboard</Link>
                       )}
-                      <Link href="/profile" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" onClick={() => setUserDropdownOpen(false)}>Profile</Link>
+                      <Link href="/profile" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>Profile</Link>
                       <form action={logoutUser}>
                         <button type="submit" className="w-full px-4 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50">Sign Out</button>
                       </form>
@@ -192,28 +190,28 @@ export default function Header() {
                 href="/login"
                 aria-label="Account"
                 title="Account"
-                className="hidden sm:inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm transition-colors hover:text-[#078b4f]"
+                className="hidden h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 transition-colors hover:border-[#b8d2c0] hover:text-[#176345] sm:inline-flex"
               >
                 <FaUser className="h-3.5 w-3.5" />
               </Link>
             )}
 
-            {/* Donate Button */}
             <Link
               href="/donation-funds"
-              className="hidden sm:inline-flex h-8 items-center rounded-md bg-[#008f47] px-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-[#067744]"
+              className="hidden h-10 items-center rounded-full bg-[#176345] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2 sm:inline-flex"
             >
               <span>Donate</span>
             </Link>
 
-            {/* Mobile Menu Button */}
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden inline-flex items-center justify-center rounded-lg p-2 transition-colors hover:bg-white/15"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors hover:bg-[#edf5ef] lg:hidden"
               aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
             >
               <svg
-                  className={`h-6 w-6 text-white transition-transform ${
+                className={`h-5 w-5 transition-transform ${
                   mobileMenuOpen ? "rotate-90" : ""
                 }`}
                 fill="none"
@@ -240,29 +238,29 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="border-t border-white/20 bg-[#0084d1] px-2 py-4 lg:hidden">
-            <div className="space-y-2">
+          <div className="border-t border-neutral-100 py-4 lg:hidden">
+            <div className="space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={`block rounded-lg px-4 py-3 text-sm transition-colors ${
                     isActive(item.href)
-                      ? "bg-sky-600 text-white"
-                      : "text-white hover:bg-white/15"
+                      ? "bg-[#edf5ef] font-semibold text-[#176345]"
+                      : "font-medium text-neutral-700 hover:bg-neutral-50"
                   }`}
                 >
                   {item.label}
                 </Link>
               ))}
 
-              <div className="border-t border-slate-200 pt-3 mt-3 space-y-2">
-                <div className="flex justify-center">
-                  <div className="flex w-full overflow-hidden rounded-md border border-slate-200 bg-[#edf8f1] p-0.5" aria-label="Language">
-                    <div className="[&>button]:w-full [&>button]:flex-1 flex w-full">
+              <div className="mt-3 space-y-2 border-t border-neutral-100 pt-4">
+                <div className="flex">
+                  <div className="flex w-full overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 p-0.5" aria-label="Language">
+                    <div className="flex w-full [&>button]:flex-1">
                       {languageButton("bn", "বাং")}
                       {languageButton("en", "EN")}
                     </div>
@@ -271,9 +269,9 @@ export default function Header() {
                 <Link
                   href="/donation-funds"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#078b4f] text-white text-sm font-semibold w-full hover:bg-[#067744] transition-colors"
+                  className="flex h-11 w-full items-center justify-center rounded-full bg-[#176345] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#104b34]"
                 >
-                  <span>Donate</span>
+                  Donate
                 </Link>
 
                 {isAuthenticated ? (
@@ -282,7 +280,7 @@ export default function Header() {
                       <Link
                         href="/dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
+                        className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
                       >
                         Admin Dashboard
                       </Link>
@@ -291,7 +289,7 @@ export default function Header() {
                       <Link
                         href="/employee-dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
+                        className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
                       >
                         Employee Dashboard
                       </Link>
@@ -300,7 +298,7 @@ export default function Header() {
                       <Link
                         href="/volunteer-dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold w-full hover:bg-sky-700 transition-colors"
+                        className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
                       >
                         Volunteer Dashboard
                       </Link>
@@ -308,14 +306,14 @@ export default function Header() {
                     <Link
                       href="/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 border-sky-600 text-sky-600 text-sm font-semibold w-full hover:bg-sky-50 transition-colors"
+                      className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
                     >
                       Profile
                     </Link>
                     <form action={logoutUser}>
                       <button
                         type="submit"
-                        className="w-full px-4 py-2 rounded-lg border-2 border-red-200 bg-red-50 text-red-600 text-sm font-semibold hover:bg-red-100 transition-colors"
+                        className="h-11 w-full rounded-full border border-red-200 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50"
                       >
                         Sign Out
                       </button>
@@ -325,7 +323,7 @@ export default function Header() {
                   <Link
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 border-white text-white text-sm font-semibold w-full hover:bg-white/10 transition-colors"
+                    className="flex h-11 w-full items-center justify-center rounded-full border border-neutral-200 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-50"
                   >
                     Account
                   </Link>
@@ -334,7 +332,6 @@ export default function Header() {
             </div>
           </div>
         )}
-      </div>
       </div>
     </header>
   );

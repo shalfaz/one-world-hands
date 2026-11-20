@@ -71,9 +71,9 @@ export async function signupUser(formData: FormData) {
           <div style="background-color: #f0f9ff; border-left: 4px solid #0ea5e9; padding: 15px; margin: 20px 0; border-radius: 4px;">
             <p><strong>Your Account Details:</strong></p>
             <ul style="list-style: none; padding: 0;">
-              <li>📧 <strong>Email:</strong> ${email}</li>
-              <li>👤 <strong>Name:</strong> ${name}</li>
-              <li>🔑 <strong>Role:</strong> User (Donor/Volunteer)</li>
+              <li><strong>Email:</strong> ${email}</li>
+              <li><strong>Name:</strong> ${name}</li>
+              <li><strong>Role:</strong> User (Donor/Volunteer)</li>
             </ul>
           </div>
 

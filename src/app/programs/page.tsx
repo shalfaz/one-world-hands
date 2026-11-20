@@ -2,6 +2,14 @@ import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import PublicProgramCard from "@/components/PublicProgramCard";
 import { getPublishedPrograms } from "@/lib/services/programService";
+import {
+  FaBookOpen,
+  FaBriefcase,
+  FaHeartPulse,
+  FaLifeRing,
+  FaTag,
+  FaUsers,
+} from "react-icons/fa6";
 
 export const metadata = {
   title: "Humanitarian Programs | One World Hands - Food, Medical & Education Support",
@@ -24,17 +32,20 @@ export default async function ProgramsPage() {
     <PageShell>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           {/* Hero intro */}
-          <section className="rounded-2xl lg:rounded-3xl border-2 border-neutral-200 bg-linear-to-br from-white to-neutral-50 p-6 shadow-lg sm:p-10">
+          <section className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <h1 className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+                  What we do
+                </p>
+                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
                   Programs
                 </h1>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
                   Each program is designed with communities to deliver dignified
                   support, practical education, and lasting community capacity.
                 </p>
-                <p className="mt-2 text-sm text-neutral-600">
+                <p className="mt-3 text-sm text-neutral-500">
                   Discover {programs.length} active programs helping communities worldwide.
                 </p>
               </div>
@@ -42,15 +53,15 @@ export default async function ProgramsPage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/donation-funds"
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-linear-to-r from-sky-600 to-blue-600 px-6 text-sm font-bold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
                 >
-                  🎁 Donate Now
+                  Donate Now
                 </Link>
                 <Link
                   href="/resources"
-                  className="inline-flex h-11 items-center justify-center rounded-full border-2 border-sky-300 bg-white px-6 text-sm font-bold text-sky-700 shadow-md transition-all hover:shadow-lg hover:scale-105 hover:bg-sky-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-[#dce5de] bg-white px-6 text-sm font-semibold text-[#365b47] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
                 >
-                  📚 Explore Resources
+                  Explore Resources
                 </Link>
               </div>
             </div>
@@ -59,13 +70,13 @@ export default async function ProgramsPage() {
           {/* Program cards */}
           <section className="mt-10" aria-label="Programs list">
             {programs.length > 0 ? (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {programs.map((program) => (
                   <PublicProgramCard key={String(program._id)} program={program} />
                 ))}
               </div>
             ) : (
-              <div className="rounded-2xl border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 text-center">
+              <div className="rounded-2xl border border-dashed border-[#cbd8cd] bg-white p-12 text-center">
                 <p className="text-neutral-600 text-lg font-semibold">
                   No programs available at the moment
                 </p>
@@ -78,53 +89,29 @@ export default async function ProgramsPage() {
 
           {/* Category explanation */}
           {programs.length > 0 && (
-            <section className="mt-12 rounded-2xl border-2 border-neutral-200 bg-neutral-50 p-8">
-              <h2 className="text-2xl font-bold text-neutral-900 mb-6">
+            <section className="mt-12 rounded-2xl border border-[#dce5de] bg-[#f1f5f0] p-6 sm:p-8">
+              <h2 className="text-xl font-semibold tracking-tight text-[#183b2c]">
                 Program Categories
               </h2>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <div className="flex gap-3">
-                  <span className="text-2xl">🏥</span>
-                  <div>
-                    <h3 className="font-semibold text-neutral-900">Health</h3>
-                    <p className="text-sm text-neutral-600">Medical assistance and health support</p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {[
+                  { title: "Health", description: "Medical assistance and health support", icon: FaHeartPulse },
+                  { title: "Education", description: "Learning programs and scholarships", icon: FaBookOpen },
+                  { title: "Community", description: "Community development initiatives", icon: FaUsers },
+                  { title: "Livelihood", description: "Skill training and employment", icon: FaBriefcase },
+                  { title: "Emergency Relief", description: "Crisis response and disaster aid", icon: FaLifeRing },
+                  { title: "Other", description: "Special initiatives and projects", icon: FaTag },
+                ].map(({ title, description, icon: Icon }) => (
+                  <div key={title} className="flex items-start gap-3 rounded-xl border border-[#dce5de] bg-white p-4">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#edf5ef] text-[#176345]">
+                      <Icon aria-hidden="true" />
+                    </span>
+                    <div>
+                      <h3 className="text-sm font-semibold text-[#234333]">{title}</h3>
+                      <p className="mt-1 text-xs leading-5 text-[#65766b]">{description}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-2xl">📚</span>
-                  <div>
-                    <h3 className="font-semibold text-neutral-900">Education</h3>
-                    <p className="text-sm text-neutral-600">Learning programs and scholarships</p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-2xl">👥</span>
-                  <div>
-                    <h3 className="font-semibold text-neutral-900">Community</h3>
-                    <p className="text-sm text-neutral-600">Community development initiatives</p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-2xl">💼</span>
-                  <div>
-                    <h3 className="font-semibold text-neutral-900">Livelihood</h3>
-                    <p className="text-sm text-neutral-600">Skill training and employment</p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-2xl">🆘</span>
-                  <div>
-                    <h3 className="font-semibold text-neutral-900">Emergency Relief</h3>
-                    <p className="text-sm text-neutral-600">Crisis response and disaster aid</p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-2xl">📌</span>
-                  <div>
-                    <h3 className="font-semibold text-neutral-900">Other</h3>
-                    <p className="text-sm text-neutral-600">Special initiatives and projects</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </section>
           )}

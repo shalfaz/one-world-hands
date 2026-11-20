@@ -91,13 +91,13 @@ function ResourcesContent() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col gap-6 bg-slate-100">
+    <div className="flex min-h-screen w-full flex-col gap-6 bg-[#f1f5f0]">
         {/* Header Section */}
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
           <div className="flex flex-col gap-4">
             <div>
-              <p className="text-sm font-semibold text-sky-600">Resources</p>
-              <h1 className="mt-1 text-3xl font-bold text-slate-950">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">Resources</p>
+              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#183b2c]">
                 Resources Management
               </h1>
               <p className="mt-2 text-sm text-slate-500">
@@ -107,33 +107,33 @@ function ResourcesContent() {
 
             {/* Statistics Cards */}
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-              <div className="rounded-lg bg-linear-to-br from-blue-50 to-blue-100 p-4">
-                <p className="text-xs font-semibold text-blue-700">Total</p>
-                <p className="mt-1 text-2xl font-bold text-blue-900">
+              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+                <p className="text-xs font-medium text-neutral-500">Total</p>
+                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
                   {resources.length}
                 </p>
               </div>
-              <div className="rounded-lg bg-linear-to-br from-purple-50 to-purple-100 p-4">
-                <p className="text-xs font-semibold text-purple-700">Photos</p>
-                <p className="mt-1 text-2xl font-bold text-purple-900">
+              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+                <p className="text-xs font-medium text-neutral-500">Photos</p>
+                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
                   {typeBreakdown.photo}
                 </p>
               </div>
-              <div className="rounded-lg bg-linear-to-br from-green-50 to-green-100 p-4">
-                <p className="text-xs font-semibold text-green-700">Docs</p>
-                <p className="mt-1 text-2xl font-bold text-green-900">
+              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+                <p className="text-xs font-medium text-neutral-500">Docs</p>
+                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
                   {typeBreakdown.document}
                 </p>
               </div>
-              <div className="rounded-lg bg-linear-to-br from-orange-50 to-orange-100 p-4">
-                <p className="text-xs font-semibold text-orange-700">Webinars</p>
-                <p className="mt-1 text-2xl font-bold text-orange-900">
+              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+                <p className="text-xs font-medium text-neutral-500">Webinars</p>
+                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
                   {typeBreakdown.webinar}
                 </p>
               </div>
-              <div className="rounded-lg bg-linear-to-br from-pink-50 to-pink-100 p-4">
-                <p className="text-xs font-semibold text-pink-700">Published</p>
-                <p className="mt-1 text-2xl font-bold text-pink-900">
+              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+                <p className="text-xs font-medium text-neutral-500">Published</p>
+                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
                   {publishedCount}
                 </p>
               </div>
@@ -165,7 +165,7 @@ function ResourcesContent() {
         </div>
 
         {/* List Section */}
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 mb-4">
               All Resources

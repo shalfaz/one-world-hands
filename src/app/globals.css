@@ -1,28 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a; /* Slate-900 */
+  color-scheme: light;
+  --background: #f8faf8;
+  --foreground: #172b22;
+  --brand: #176345;
+  --brand-strong: #104b34;
+  --brand-soft: #edf5ef;
+  --surface: #ffffff;
+  --muted: #64736a;
+  --border: #dce5de;
+  --accent: #c99a53;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-mono-custom);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #070a12;
-    --foreground: #e5e7eb; /* Gray-200 */
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: #d9e9dc;
+  color: #173c2a;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Hide scrollbar but keep scroll */

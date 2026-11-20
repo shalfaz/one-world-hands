@@ -64,7 +64,7 @@ export default function ContactForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoComplete="name"
-            className="h-11 rounded-2xl border border-neutral-200 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="h-11 rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#176345]/30 focus:border-[#176345]"
             placeholder="Your name"
             required
           />
@@ -81,7 +81,7 @@ export default function ContactForm() {
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             inputMode="email"
-            className="h-11 rounded-2xl border border-neutral-200 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="h-11 rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#176345]/30 focus:border-[#176345]"
             placeholder="you@example.com"
             required
           />
@@ -98,7 +98,7 @@ export default function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
-          className="rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-sky-500"
+          className="rounded-lg border border-[#dce5de] bg-white px-4 py-3 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#176345]/30 focus:border-[#176345]"
           placeholder="Tell us how we can help—donations, volunteering, or partnerships."
           required
         />
@@ -120,7 +120,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={!canSubmit}
-          className="inline-flex h-11 items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 disabled:cursor-not-allowed disabled:bg-sky-300"
+          className="inline-flex h-11 items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:cursor-not-allowed disabled:bg-[#94b7a0]"
         >
           Send Message
         </button>

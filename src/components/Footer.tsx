@@ -1,283 +1,172 @@
 import Link from "next/link";
-import { FaEnvelope, FaPhone, FaMapPin, FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa6";
+import {
+  FaEnvelope,
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaMapPin,
+  FaPhone,
+  FaYoutube,
+} from "react-icons/fa6";
+
+const quickLinks = [
+  ["Home", "/"],
+  ["About us", "/about-us"],
+  ["Programs", "/programs"],
+  ["Donation funds", "/donation-funds"],
+  ["Resources", "/resources"],
+  ["Updates", "/updates"],
+  ["Contact", "/contact"],
+] as const;
+
+const programLinks = [
+  ["Food assistance", "/programs#food-assistance"],
+  ["Emergency relief", "/programs#emergency-relief"],
+  ["Medical assistance", "/programs#medical-assistance"],
+  ["Winter support", "/programs#winter-support"],
+  ["Education support", "/programs#education-support"],
+] as const;
+
+const fundLinks = [
+  ["Hunger relief", "/donation-funds#hunger-relief"],
+  ["Emergency relief", "/donation-funds#emergency-relief"],
+  ["Medical aid", "/donation-funds#medical-aid"],
+  ["Winter support", "/donation-funds#winter-support"],
+  ["General donation", "/donation-funds#general-donation"],
+] as const;
+
+const socialLinks = [
+  { label: "Facebook", href: "https://facebook.com", icon: FaFacebook },
+  { label: "Instagram", href: "https://instagram.com", icon: FaInstagram },
+  { label: "LinkedIn", href: "https://linkedin.com", icon: FaLinkedin },
+  { label: "YouTube", href: "https://youtube.com", icon: FaYoutube },
+];
+
+function FooterLinks({
+  title,
+  links,
+  moreHref,
+  moreLabel,
+}: {
+  title: string;
+  links: readonly (readonly [string, string])[];
+  moreHref?: string;
+  moreLabel?: string;
+}) {
+  return (
+    <div>
+      <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
+        {title}
+      </h2>
+      <ul className="mt-5 space-y-3">
+        {links.map(([label, href]) => (
+          <li key={href}>
+            <Link
+              href={href}
+              className="text-sm text-white/80 transition-colors hover:text-white"
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
+        {moreHref && moreLabel && (
+          <li className="pt-1">
+            <Link
+              href={moreHref}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#c8dfcb] transition-colors hover:text-white"
+            >
+              {moreLabel} <span aria-hidden="true">→</span>
+            </Link>
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
 
 export default function Footer() {
   return (
-    <footer className="border-t-2 border-neutral-200 bg-linear-to-b from-white to-neutral-50">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-2">
-              <p className="text-lg font-bold bg-linear-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-                One World Hands
-              </p>
-            </div>
-            <p className="mt-3 text-sm leading-6 text-neutral-700">
+    <footer className="border-t border-white/10 bg-[#2698C8] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.9fr_0.9fr_1.2fr] lg:gap-8">
+          <div className="max-w-sm">
+            <p className="text-lg font-semibold tracking-tight">One World Hands</p>
+            <p className="mt-4 text-sm leading-6 text-white/75">
               For the world, with a magic touch. We empower individuals and
               support communities through education, direct action, and
               collaboration.
             </p>
-            <p className="mt-6 text-sm leading-6 text-neutral-700">
-              <span className="font-bold text-neutral-900">One World Hands</span>{" "}
-              — A global initiative for humanity, unity, and hope.
+            <p className="mt-4 text-sm leading-6 text-white/75">
+              A global initiative for humanity, unity, and hope.
             </p>
           </div>
 
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Quick Links</p>
-            <ul className="mt-4 space-y-2.5">
-              <li>
-                <Link
-                  href="/"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about-us"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/programs"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Programs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/donation-funds"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Donation Funds
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/resources"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Resources
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/updates"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1 flex items-center gap-1"
-                >
-                  Updates
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <FooterLinks title="Explore" links={quickLinks} />
+          <FooterLinks
+            title="Programs"
+            links={programLinks}
+            moreHref="/programs"
+            moreLabel="All programs"
+          />
+          <FooterLinks
+            title="Donation funds"
+            links={fundLinks}
+            moreHref="/donation-funds"
+            moreLabel="All funds"
+          />
 
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Programs</p>
-            <ul className="mt-4 space-y-2.5">
-              <li>
-                <Link
-                  href="/programs#food-assistance"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Food Assistance
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/programs#emergency-relief"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Emergency Relief
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/programs#medical-assistance"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Medical Assistance
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/programs#winter-support"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Winter Support
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/programs#education-support"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Education Support
-                </Link>
-              </li>
-              <li className="pt-2">
-                <Link
-                  href="/programs"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-sky-600 transition-all hover:text-sky-800 hover:translate-x-1"
-                >
-                  View all programs →
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Donation Funds</p>
-            <ul className="mt-4 space-y-2.5">
-              <li>
-                <Link
-                  href="/donation-funds#hunger-relief"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Hunger Relief
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/donation-funds#emergency-relief"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Emergency Relief
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/donation-funds#medical-aid"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Medical Aid
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/donation-funds#winter-support"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  Winter Support
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/donation-funds#general-donation"
-                  className="text-sm font-medium text-neutral-700 transition-all hover:text-sky-600 hover:translate-x-1"
-                >
-                  General Donation
-                </Link>
-              </li>
-              <li className="pt-2">
-                <Link
-                  href="/donation-funds"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-sky-600 transition-all hover:text-sky-800 hover:translate-x-1"
-                >
-                  View all funds →
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Contact</p>
-            <ul className="mt-4 space-y-3">
-              <li className="text-sm text-neutral-700 flex items-center">
-                <FaEnvelope className="mr-2 text-sky-600" />
-                <a
-                  className="font-bold text-sky-600 underline-offset-4 hover:underline transition-colors"
-                  href="mailto:hello@oneworldhands.org"
-                >
+            <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
+              Contact
+            </h2>
+            <ul className="mt-5 space-y-4 text-sm text-white/80">
+              <li className="flex items-start gap-3">
+                <FaEnvelope className="mt-0.5 shrink-0 text-[#c8dfcb]" aria-hidden="true" />
+                <a className="transition-colors hover:text-white" href="mailto:hello@oneworldhands.org">
                   hello@oneworldhands.org
                 </a>
               </li>
-              <li className="text-sm text-neutral-700 flex items-center">
-                <FaPhone className="mr-2 text-sky-600" />
-                <a
-                  className="font-bold text-sky-600 underline-offset-4 hover:underline transition-colors"
-                  href="tel:+10000000000"
-                >
+              <li className="flex items-start gap-3">
+                <FaPhone className="mt-0.5 shrink-0 text-[#c8dfcb]" aria-hidden="true" />
+                <a className="transition-colors hover:text-white" href="tel:+10000000000">
                   +1 (000) 000-0000
                 </a>
               </li>
-              <li className="text-sm text-neutral-700 flex items-center">
-                <FaMapPin className="mr-2 text-sky-600" />
-                <span className="font-bold">City, Country</span>
+              <li className="flex items-start gap-3">
+                <FaMapPin className="mt-0.5 shrink-0 text-[#c8dfcb]" aria-hidden="true" />
+                <span>City, Country</span>
               </li>
             </ul>
 
-            <div className="mt-6">
-              <p className="text-sm font-bold uppercase tracking-widest text-neutral-900">Social</p>
-              <div className="mt-3 flex flex-wrap gap-4">
+            <h3 className="mt-7 text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
+              Follow our work
+            </h3>
+            <div className="mt-3 flex gap-2">
+              {socialLinks.map(({ label, href, icon: Icon }) => (
                 <a
-                  href="https://facebook.com"
+                  key={label}
+                  href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-lg transition-transform hover:scale-125 hover:text-sky-600"
-                  title="Facebook"
+                  aria-label={label}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/75 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
                 >
-                  <FaFacebook />
+                  <Icon aria-hidden="true" />
                 </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-lg transition-transform hover:scale-125 hover:text-sky-600"
-                  title="Instagram"
-                >
-                  <FaInstagram />
-                </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-lg transition-transform hover:scale-125 hover:text-sky-600"
-                  title="LinkedIn"
-                >
-                  <FaLinkedin />
-                </a>
-                <a
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-lg transition-transform hover:scale-125 hover:text-sky-600"
-                  title="YouTube"
-                >
-                  <FaYoutube />
-                </a>
-              </div>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t-2 border-neutral-200 pt-8 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-medium">© {new Date().getFullYear()} <span className="font-bold text-neutral-900">One World Hands</span>. All rights reserved.</p>
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/15 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {new Date().getFullYear()} One World Hands. All rights reserved.
+          </p>
           <div className="flex gap-6">
-            <Link
-              href="/privacy"
-              className="font-medium transition-all hover:text-sky-600 hover:translate-x-1"
-              aria-label="Privacy policy"
-            >
+            <Link href="/privacy" className="transition-colors hover:text-white">
               Privacy
             </Link>
-            <Link
-              href="/contact"
-              className="font-medium transition-all hover:text-sky-600 hover:translate-x-1"
-            >
+            <Link href="/contact" className="transition-colors hover:text-white">
               Contact
             </Link>
           </div>
@@ -286,4 +175,3 @@ export default function Footer() {
     </footer>
   );
 }
-

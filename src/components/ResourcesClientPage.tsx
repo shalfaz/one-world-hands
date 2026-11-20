@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import ResourceCard from "@/components/ResourceCard";
 
 const resourceTypes = [
+  { label: "All resources", value: "all" },
   { label: "Photo", value: "photo" },
   { label: "Video", value: "video" },
   { label: "Blogs", value: "blog" },
@@ -31,54 +32,10 @@ type ResourcesClientPageProps = {
   error?: boolean;
 };
 
-function getAccent(type: string) {
-  const normalized = type.toLowerCase();
-
-  if (normalized === "photo") {
-    return {
-      bg: "bg-sky-50",
-      text: "text-sky-700",
-    };
-  }
-
-  if (normalized === "video") {
-    return {
-      bg: "bg-red-50",
-      text: "text-red-700",
-    };
-  }
-
-  if (normalized === "blog") {
-    return {
-      bg: "bg-emerald-50",
-      text: "text-emerald-700",
-    };
-  }
-
-  if (normalized === "annual report" || normalized === "report") {
-    return {
-      bg: "bg-amber-50",
-      text: "text-amber-700",
-    };
-  }
-
-  if (normalized === "publication") {
-    return {
-      bg: "bg-indigo-50",
-      text: "text-indigo-700",
-    };
-  }
-
-  if (normalized === "webinar") {
-    return {
-      bg: "bg-violet-50",
-      text: "text-violet-700",
-    };
-  }
-
+function getAccent() {
   return {
-    bg: "bg-neutral-50",
-    text: "text-neutral-700",
+    bg: "bg-[#edf5ef]",
+    text: "text-[#45624e]",
   };
 }
 
@@ -92,7 +49,7 @@ function mapDbResourceToCard(resource: SupabaseResource) {
 
   const previewUrl = urls[0] || "";
   const type = resource.type || "Resource";
-  const accent = getAccent(type);
+  const accent = getAccent();
 
   const createdYear = resource.created_at
     ? new Date(resource.created_at).getFullYear()
@@ -128,7 +85,7 @@ export default function ResourcesClientPage({
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
 
-  const [activeType, setActiveType] = useState("photo");
+  const [activeType, setActiveType] = useState("all");
 
   useEffect(() => {
     const typeParam = searchParams.get("type");
@@ -143,6 +100,7 @@ export default function ResourcesClientPage({
         "publication",
         "webinar",
         "document",
+        "all",
       ].includes(typeParam.toLowerCase())
     ) {
       startTransition(() => {
@@ -171,18 +129,21 @@ export default function ResourcesClientPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <section className="rounded-4xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+      <section className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+          Learning and transparency
+        </p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
           Resources
         </h1>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
+        <p className="mt-4 max-w-2xl text-base leading-7 text-[#52645a]">
           Explore reports, publications, learning notes, and media from One
           World Hands programs.
         </p>
       </section>
 
       <div className="mt-10">
-        <div className="grid w-full grid-cols-2 gap-2 rounded-3xl bg-sky-500 p-2 text-white sm:grid-cols-3 sm:rounded-full lg:grid-cols-7">
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter resources by type">
           {resourceTypes.map((type) => {
             const isActive = activeType === type.value;
 
@@ -192,10 +153,10 @@ export default function ResourcesClientPage({
                 type="button"
                 onClick={() => setActiveType(type.value)}
                 className={[
-                  "flex min-w-0 items-center justify-center rounded-full px-2 py-2 text-center text-sm font-semibold transition sm:px-3",
+                  "flex min-w-0 items-center justify-center rounded-full border px-4 py-2.5 text-center text-sm font-medium transition-colors",
                   isActive
-                    ? "bg-white text-sky-700 shadow-sm"
-                    : "text-white hover:bg-white/15",
+                    ? "border-[#176345] bg-[#176345] text-white"
+                    : "border-[#dce5de] bg-white text-[#52645a] hover:border-[#b8d2c0] hover:bg-[#f1f6f1]",
                 ].join(" ")}
               >
                 {type.label}
@@ -207,7 +168,7 @@ export default function ResourcesClientPage({
 
       <div className="mt-8">
         {error && (
-          <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             Failed to load resources from database.
           </div>
         )}
@@ -229,7 +190,7 @@ export default function ResourcesClientPage({
               />
             ))
           ) : (
-            <div className="col-span-full rounded-4xl border border-dashed border-neutral-300 bg-white p-10 text-center">
+            <div className="col-span-full rounded-2xl border border-dashed border-[#cbd8cd] bg-white p-10 text-center">
               <h2 className="text-lg font-semibold text-neutral-900">
                 No resources found
               </h2>

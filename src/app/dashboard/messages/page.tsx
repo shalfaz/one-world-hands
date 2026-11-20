@@ -43,7 +43,7 @@ export default async function MessagesPage() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f9" }}>
+      <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f0" }}>
         <div className="w-full">
           <div className="text-red-600">Error loading messages</div>
         </div>
@@ -52,10 +52,10 @@ export default async function MessagesPage() {
   }
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f9" }}>
+    <div className="flex min-h-screen" style={{ backgroundColor: "#f1f5f0" }}>
       <div className="w-full">
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <h1 className="text-3xl font-bold">Messages</h1>
+        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+          <h1 className="text-3xl font-semibold tracking-tight text-[#183b2c]">Messages</h1>
           <p className="mt-2 text-slate-600">
             {serializedMessages.length} message{serializedMessages.length !== 1 ? "s" : ""}
           </p>
