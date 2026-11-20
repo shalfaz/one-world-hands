@@ -64,7 +64,7 @@ export default function ContactForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoComplete="name"
-            className="h-11 rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#176345]/30 focus:border-[#176345]"
+            className="h-11 rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#009EDB]/30 focus:border-[#009EDB]"
             placeholder="Your name"
             required
           />
@@ -81,7 +81,7 @@ export default function ContactForm() {
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             inputMode="email"
-            className="h-11 rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#176345]/30 focus:border-[#176345]"
+            className="h-11 rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#009EDB]/30 focus:border-[#009EDB]"
             placeholder="you@example.com"
             required
           />
@@ -98,7 +98,7 @@ export default function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
-          className="rounded-lg border border-[#dce5de] bg-white px-4 py-3 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#176345]/30 focus:border-[#176345]"
+          className="rounded-lg border border-[#D9E2EC] bg-white px-4 py-3 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#009EDB]/30 focus:border-[#009EDB]"
           placeholder="Tell us how we can help—donations, volunteering, or partnerships."
           required
         />
@@ -111,7 +111,7 @@ export default function ContactForm() {
       )}
 
       {status.kind === "success" && (
-        <p className="rounded-2xl border border-green-200 bg-green-50 p-4 text-sm font-medium text-green-900">
+        <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-[#17634B]">
           {status.message}
         </p>
       )}
@@ -120,7 +120,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={!canSubmit}
-          className="inline-flex h-11 items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:cursor-not-allowed disabled:bg-[#94b7a0]"
+          className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:cursor-not-allowed disabled:bg-[#009EDB]/40"
         >
           Send Message
         </button>

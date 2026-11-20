@@ -86,7 +86,7 @@ export default function ResourceForm({
           placeholder="Enter resource title"
           defaultValue={String(resource?.title || "")}
           maxLength={150}
-          className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+          className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           required
         />
       </div>
@@ -102,7 +102,7 @@ export default function ResourceForm({
               key={option.value}
               className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
                 selectedType === option.value
-                  ? "border-[#176345] bg-[#f1f6f1]"
+                  ? "border-[#009EDB] bg-[#EAF6FB]"
                   : "border-slate-200 hover:border-slate-300"
               }`}
             >
@@ -135,7 +135,7 @@ export default function ResourceForm({
           placeholder="Brief description of the resource"
           defaultValue={String(resource?.description || "")}
           rows={2}
-          className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+          className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
         />
       </div>
 
@@ -153,10 +153,10 @@ export default function ResourceForm({
             onChange={(e) =>
               setFileName(e.target.files?.[0]?.name || "")
             }
-            className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+            className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           />
           {fileName && (
-            <p className="text-xs text-green-600 mt-1">{fileName}</p>
+            <p className="text-xs text-[#009EDB] font-medium mt-1">{fileName}</p>
           )}
         </div>
       )}
@@ -171,7 +171,7 @@ export default function ResourceForm({
             placeholder="Write your blog content here..."
             defaultValue={String(resource?.content || "")}
             rows={4}
-            className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+            className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           />
         </div>
       )}
@@ -186,7 +186,7 @@ export default function ResourceForm({
             type="url"
             placeholder="https://www.youtube.com/watch?v=..."
             defaultValue={String(resource?.youtubeLink || "")}
-            className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+            className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
             required={selectedType === "webinar"}
           />
           <p className="text-xs text-slate-500 mt-1">
@@ -208,10 +208,10 @@ export default function ResourceForm({
             onChange={(e) =>
               setFileName(e.target.files?.[0]?.name || "")
             }
-            className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+            className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           />
           {fileName && (
-            <p className="text-xs text-green-600 mt-1">{fileName} selected</p>
+            <p className="text-xs text-[#009EDB] font-medium mt-1">{fileName} selected</p>
           )}
         </div>
       )}
@@ -229,10 +229,10 @@ export default function ResourceForm({
             onChange={(e) =>
               setFileName(e.target.files?.[0]?.name || "")
             }
-            className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+            className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           />
           {fileName && (
-            <p className="text-xs text-green-600 mt-1">{fileName} selected</p>
+            <p className="text-xs text-[#009EDB] font-medium mt-1">{fileName} selected</p>
           )}
         </div>
       )}
@@ -245,7 +245,7 @@ export default function ResourceForm({
         <select
           name="status"
           defaultValue={String(resource?.status || "draft")}
-          className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+          className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           aria-label="Resource status"
         >
           <option value="draft">Draft</option>
@@ -257,7 +257,7 @@ export default function ResourceForm({
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-full bg-[#176345] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:opacity-50"
+        className="w-full rounded-full bg-[#009EDB] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:opacity-50"
       >
         {loading
           ? "Processing..."

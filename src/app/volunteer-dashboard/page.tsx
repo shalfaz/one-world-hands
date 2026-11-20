@@ -14,15 +14,15 @@ export default async function VolunteerDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f1f5f0]">
+    <div className="min-h-screen bg-[#F7FAFC]">
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-8">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
                 Volunteer Dashboard
               </p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c]">
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70]">
                 Welcome, {name || "Volunteer"}
               </h1>
               <p className="mt-2 text-sm text-slate-500">
@@ -33,7 +33,7 @@ export default async function VolunteerDashboardPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-[#dce5de] bg-white px-5 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1]"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-5 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
               >
                 Back to Website
               </Link>
@@ -41,7 +41,7 @@ export default async function VolunteerDashboardPage() {
               <form action={logoutUser}>
                 <button
                   type="submit"
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#176345] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34]"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be]"
                 >
                   Logout
                 </button>
@@ -50,8 +50,8 @@ export default async function VolunteerDashboardPage() {
           </div>
 
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            <div className="rounded-xl border border-[#dce5de] bg-[#f7faf7] p-5">
-              <h2 className="text-base font-semibold text-[#183b2c]">
+            <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-5">
+              <h2 className="text-base font-semibold text-[#174A70]">
                 Volunteer Tasks
               </h2>
               <p className="mt-2 text-sm text-slate-600">
@@ -60,8 +60,8 @@ export default async function VolunteerDashboardPage() {
               </p>
             </div>
 
-            <div className="rounded-xl border border-[#dce5de] bg-[#f7faf7] p-5">
-              <h2 className="text-base font-semibold text-[#183b2c]">
+            <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-5">
+              <h2 className="text-base font-semibold text-[#174A70]">
                 Event Participation
               </h2>
               <p className="mt-2 text-sm text-slate-600">
@@ -70,8 +70,8 @@ export default async function VolunteerDashboardPage() {
               </p>
             </div>
 
-            <div className="rounded-xl border border-[#dce5de] bg-[#f7faf7] p-5">
-              <h2 className="text-base font-semibold text-[#183b2c]">
+            <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-5">
+              <h2 className="text-base font-semibold text-[#174A70]">
                 Learning & Resources
               </h2>
               <p className="mt-2 text-sm text-slate-600">

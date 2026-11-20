@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-100 text-yellow-800",
-  published: "bg-green-100 text-green-800",
+  published: "bg-emerald-50 text-[#17634B]",
 };
 
 export default function ResourceList({
@@ -128,7 +128,7 @@ export default function ResourceList({
                         href={String(resource.fileUrl)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ml-2 text-[#176345] hover:underline"
+                        className="ml-2 text-[#009EDB] hover:underline"
                       >
                         (View)
                       </a>
@@ -141,7 +141,7 @@ export default function ResourceList({
                         href={String(resource.youtubeLink)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ml-2 text-[#176345] hover:underline"
+                        className="ml-2 text-[#009EDB] hover:underline"
                       >
                         (Watch)
                       </a>
@@ -175,7 +175,7 @@ export default function ResourceList({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(resource)}
-                      className="rounded-lg bg-[#edf5ef] px-3 py-1 text-xs font-semibold text-[#45624e] transition-colors hover:bg-[#dcebdd]"
+                      className="rounded-lg bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70] transition-colors hover:bg-[#009EDB] hover:text-white"
                     >
                       Edit
                     </button>

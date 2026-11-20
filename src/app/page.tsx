@@ -52,8 +52,8 @@ export default async function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
-      <div className="w-full border-b border-[#e3ebe4] bg-[#f1f5f0]">
-        <div className="mx-auto max-w-7xl px-4 py-2 text-center text-xs font-semibold tracking-wide text-[#365b47] sm:px-6 lg:px-8">
+      <div className="w-full border-b border-[#D9E2EC] bg-[#F7FAFC]">
+        <div className="mx-auto max-w-7xl px-4 py-2 text-center text-xs font-semibold tracking-wide text-[#174A70] sm:px-6 lg:px-8">
           Where Magic Hands Unite, Wonders Arise.
         </div>
       </div>
@@ -80,35 +80,35 @@ export default async function Home() {
         <section aria-labelledby="about-preview-title">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <div className="mb-9 max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
                 Who we are
               </p>
               <h2
                 id="about-preview-title"
-                className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl"
+                className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl"
               >
                 Our Vision & Mission
               </h2>
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2">
-              <div className="group relative overflow-hidden rounded-2xl border border-[#dce5de] bg-white p-7 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.35)] sm:p-8">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#176345]" />
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+              <div className="group relative overflow-hidden rounded-2xl border border-[#D9E2EC] bg-white p-7 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(23,74,112,0.25)] sm:p-8">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#009EDB]" />
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
                   Vision
                 </p>
-                <p className="mt-4 text-lg leading-8 text-[#42584b] sm:text-xl">
+                <p className="mt-4 text-lg leading-8 text-[#475569] sm:text-xl">
                   A world where every human being has opportunity, dignity, and
                   support to live a better life.
                 </p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-2xl border border-[#dce5de] bg-white p-7 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.35)] sm:p-8">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#c99a53]" />
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+              <div className="group relative overflow-hidden rounded-2xl border border-[#D9E2EC] bg-white p-7 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(23,74,112,0.25)] sm:p-8">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#174A70]" />
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
                   Mission
                 </p>
-                <p className="mt-4 text-lg leading-8 text-[#42584b] sm:text-xl">
+                <p className="mt-4 text-lg leading-8 text-[#475569] sm:text-xl">
                   To empower individuals, support communities, and address social,
                   economic, and environmental challenges through direct action,
                   education, and collaboration.
@@ -119,7 +119,7 @@ export default async function Home() {
             <div className="mt-10 flex justify-center">
               <a
                 href="/about-us"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#176345] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#009EDB] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
               >
                 Know More
               </a>
@@ -134,16 +134,16 @@ export default async function Home() {
         <section aria-labelledby="why-support-title">
           <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
                 Our approach
               </p>
               <h2
                 id="why-support-title"
-                className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl"
+                className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl"
               >
                 Why Support Us
               </h2>
-              <p className="mt-3 max-w-2xl text-base leading-7 text-[#52645a]">
+              <p className="mt-3 max-w-2xl text-base leading-7 text-[#475569]">
                 Trust is built through consistent care, transparency, and
                 measurable learning.
               </p>
@@ -170,13 +170,13 @@ export default async function Home() {
               ].map((pillar) => (
                 <div
                   key={pillar.title}
-                  className="group relative overflow-hidden rounded-2xl border border-[#dce5de] bg-white p-6 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.35)]"
+                  className="group relative overflow-hidden rounded-2xl border border-[#D9E2EC] bg-white p-6 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(23,74,112,0.25)]"
                 >
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#176345]" />
-                  <h3 className="text-base font-semibold leading-7 text-[#183b2c]">
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#009EDB]" />
+                  <h3 className="text-base font-semibold leading-7 text-[#174A70]">
                     {pillar.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-[#52645a]">
+                  <p className="mt-3 text-sm leading-6 text-[#475569]">
                     {pillar.body}
                   </p>
                 </div>
@@ -187,12 +187,12 @@ export default async function Home() {
 
         <section aria-labelledby="resources-title">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
               Learn and share
             </p>
             <h2
               id="resources-title"
-              className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl"
+              className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl"
             >
               Resources Preview
             </h2>
@@ -215,7 +215,7 @@ export default async function Home() {
                   <a
                     key={category.label}
                     href={category.href}
-                    className="inline-flex items-center justify-center rounded-full border border-[#dce5de] bg-white px-4 py-2.5 text-center text-sm font-medium text-[#365b47] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+                    className="inline-flex items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-4 py-2.5 text-center text-sm font-medium text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
                   >
                     {category.label}
                   </a>

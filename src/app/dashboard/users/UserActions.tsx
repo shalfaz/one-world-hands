@@ -20,7 +20,7 @@ export function UserActions({ userId, currentRole }: { userId: string; currentRo
       text: `Change role from "${role}" to "${newRole}"?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#0ea5e9",
+      confirmButtonColor: "#009EDB",
       cancelButtonColor: "#ef4444",
       confirmButtonText: "Yes, update it!",
     });

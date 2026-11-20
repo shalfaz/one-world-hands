@@ -64,11 +64,11 @@ export async function signupUser(formData: FormData) {
       subject: "Welcome to One World Hands NGO!",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #0ea5e9;">Welcome to One World Hands!</h2>
+          <h2 style="color: #009EDB;">Welcome to One World Hands!</h2>
           <p>Dear ${name},</p>
           <p>Thank you for creating an account with us. We're excited to have you as part of our community dedicated to making a difference in the world.</p>
           
-          <div style="background-color: #f0f9ff; border-left: 4px solid #0ea5e9; padding: 15px; margin: 20px 0; border-radius: 4px;">
+          <div style="background-color: #EAF6FB; border-left: 4px solid #009EDB; padding: 15px; margin: 20px 0; border-radius: 4px;">
             <p><strong>Your Account Details:</strong></p>
             <ul style="list-style: none; padding: 0;">
               <li><strong>Email:</strong> ${email}</li>
@@ -80,7 +80,7 @@ export async function signupUser(formData: FormData) {
           <p>You can now log in to your account and start contributing to our mission.</p>
           
           <div style="text-align: center; margin: 30px 0;">
-            <a href="http://localhost:3000/login" style="display: inline-block; background-color: #0ea5e9; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">
+            <a href="http://localhost:3000/login" style="display: inline-block; background-color: #009EDB; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">
               Log In Now
             </a>
           </div>

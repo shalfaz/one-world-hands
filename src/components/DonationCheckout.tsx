@@ -83,9 +83,9 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
   return (
     <section
       aria-labelledby="donation-form-title"
-      className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-[0_8px_30px_rgba(20,55,35,0.08)]"
+      className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-[0_8px_30px_rgba(23,74,112,0.1)]"
     >
-      <div className="bg-[#008744] px-5 py-5 text-white sm:px-7 sm:py-6">
+      <div className="bg-[#009EDB] px-5 py-5 text-white sm:px-7 sm:py-6">
         <div>
           <p className="text-xs font-bold uppercase text-white/75">
             {submitted ? "Thank you" : "Make an impact"}
@@ -123,10 +123,10 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
                     setAmount(String(suggestedAmount));
                     setCustomAmount("");
                   }}
-                  className={`h-11 rounded-md border text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#008744] focus-visible:ring-offset-2 ${
+                  className={`h-11 rounded-md border text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2 ${
                     !customAmount && amount === String(suggestedAmount)
-                      ? "border-[#008744] bg-[#e8f4ec] text-[#006b36]"
-                      : "border-neutral-300 bg-white text-neutral-800 hover:border-[#008744]"
+                      ? "border-[#009EDB] bg-[#EAF6FB] text-[#174A70]"
+                      : "border-neutral-300 bg-white text-neutral-800 hover:border-[#009EDB]"
                   }`}
                 >
                   ৳{suggestedAmount.toLocaleString()}
@@ -138,7 +138,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
           <label className="mt-4 block text-sm font-semibold text-neutral-800" htmlFor="custom-amount">
             Or enter another amount
           </label>
-          <div className="mt-2 flex h-11 items-center rounded-md border border-neutral-300 focus-within:ring-2 focus-within:ring-[#008744]">
+          <div className="mt-2 flex h-11 items-center rounded-md border border-neutral-300 focus-within:ring-2 focus-within:ring-[#009EDB]">
             <span className="pl-3 text-sm font-semibold text-neutral-500">৳</span>
             <input
               id="custom-amount"
@@ -164,7 +164,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
                   required
                   value={donorName}
                   onChange={(event) => setDonorName(event.target.value)}
-                  className="mt-1.5 h-11 w-full rounded-md border border-neutral-300 px-3 text-sm text-neutral-950 outline-none focus:border-[#008744] focus:ring-2 focus:ring-[#008744]/20"
+                  className="mt-1.5 h-11 w-full rounded-md border border-neutral-300 px-3 text-sm text-neutral-950 outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 />
               </label>
               <label className="text-sm font-medium text-neutral-700" htmlFor="donor-email">
@@ -175,7 +175,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
                   autoComplete="email"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  className="mt-1.5 h-11 w-full rounded-md border border-neutral-300 px-3 text-sm text-neutral-950 outline-none focus:border-[#008744] focus:ring-2 focus:ring-[#008744]/20"
+                  className="mt-1.5 h-11 w-full rounded-md border border-neutral-300 px-3 text-sm text-neutral-950 outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 />
               </label>
               <label className="text-sm font-medium text-neutral-700" htmlFor="donor-phone">
@@ -186,7 +186,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
                   autoComplete="tel"
                   value={phone}
                   onChange={(event) => setPhone(event.target.value)}
-                  className="mt-1.5 h-11 w-full rounded-md border border-neutral-300 px-3 text-sm text-neutral-950 outline-none focus:border-[#008744] focus:ring-2 focus:ring-[#008744]/20"
+                  className="mt-1.5 h-11 w-full rounded-md border border-neutral-300 px-3 text-sm text-neutral-950 outline-none focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 />
               </label>
             </div>
@@ -199,7 +199,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
                 <label
                   key={method.id}
                   className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-md border px-3 transition-colors ${
-                    paymentMethod === method.id ? "border-[#008744] bg-[#f0f7f2]" : "border-neutral-300"
+                    paymentMethod === method.id ? "border-[#009EDB] bg-[#EAF6FB]" : "border-neutral-300"
                   }`}
                 >
                   <input
@@ -208,7 +208,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
                     value={method.id}
                     checked={paymentMethod === method.id}
                     onChange={() => setPaymentMethod(method.id)}
-                    className="h-4 w-4 accent-[#008744]"
+                    className="h-4 w-4 accent-[#009EDB]"
                   />
                   <span className="flex flex-1 items-center justify-between gap-3">
                     <span className="text-sm font-bold text-neutral-900">{method.label}</span>
@@ -226,7 +226,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-[#008744] px-5 text-sm font-bold text-white transition-colors hover:bg-[#006b36] disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#008744] focus-visible:ring-offset-2"
+            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-[#009EDB] px-5 text-sm font-bold text-white transition-colors hover:bg-[#0088be] disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
           >
             {submitting ? "Submitting..." : "Donate"}
           </button>

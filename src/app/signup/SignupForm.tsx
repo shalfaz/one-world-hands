@@ -56,7 +56,7 @@ export function SignupForm() {
           name="name"
           type="text"
           placeholder="John Doe"
-          className="h-12 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+          className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
           required
         />
       </div>
@@ -73,7 +73,7 @@ export function SignupForm() {
           name="email"
           type="email"
           placeholder="you@example.com"
-          className="h-12 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+          className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
           required
         />
         <p className="mt-1 text-xs text-slate-500">
@@ -93,7 +93,7 @@ export function SignupForm() {
           name="password"
           type="password"
           placeholder="At least 8 characters"
-          className="h-12 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+          className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
           required
         />
         <p className="mt-1 text-xs text-slate-500">
@@ -113,26 +113,26 @@ export function SignupForm() {
           name="confirmPassword"
           type="password"
           placeholder="Confirm your password"
-          className="h-12 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
+          className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
           required
         />
       </div>
 
-      <div className="flex items-start gap-3 rounded-lg bg-[#f1f6f1] p-3">
+      <div className="flex items-start gap-3 rounded-lg bg-[#EAF6FB] p-3">
         <input
           id="terms"
           name="terms"
           type="checkbox"
-          className="mt-1 h-4 w-4 rounded border-slate-300 text-[#176345] focus:ring-[#176345]"
+          className="mt-1 h-4 w-4 rounded border-slate-300 text-[#009EDB] focus:ring-[#009EDB]"
           required
         />
         <label htmlFor="terms" className="text-xs text-slate-600">
           I agree to the{" "}
-          <a href="#" className="font-semibold text-[#176345] hover:text-[#104b34]">
+          <a href="#" className="font-semibold text-[#174A70] hover:text-[#009EDB]">
             Terms & Conditions
           </a>{" "}
           and{" "}
-          <a href="#" className="font-semibold text-[#176345] hover:text-[#104b34]">
+          <a href="#" className="font-semibold text-[#174A70] hover:text-[#009EDB]">
             Privacy Policy
           </a>
         </label>
@@ -140,7 +140,7 @@ export function SignupForm() {
 
       <button
         type="submit"
-        className="mt-6 h-12 w-full rounded-full bg-[#176345] font-semibold text-white transition-colors hover:bg-[#104b34]"
+        className="mt-6 h-12 w-full rounded-full bg-[#009EDB] font-semibold text-white transition-colors hover:bg-[#0088be]"
       >
         Create Account
       </button>

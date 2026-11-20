@@ -10,11 +10,11 @@ export default function PrivacyPage() {
   return (
     <PageShell>
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
             Your information
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c]">
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70]">
             Privacy Policy
           </h1>
           <p className="mt-3 text-sm leading-6 text-neutral-500">
@@ -23,12 +23,12 @@ export default function PrivacyPage() {
             time to time; the date above will reflect the latest revision.
           </p>
 
-          <div className="mt-10 divide-y divide-[#e7ede7]">
+          <div className="mt-10 divide-y divide-[#D9E2EC]">
           <section className="pb-7">
-            <h2 className="text-lg font-semibold text-[#183b2c]">
+            <h2 className="text-lg font-semibold text-[#174A70]">
               Information we may collect
             </h2>
-            <p className="mt-3 text-sm leading-7 text-[#52645a]">
+            <p className="mt-3 text-sm leading-7 text-[#475569]">
               Depending on how you use our site, we may receive information you
               choose to provide (for example, when you contact us by email or
               through a form) such as your name, email address, and message
@@ -39,10 +39,10 @@ export default function PrivacyPage() {
           </section>
 
           <section className="py-7">
-            <h2 className="text-lg font-semibold text-[#183b2c]">
+            <h2 className="text-lg font-semibold text-[#174A70]">
               How we use information
             </h2>
-            <p className="mt-3 text-sm leading-7 text-[#52645a]">
+            <p className="mt-3 text-sm leading-7 text-[#475569]">
               We use contact and donation-related information to respond to
               inquiries, acknowledge support, send updates you have opted into,
               and improve our programs and communications. We do not sell your
@@ -51,10 +51,10 @@ export default function PrivacyPage() {
           </section>
 
           <section className="py-7">
-            <h2 className="text-lg font-semibold text-[#183b2c]">
+            <h2 className="text-lg font-semibold text-[#174A70]">
               Cookies and analytics
             </h2>
-            <p className="mt-3 text-sm leading-7 text-[#52645a]">
+            <p className="mt-3 text-sm leading-7 text-[#475569]">
               Our site may use essential cookies to operate securely. If we add
               optional analytics or marketing tools, we will describe them here
               and, where required, ask for your consent.
@@ -62,10 +62,10 @@ export default function PrivacyPage() {
           </section>
 
           <section className="py-7">
-            <h2 className="text-lg font-semibold text-[#183b2c]">
+            <h2 className="text-lg font-semibold text-[#174A70]">
               Your choices
             </h2>
-            <p className="mt-3 text-sm leading-7 text-[#52645a]">
+            <p className="mt-3 text-sm leading-7 text-[#475569]">
               You may contact us to ask questions about this policy, to update
               your contact preferences, or to request reasonable access to
               personal information we hold in connection with this site.
@@ -73,11 +73,11 @@ export default function PrivacyPage() {
           </section>
 
           <section className="pt-7">
-            <h2 className="text-lg font-semibold text-[#183b2c]">Contact</h2>
-            <p className="mt-3 text-sm leading-7 text-[#52645a]">
+            <h2 className="text-lg font-semibold text-[#174A70]">Contact</h2>
+            <p className="mt-3 text-sm leading-7 text-[#475569]">
               Questions about privacy:{" "}
               <a
-                className="font-medium text-[#176345] underline-offset-4 hover:underline"
+                className="font-medium text-[#009EDB] underline-offset-4 hover:underline"
                 href="mailto:hello@oneworldhands.org"
               >
                 hello@oneworldhands.org

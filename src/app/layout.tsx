@@ -104,7 +104,7 @@ export default function RootLayout({
     >
       <head>
         <StructuredData />
-        <meta name="theme-color" content="#176345" />
+        <meta name="theme-color" content="#009EDB" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="canonical" href="https://oneworldhands.org" />

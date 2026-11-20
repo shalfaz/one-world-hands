@@ -34,8 +34,8 @@ type ResourcesClientPageProps = {
 
 function getAccent() {
   return {
-    bg: "bg-[#edf5ef]",
-    text: "text-[#45624e]",
+    bg: "bg-[#EAF6FB]",
+    text: "text-[#174A70]",
   };
 }
 
@@ -129,14 +129,14 @@ export default function ResourcesClientPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <section className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+      <section className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
           Learning and transparency
         </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
           Resources
         </h1>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-[#52645a]">
+        <p className="mt-4 max-w-2xl text-base leading-7 text-[#475569]">
           Explore reports, publications, learning notes, and media from One
           World Hands programs.
         </p>
@@ -155,8 +155,8 @@ export default function ResourcesClientPage({
                 className={[
                   "flex min-w-0 items-center justify-center rounded-full border px-4 py-2.5 text-center text-sm font-medium transition-colors",
                   isActive
-                    ? "border-[#176345] bg-[#176345] text-white"
-                    : "border-[#dce5de] bg-white text-[#52645a] hover:border-[#b8d2c0] hover:bg-[#f1f6f1]",
+                    ? "border-[#009EDB] bg-[#009EDB] text-white"
+                    : "border-[#D9E2EC] bg-white text-[#475569] hover:border-[#009EDB] hover:bg-[#EAF6FB]",
                 ].join(" ")}
               >
                 {type.label}
@@ -190,7 +190,7 @@ export default function ResourcesClientPage({
               />
             ))
           ) : (
-            <div className="col-span-full rounded-2xl border border-dashed border-[#cbd8cd] bg-white p-10 text-center">
+            <div className="col-span-full rounded-2xl border border-dashed border-[#D9E2EC] bg-white p-10 text-center">
               <h2 className="text-lg font-semibold text-neutral-900">
                 No resources found
               </h2>

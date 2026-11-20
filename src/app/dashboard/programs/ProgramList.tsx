@@ -50,7 +50,7 @@ export default function ProgramList({
           icon: "error",
           title: "Could not delete program",
           text: result.error,
-          confirmButtonColor: "#0ea5e9",
+          confirmButtonColor: "#009EDB",
         });
         return;
       }
@@ -61,7 +61,7 @@ export default function ProgramList({
         icon: "success",
         title: "Deleted",
         text: "Program has been deleted successfully",
-        confirmButtonColor: "#0ea5e9",
+        confirmButtonColor: "#009EDB",
       });
     } catch (error) {
       console.error("Delete error:", error);
@@ -69,7 +69,7 @@ export default function ProgramList({
         icon: "error",
         title: "Could not delete program",
         text: error instanceof Error ? error.message : "Please try again.",
-        confirmButtonColor: "#0ea5e9",
+        confirmButtonColor: "#009EDB",
       });
     } finally {
       setDeletingId(null);
@@ -78,7 +78,7 @@ export default function ProgramList({
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      active: "bg-green-100 text-green-700",
+      active: "bg-emerald-50 text-[#17634B]",
       draft: "bg-yellow-100 text-yellow-700",
       inactive: "bg-gray-100 text-gray-700",
     };
@@ -133,7 +133,7 @@ export default function ProgramList({
                 <div className="flex gap-2">
                   <button
                     onClick={() => onEdit(program)}
-                    className="rounded-lg bg-[#edf5ef] px-3 py-1 text-xs font-medium text-[#45624e] transition-colors hover:bg-[#dcebdd]"
+                    className="rounded-lg bg-[#EAF6FB] px-3 py-1 text-xs font-medium text-[#174A70] transition-colors hover:bg-[#009EDB] hover:text-white"
                   >
                     Edit
                   </button>

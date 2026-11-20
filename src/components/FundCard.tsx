@@ -20,8 +20,8 @@ type FundCardFund = {
 
 export default function FundCard({ fund }: { fund: FundCardFund }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-[#dce5de] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#c5d8c8] hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.38)]">
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#edf2ed]">
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-[#D9E2EC] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#009EDB] hover:shadow-[0_18px_42px_-30px_rgba(23,74,112,0.25)]">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EAF6FB]">
         {fund.image ? (
           <Image
             src={fund.image}
@@ -53,26 +53,26 @@ export default function FundCard({ fund }: { fund: FundCardFund }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h3 className="text-lg font-semibold leading-snug tracking-tight text-[#183b2c]">
+        <h3 className="text-lg font-semibold leading-snug tracking-tight text-[#174A70]">
           {fund.name}
         </h3>
 
         {fund.categoryLabel || fund.category ? (
           <div className="mt-2">
-            <span className="inline-flex items-center rounded-full bg-[#edf5ef] px-3 py-1 text-xs font-semibold text-[#45624e]">
+            <span className="inline-flex items-center rounded-full bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70]">
               {fund.categoryLabel || (fund.category || "").charAt(0).toUpperCase() + (fund.category || "").slice(1)}
             </span>
           </div>
         ) : null}
 
-        <p className="mt-3 flex-1 text-sm leading-6 text-[#5b6d62]">
+        <p className="mt-3 flex-1 text-sm leading-6 text-[#475569]">
           {fund.description}
         </p>
 
         <div className="mt-5 pt-1">
           <Link
             href={fund.href}
-            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
+            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
             aria-label={`Donate to ${fund.name}`}
           >
             Donate

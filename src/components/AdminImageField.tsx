@@ -95,12 +95,12 @@ export default function AdminImageField({
           </div>
         ) : (
           <button type="button" onClick={() => inputRef.current?.click()} className="flex min-h-44 w-full flex-col items-center justify-center px-6 text-center">
-            <span className="grid h-12 w-12 place-items-center rounded-full bg-[#edf5ef] text-xl text-[#176345]"><FiImage /></span>
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-[#EAF6FB] text-xl text-[#009EDB]"><FiImage /></span>
             <span className="mt-3 text-sm font-semibold text-slate-800">Drop an image here or choose a file</span>
             <span className="mt-1 text-xs text-slate-500">JPG, PNG or WebP · Max 5 MB</span>
           </button>
         )}
-        {uploading && <div className="absolute inset-x-0 bottom-0 h-1 bg-slate-200"><div className="h-full w-2/3 animate-pulse bg-[#377b57]" /></div>}
+        {uploading && <div className="absolute inset-x-0 bottom-0 h-1 bg-slate-200"><div className="h-full w-2/3 animate-pulse bg-[#009EDB]" /></div>}
       </div>
       <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={handleChange} disabled={uploading} className="hidden" />
       {error && <p className="mt-2 flex items-center gap-2 text-xs font-medium text-red-600"><FiX /> {error}</p>}

@@ -71,14 +71,14 @@ export default function FundForm({
           placeholder="Fund name"
           defaultValue={String(fund?.name || "")}
           maxLength={100}
-          className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+          className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           required
         />
 
         <select
           name="category"
           defaultValue={String(fund?.category || "")}
-          className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+          className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           required
           aria-label="Fund category"
         >
@@ -97,13 +97,13 @@ export default function FundForm({
           placeholder="Target amount (BDT)"
           defaultValue={Number(fund?.targetAmount || 0)}
           min="0"
-          className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+          className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
         />
 
         <select
           name="status"
           defaultValue={String(fund?.status || "draft")}
-          className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+          className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           aria-label="Fund status"
         >
           <option value="draft">Draft</option>
@@ -120,12 +120,12 @@ export default function FundForm({
             placeholder="Description"
             defaultValue={String(fund?.description || "")}
             rows={2}
-            className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+            className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           />
         </div>
 
         <label className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 md:col-span-2 xl:col-span-4">
-          <input name="published" type="checkbox" value="true" defaultChecked={Boolean(fund?.published ?? fund?.status === "active")} className="h-4 w-4 rounded border-slate-300 text-[#176345]" />
+          <input name="published" type="checkbox" value="true" defaultChecked={Boolean(fund?.published ?? fund?.status === "active")} className="h-4 w-4 rounded border-slate-300 text-[#009EDB]" />
           Published on the website
         </label>
 
@@ -135,7 +135,7 @@ export default function FundForm({
             placeholder="Impact summary"
             defaultValue={String(fund?.impactSummary || "")}
             rows={2}
-            className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-600"
+            className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           />
         </div>
 
@@ -143,7 +143,7 @@ export default function FundForm({
           <button
             type="submit"
             disabled={loading || imageUploading}
-            className="w-full rounded-full bg-[#176345] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:opacity-50"
+            className="w-full rounded-full bg-[#009EDB] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:opacity-50"
           >
             {loading
               ? "Processing..."

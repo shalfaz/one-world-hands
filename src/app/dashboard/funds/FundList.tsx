@@ -5,7 +5,7 @@ import { deleteFund } from "./actions";
 import Swal from "sweetalert2";
 
 const statusColors: Record<string, string> = {
-  active: "bg-green-100 text-green-800",
+  active: "bg-emerald-50 text-[#17634B]",
   draft: "bg-yellow-100 text-yellow-800",
   completed: "bg-gray-100 text-gray-800",
   paused: "bg-orange-100 text-orange-800",
@@ -139,7 +139,7 @@ export default function FundList({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(fund)}
-                      className="rounded-lg bg-[#edf5ef] px-3 py-1 text-xs font-semibold text-[#45624e] transition-colors hover:bg-[#dcebdd]"
+                      className="rounded-lg bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70] transition-colors hover:bg-[#009EDB] hover:text-white"
                     >
                       Edit
                     </button>

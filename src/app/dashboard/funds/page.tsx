@@ -69,7 +69,7 @@ function FundsContent() {
       text: "This will add or update all 13 standard donation funds in the database.",
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#176345",
+      confirmButtonColor: "#009EDB",
       cancelButtonColor: "#6b7280",
       confirmButtonText: "Yes, import funds",
       cancelButtonText: "Cancel",
@@ -120,13 +120,13 @@ function FundsContent() {
   const totalRaised = funds.reduce((sum, f) => sum + Number(f.raisedAmount || 0), 0);
 
   return (
-    <div className="flex min-h-screen w-full flex-col gap-6 bg-[#f1f5f0]">
+    <div className="flex min-h-screen w-full flex-col gap-6 bg-[#F7FAFC]">
         {/* Header Section */}
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <div className="flex flex-col gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">Funds Management</p>
-              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#183b2c]">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">Funds Management</p>
+              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[#174A70]">
                 Funds Management
               </h1>
               <p className="mt-2 text-sm text-slate-500">
@@ -137,27 +137,27 @@ function FundsContent() {
 
             {/* Statistics Cards */}
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Total Funds</p>
-                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-2xl font-semibold text-[#174A70]">
                   {funds.length}
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Active</p>
-                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-2xl font-semibold text-[#174A70]">
                   {activeFunds}
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Total Raised</p>
-                <p className="mt-1 text-xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-xl font-semibold text-[#174A70]">
                   ৳{(totalRaised / 1000).toFixed(0)}K
                 </p>
               </div>
-              <div className="rounded-xl border border-[#e5ebe5] bg-[#f7faf7] p-4">
+              <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-xs font-medium text-neutral-500">Draft</p>
-                <p className="mt-1 text-2xl font-semibold text-[#183b2c]">
+                <p className="mt-1 text-2xl font-semibold text-[#174A70]">
                   {funds.filter((f) => f.status === "draft").length}
                 </p>
               </div>
@@ -173,7 +173,7 @@ function FundsContent() {
                   type="button"
                   onClick={handleSeedDefaults}
                   disabled={seeding}
-                  className="inline-flex h-10 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 px-5 text-sm font-semibold text-emerald-800 transition-colors hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex h-10 items-center justify-center rounded-full border border-[#D9E2EC] bg-[#EAF6FB] px-5 text-sm font-semibold text-[#174A70] transition-colors hover:bg-[#009EDB] hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {seeding ? "Importing..." : "Import 13 Default Funds"}
                 </button>
@@ -204,7 +204,7 @@ function FundsContent() {
         </div>
 
         {/* List Section */}
-        <div className="rounded-2xl border border-[#dce5de] bg-white p-6">
+        <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 mb-4">
               All Funds

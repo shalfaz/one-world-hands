@@ -27,11 +27,11 @@ export default async function FundDetailPage({ params }: FundPageProps) {
 
   return (
     <PageShell>
-      <div className="bg-[#f4f7f4]">
+      <div className="bg-[#F7FAFC]">
         <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 sm:py-10 lg:px-8">
           <Link
             href="/donation-funds"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 transition-colors hover:text-[#007a3d]"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 transition-colors hover:text-[#009EDB]"
           >
             <span aria-hidden="true">←</span> All donation funds
           </Link>
@@ -39,7 +39,7 @@ export default async function FundDetailPage({ params }: FundPageProps) {
           <div className="mt-5 grid items-start gap-7 lg:grid-cols-[minmax(0,1.08fr)_minmax(390px,0.92fr)] lg:gap-10">
             <article className="min-w-0">
               <header className="mb-5">
-                <p className="text-xs font-bold uppercase text-[#007a3d]">
+                <p className="text-xs font-bold uppercase text-[#174A70]">
                   {fund.categoryLabel || fund.category} fund
                 </p>
                 <h1 className="mt-1.5 text-3xl font-bold leading-tight text-neutral-950 sm:text-4xl">
@@ -65,8 +65,8 @@ export default async function FundDetailPage({ params }: FundPageProps) {
                 )}
               </div>
 
-              <blockquote className="mt-5 rounded-lg border border-[#dce9df] bg-[#edf4ef] px-5 py-5 sm:px-7">
-                <p className="text-center text-base font-semibold leading-7 text-[#234333]">
+              <blockquote className="mt-5 rounded-lg border border-[#D9E2EC] bg-[#EAF6FB] px-5 py-5 sm:px-7">
+                <p className="text-center text-base font-semibold leading-7 text-[#174A70]">
                   {fund.impactSummary}
                 </p>
               </blockquote>
@@ -80,8 +80,8 @@ export default async function FundDetailPage({ params }: FundPageProps) {
                 </p>
               </div>
 
-              <section className="mt-6 rounded-lg border border-[#dce9df] bg-[#edf4ef] p-5 sm:p-6" aria-labelledby="fund-priorities-title">
-                <h2 id="fund-priorities-title" className="text-lg font-bold text-[#173c2a]">
+              <section className="mt-6 rounded-lg border border-[#D9E2EC] bg-[#EAF6FB] p-5 sm:p-6" aria-labelledby="fund-priorities-title">
+                <h2 id="fund-priorities-title" className="text-lg font-bold text-[#174A70]">
                   Fund priorities
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-neutral-700">
@@ -89,11 +89,11 @@ export default async function FundDetailPage({ params }: FundPageProps) {
                 </p>
                 <ul className="mt-4 grid gap-2.5 text-sm leading-5 text-neutral-800">
                   <li className="flex items-start gap-2.5">
-                    <span aria-hidden="true" className="mt-0.5 text-[#008744]">●</span>
+                    <span aria-hidden="true" className="mt-0.5 text-[#009EDB]">●</span>
                     <span>{fund.impactSummary}</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span aria-hidden="true" className="mt-0.5 text-[#008744]">●</span>
+                    <span aria-hidden="true" className="mt-0.5 text-[#009EDB]">●</span>
                     <span>{fund.description}</span>
                   </li>
                 </ul>

@@ -73,7 +73,7 @@ function FooterLinks({
           <li className="pt-1">
             <Link
               href={moreHref}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#c8dfcb] transition-colors hover:text-white"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#EAF6FB] transition-colors hover:text-white"
             >
               {moreLabel} <span aria-hidden="true">→</span>
             </Link>
@@ -86,7 +86,7 @@ function FooterLinks({
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#2698C8] text-white">
+    <footer className="border-t border-white/10 bg-[#174A70] text-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.9fr_0.9fr_1.2fr] lg:gap-8">
           <div className="max-w-sm">
@@ -121,19 +121,19 @@ export default function Footer() {
             </h2>
             <ul className="mt-5 space-y-4 text-sm text-white/80">
               <li className="flex items-start gap-3">
-                <FaEnvelope className="mt-0.5 shrink-0 text-[#c8dfcb]" aria-hidden="true" />
+                <FaEnvelope className="mt-0.5 shrink-0 text-[#EAF6FB]" aria-hidden="true" />
                 <a className="transition-colors hover:text-white" href="mailto:hello@oneworldhands.org">
                   hello@oneworldhands.org
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <FaPhone className="mt-0.5 shrink-0 text-[#c8dfcb]" aria-hidden="true" />
+                <FaPhone className="mt-0.5 shrink-0 text-[#EAF6FB]" aria-hidden="true" />
                 <a className="transition-colors hover:text-white" href="tel:+10000000000">
                   +1 (000) 000-0000
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <FaMapPin className="mt-0.5 shrink-0 text-[#c8dfcb]" aria-hidden="true" />
+                <FaMapPin className="mt-0.5 shrink-0 text-[#EAF6FB]" aria-hidden="true" />
                 <span>City, Country</span>
               </li>
             </ul>
