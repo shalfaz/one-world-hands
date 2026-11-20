@@ -70,7 +70,7 @@ export default function DonationFundsCarousel({
         <div>
           <h2
             id="funds-title"
-            className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
+            className="text-2xl font-semibold tracking-tight text-[#183b2c] sm:text-3xl"
           >
             Donation Funds
           </h2>
@@ -104,7 +104,7 @@ export default function DonationFundsCarousel({
         <div className="mt-10 flex justify-center">
           <Link
             href="/donation-funds"
-            className="inline-flex items-center justify-center rounded-full border border-neutral-200 bg-white px-6 py-3 text-sm font-semibold text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center rounded-full border border-[#dce5de] bg-white px-6 py-3 text-sm font-semibold text-[#365b47] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
           >
             Explore All Donation Funds
           </Link>

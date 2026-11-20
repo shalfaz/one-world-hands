@@ -17,13 +17,13 @@ export default function ResetPasswordPage({ searchParams }: ResetPasswordPagePro
   if (!token || !email) {
     return (
       <PageShell>
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 py-12">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center">
-            <h1 className="text-3xl font-bold text-red-600 mb-2">Invalid Reset Link</h1>
-            <p className="text-gray-600 mb-6">
+        <div className="flex min-h-[65vh] items-center justify-center bg-[#f1f5f0] px-4 py-12">
+          <div className="w-full max-w-md rounded-2xl border border-[#dce5de] bg-white p-7 text-center sm:p-8">
+            <h1 className="mb-2 text-2xl font-semibold tracking-tight text-[#183b2c]">Invalid Reset Link</h1>
+            <p className="mb-6 text-sm leading-6 text-[#65766b]">
               The password reset link is missing or invalid. Please request a new one.
             </p>
-            <a href="/forgot-password" className="text-blue-600 hover:text-blue-700 font-semibold">
+            <a href="/forgot-password" className="font-semibold text-[#176345] hover:text-[#104b34]">
               Request New Reset Link
             </a>
           </div>
@@ -34,11 +34,11 @@ export default function ResetPasswordPage({ searchParams }: ResetPasswordPagePro
 
   return (
     <PageShell>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 py-12">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+      <div className="flex min-h-[65vh] items-center justify-center bg-[#f1f5f0] px-4 py-12">
+        <div className="w-full max-w-md rounded-2xl border border-[#dce5de] bg-white p-7 sm:p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Reset Password</h1>
-            <p className="text-gray-600">
+            <h1 className="mb-2 text-3xl font-semibold tracking-tight text-[#183b2c]">Reset Password</h1>
+            <p className="text-sm leading-6 text-[#65766b]">
               Enter your new password below.
             </p>
           </div>
@@ -46,7 +46,7 @@ export default function ResetPasswordPage({ searchParams }: ResetPasswordPagePro
           <ResetPasswordForm token={token} email={email} />
 
           <div className="mt-6 text-center">
-            <a href="/login" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+            <a href="/login" className="text-sm font-semibold text-[#176345] hover:text-[#104b34]">
               Back to Sign In
             </a>
           </div>

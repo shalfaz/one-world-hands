@@ -7,16 +7,16 @@ export default async function HomeDonationFundsSection() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="rounded-4xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
+      <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#008744]">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
               Donation Funds
             </p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
               Support the fund that matters most
             </h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
+            <p className="mt-4 max-w-2xl text-base leading-7 text-[#52645a]">
               Explore our active donation funds and support community-led,
               dignity-first action where it is needed most.
             </p>
@@ -24,7 +24,7 @@ export default async function HomeDonationFundsSection() {
 
           <Link
             href="/donation-funds"
-            className="inline-flex h-11 items-center justify-center rounded-full border border-neutral-200 bg-white px-6 text-sm font-semibold text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-[#dce5de] bg-white px-6 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
           >
             View All Funds
           </Link>

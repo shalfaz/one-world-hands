@@ -23,11 +23,14 @@ export default async function DonationFundsPage() {
   return (
     <PageShell>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <section className="rounded-4xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+        <section className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+            Give with purpose
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
             Donation Funds
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
+          <p className="mt-4 max-w-2xl text-base leading-7 text-[#52645a]">
             Choose where your support helps most. Each fund is designed for
             dignity-first outcomes and community-led priorities.
           </p>
@@ -41,7 +44,7 @@ export default async function DonationFundsPage() {
             </Link>
             <Link
               href="/programs"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-neutral-200 bg-white px-6 text-sm font-semibold text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-[#dce5de] bg-white px-6 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
             >
               Explore Programs
             </Link>
@@ -49,7 +52,7 @@ export default async function DonationFundsPage() {
         </section>
 
         <section className="mt-10" aria-label="Donation funds list">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {funds.map((fund) => (
               <div key={fund.id} id={fund.slug} className="scroll-mt-28">
                 <FundCard fund={fund} />

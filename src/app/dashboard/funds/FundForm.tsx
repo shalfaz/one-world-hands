@@ -125,7 +125,7 @@ export default function FundForm({
         </div>
 
         <label className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 md:col-span-2 xl:col-span-4">
-          <input name="published" type="checkbox" value="true" defaultChecked={Boolean(fund?.published ?? fund?.status === "active")} className="h-4 w-4 rounded border-slate-300 text-sky-600" />
+          <input name="published" type="checkbox" value="true" defaultChecked={Boolean(fund?.published ?? fund?.status === "active")} className="h-4 w-4 rounded border-slate-300 text-[#176345]" />
           Published on the website
         </label>
 
@@ -143,7 +143,7 @@ export default function FundForm({
           <button
             type="submit"
             disabled={loading || imageUploading}
-            className="w-full rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700 disabled:opacity-50"
+            className="w-full rounded-full bg-[#176345] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:opacity-50"
           >
             {loading
               ? "Processing..."

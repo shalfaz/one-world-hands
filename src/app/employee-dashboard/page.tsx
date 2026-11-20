@@ -14,15 +14,15 @@ export default async function EmployeeDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-[#f1f5f0]">
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
+        <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-sm font-semibold text-sky-600">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
                 Employee Dashboard
               </p>
-              <h1 className="mt-2 text-3xl font-bold text-slate-950">
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c]">
                 Welcome, {name || "Employee"}
               </h1>
               <p className="mt-2 text-sm text-slate-500">
@@ -33,7 +33,7 @@ export default async function EmployeeDashboardPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-[#dce5de] bg-white px-5 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1]"
               >
                 Back to Website
               </Link>
@@ -41,7 +41,7 @@ export default async function EmployeeDashboardPage() {
               <form action={logoutUser}>
                 <button
                   type="submit"
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-slate-900 px-5 text-sm font-semibold text-white hover:bg-slate-800"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#176345] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34]"
                 >
                   Logout
                 </button>
@@ -50,8 +50,8 @@ export default async function EmployeeDashboardPage() {
           </div>
 
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-              <h2 className="text-lg font-semibold text-slate-900">
+            <div className="rounded-xl border border-[#dce5de] bg-[#f7faf7] p-5">
+              <h2 className="text-base font-semibold text-[#183b2c]">
                 Assigned Work
               </h2>
               <p className="mt-2 text-sm text-slate-600">
@@ -60,8 +60,8 @@ export default async function EmployeeDashboardPage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-              <h2 className="text-lg font-semibold text-slate-900">
+            <div className="rounded-xl border border-[#dce5de] bg-[#f7faf7] p-5">
+              <h2 className="text-base font-semibold text-[#183b2c]">
                 Program Coordination
               </h2>
               <p className="mt-2 text-sm text-slate-600">
@@ -70,8 +70,8 @@ export default async function EmployeeDashboardPage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-              <h2 className="text-lg font-semibold text-slate-900">
+            <div className="rounded-xl border border-[#dce5de] bg-[#f7faf7] p-5">
+              <h2 className="text-base font-semibold text-[#183b2c]">
                 Reports & Notes
               </h2>
               <p className="mt-2 text-sm text-slate-600">

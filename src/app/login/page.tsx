@@ -2,8 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { loginUser } from "./actions";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import connectToDatabase from "@/lib/mongoose";
 import User from "@/lib/models/User";
 import {
@@ -65,14 +64,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const showError = Boolean(error);
 
   return (
-    <>
-      <Header />
-      <div className="min-h-[calc(100vh-120px)] bg-linear-to-br from-sky-50 to-slate-100 px-4 py-12 flex items-center justify-center">
+    <PageShell>
+    <div className="flex min-h-[calc(100vh-120px)] items-center justify-center bg-[#f1f5f0] px-4 py-12">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="mb-8 text-center">
           <div className="mb-4 flex justify-center">
-            <div className="rounded-2xl bg-sky-600 p-3">
+            <div className="rounded-xl bg-[#176345] p-3">
               <svg
                 className="h-8 w-8 text-white"
                 fill="none"
@@ -88,7 +86,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               </svg>
             </div>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-950">
+          <h1 className="text-3xl font-semibold tracking-tight text-[#183b2c]">
             Welcome Back
           </h1>
           <p className="mt-2 text-sm text-slate-600">
@@ -119,7 +117,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         )}
 
         {/* Login Form */}
-        <div className="rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200">
+        <div className="rounded-2xl border border-[#dce5de] bg-white p-7 sm:p-8">
           <form action={loginUser} className="space-y-4">
             <div>
               <label
@@ -133,7 +131,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 name="email"
                 type="email"
                 placeholder="you@example.com"
-                className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
+                className="h-12 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
                 required
               />
             </div>
@@ -150,7 +148,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 name="password"
                 type="password"
                 placeholder="Enter your password"
-                className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
+                className="h-12 w-full rounded-lg border border-[#dce5de] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#176345] focus:ring-2 focus:ring-[#176345]/20"
                 required
               />
             </div>
@@ -159,18 +157,18 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  className="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                  className="h-4 w-4 rounded border-slate-300 text-[#176345] focus:ring-[#176345]"
                 />
                 <span className="text-sm text-slate-600">Remember me</span>
               </label>
-              <a href="/forgot-password" className="text-sm font-semibold text-sky-600 hover:text-sky-700">
+              <a href="/forgot-password" className="text-sm font-semibold text-[#176345] hover:text-[#104b34]">
                 Forgot password?
               </a>
             </div>
 
             <button
               type="submit"
-              className="mt-6 h-12 w-full rounded-full bg-linear-to-r from-sky-600 to-sky-500 font-semibold text-white shadow-md transition-all hover:shadow-lg hover:from-sky-700 hover:to-sky-600"
+              className="mt-6 h-12 w-full rounded-full bg-[#176345] font-semibold text-white transition-colors hover:bg-[#104b34]"
             >
               Sign In
             </button>
@@ -186,7 +184,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           {/* Signup Link */}
           <Link
             href="/signup"
-            className="block rounded-full border-2 border-sky-600 py-3 text-center font-semibold text-sky-600 transition-colors hover:bg-sky-50"
+            className="block rounded-full border border-[#b8d2c0] py-3 text-center font-semibold text-[#176345] transition-colors hover:bg-[#f1f6f1]"
           >
             Create an Account
           </Link>
@@ -196,14 +194,14 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <div className="mt-6 text-center">
           <Link
             href="/"
-            className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors"
+            className="text-sm font-medium text-slate-600 transition-colors hover:text-[#176345]"
           >
             ← Back to Website
           </Link>
         </div>
 
         {/* Security Info */}
-        <div className="mt-8 rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
+        <div className="mt-8 rounded-xl border border-[#dce5de] bg-white p-4">
           <div className="flex gap-3">
             <svg
               className="h-5 w-5 shrink-0 text-green-600"
@@ -226,7 +224,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         </div>
       </div>
       </div>
-      <Footer />
-    </>
+    </PageShell>
   );
 }

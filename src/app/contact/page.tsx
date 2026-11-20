@@ -20,8 +20,11 @@ export default function ContactPage() {
   return (
     <PageShell>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
-            <h1 className="text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+          <section className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+              Get in touch
+            </p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
               Contact
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
@@ -32,8 +35,8 @@ export default function ContactPage() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
             {/* Contact form */}
-            <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-              <h2 className="text-xl font-semibold tracking-tight text-neutral-950">
+            <section className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-8">
+              <h2 className="text-xl font-semibold tracking-tight text-[#183b2c]">
                 Send a message
               </h2>
               <p className="mt-2 text-sm leading-6 text-neutral-700">
@@ -45,8 +48,8 @@ export default function ContactPage() {
             </section>
 
             {/* Contact info */}
-            <aside className="rounded-[2rem] border border-neutral-200 bg-neutral-50 p-6 shadow-sm sm:p-8">
-              <h2 className="text-xl font-semibold tracking-tight text-neutral-950">
+            <aside className="rounded-2xl border border-[#dce5de] bg-[#f1f5f0] p-6 sm:p-8">
+              <h2 className="text-xl font-semibold tracking-tight text-[#183b2c]">
                 Get in touch
               </h2>
 
@@ -57,7 +60,7 @@ export default function ContactPage() {
                   </p>
                   <p className="mt-2 text-sm font-semibold text-neutral-900">
                     <a
-                      className="underline underline-offset-4 decoration-sky-200 hover:decoration-sky-400"
+                      className="underline underline-offset-4 decoration-[#b8d2c0] hover:decoration-[#176345]"
                       href="mailto:hello@oneworldhands.org"
                     >
                       hello@oneworldhands.org
@@ -74,7 +77,7 @@ export default function ContactPage() {
                   </p>
                   <p className="mt-2 text-sm font-semibold text-neutral-900">
                     <a
-                      className="underline underline-offset-4 decoration-sky-200 hover:decoration-sky-400"
+                      className="underline underline-offset-4 decoration-[#b8d2c0] hover:decoration-[#176345]"
                       href="tel:+10000000000"
                     >
                       +1 (000) 000-0000
@@ -107,7 +110,7 @@ export default function ContactPage() {
                     href="https://facebook.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 shadow-sm transition-colors hover:border-sky-200 hover:bg-sky-50"
+                    className="rounded-full border border-[#dce5de] bg-white px-4 py-2 text-sm font-medium text-[#52645a] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1]"
                   >
                     Facebook
                   </a>
@@ -115,7 +118,7 @@ export default function ContactPage() {
                     href="https://instagram.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 shadow-sm transition-colors hover:border-sky-200 hover:bg-sky-50"
+                    className="rounded-full border border-[#dce5de] bg-white px-4 py-2 text-sm font-medium text-[#52645a] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1]"
                   >
                     Instagram
                   </a>
@@ -123,7 +126,7 @@ export default function ContactPage() {
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 shadow-sm transition-colors hover:border-sky-200 hover:bg-sky-50"
+                    className="rounded-full border border-[#dce5de] bg-white px-4 py-2 text-sm font-medium text-[#52645a] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1]"
                   >
                     LinkedIn
                   </a>
@@ -131,7 +134,7 @@ export default function ContactPage() {
                     href="https://youtube.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 shadow-sm transition-colors hover:border-sky-200 hover:bg-sky-50"
+                    className="rounded-full border border-[#dce5de] bg-white px-4 py-2 text-sm font-medium text-[#52645a] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1]"
                   >
                     YouTube
                   </a>
@@ -143,7 +146,7 @@ export default function ContactPage() {
           {/* Volunteer / partnership CTA */}
           <section className="mt-10">
             <div className="grid gap-5 lg:grid-cols-3">
-              <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-8 lg:col-span-1">
+              <div className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-8 lg:col-span-1">
                 <h2 className="text-lg font-semibold tracking-tight text-neutral-950">
                   Volunteer with us
                 </h2>
@@ -154,14 +157,14 @@ export default function ContactPage() {
                 <div className="mt-6">
                   <Link
                     href="/contact"
-                    className="inline-flex h-11 w-full items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                    className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
                   >
                     Partner / Volunteer
                   </Link>
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-neutral-200 bg-neutral-50 p-6 shadow-sm sm:p-8 lg:col-span-2">
+              <div className="rounded-2xl border border-[#dce5de] bg-[#f1f5f0] p-6 sm:p-8 lg:col-span-2">
                 <h2 className="text-lg font-semibold tracking-tight text-neutral-950">
                   Partnership opportunities
                 </h2>
@@ -173,13 +176,13 @@ export default function ContactPage() {
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/programs"
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-neutral-200 bg-white px-6 text-sm font-semibold text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                    className="inline-flex h-11 items-center justify-center rounded-full border border-[#dce5de] bg-white px-6 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f7faf7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
                   >
                     Explore Programs
                   </Link>
                   <Link
                     href="/donation-funds"
-                    className="inline-flex h-11 items-center justify-center rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                    className="inline-flex h-11 items-center justify-center rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
                   >
                     Support with Donations
                   </Link>

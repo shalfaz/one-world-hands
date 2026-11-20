@@ -104,8 +104,8 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                 key={msg._id}
                 onClick={() => void handleSelect(msg)}
                 className={`p-4 cursor-pointer transition hover:bg-slate-50 ${
-                  selectedMessage?._id === msg._id ? "bg-sky-50" : ""
-                } ${msg.status === "unread" ? "bg-blue-50" : ""}`}
+                  selectedMessage?._id === msg._id ? "bg-[#f1f6f1]" : ""
+                } ${msg.status === "unread" ? "bg-[#f1f6f1]" : ""}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
@@ -114,7 +114,7 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                       <span
                         className={`text-xs px-2 py-1 rounded-full ${
                           msg.status === "unread"
-                            ? "bg-blue-200 text-blue-800"
+                            ? "bg-[#dcebdd] text-[#365b47]"
                             : msg.status === "replied"
                             ? "bg-green-200 text-green-800"
                             : "bg-gray-200 text-gray-800"
@@ -171,7 +171,7 @@ export default function MessageList({ messages }: { messages: Message[] }) {
           <button
             onClick={handleReply}
             disabled={!replyText.trim() || saving}
-            className="mt-2 w-full rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 disabled:bg-slate-300"
+            className="mt-2 w-full rounded-lg bg-[#176345] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:bg-slate-300"
           >
             {saving ? "Saving..." : "Save Reply"}
           </button>

@@ -3,23 +3,35 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import PageShell from "@/components/PageShell";
 import { getPublishedPrograms } from "@/lib/services/programService";
+import {
+  FaArrowRight,
+  FaBookOpen,
+  FaBriefcase,
+  FaCircleCheck,
+  FaHeartPulse,
+  FaLifeRing,
+  FaLocationDot,
+  FaTag,
+  FaUsers,
+} from "react-icons/fa6";
+import type { IconType } from "react-icons";
 
 const categoryColors: Record<string, { bg: string; text: string }> = {
-  health: { bg: "bg-red-100", text: "text-red-700" },
-  education: { bg: "bg-blue-100", text: "text-blue-700" },
-  community: { bg: "bg-green-100", text: "text-green-700" },
-  livelihood: { bg: "bg-purple-100", text: "text-purple-700" },
-  relief: { bg: "bg-orange-100", text: "text-orange-700" },
-  other: { bg: "bg-slate-100", text: "text-slate-700" },
+  health: { bg: "bg-rose-50", text: "text-rose-700" },
+  education: { bg: "bg-sky-50", text: "text-sky-700" },
+  community: { bg: "bg-[#edf5ef]", text: "text-[#45624e]" },
+  livelihood: { bg: "bg-amber-50", text: "text-amber-700" },
+  relief: { bg: "bg-orange-50", text: "text-orange-700" },
+  other: { bg: "bg-neutral-100", text: "text-neutral-700" },
 };
 
-const categoryIcons: Record<string, string> = {
-  health: "🏥",
-  education: "📚",
-  community: "👥",
-  livelihood: "💼",
-  relief: "🆘",
-  other: "📌",
+const categoryIcons: Record<string, IconType> = {
+  health: FaHeartPulse,
+  education: FaBookOpen,
+  community: FaUsers,
+  livelihood: FaBriefcase,
+  relief: FaLifeRing,
+  other: FaTag,
 };
 
 export const generateMetadata = async ({
@@ -70,8 +82,8 @@ export default async function ProgramDetailPage({
   }
 
   const category = String(program.category || "other");
-  const colors = categoryColors[category];
-  const icon = categoryIcons[category];
+  const colors = categoryColors[category] || categoryColors.other;
+  const CategoryIcon = categoryIcons[category] || FaTag;
   const createdBy = program.createdBy as Record<string, unknown>;
   const createdDate = new Date(String(program.createdAt));
 
@@ -86,30 +98,32 @@ export default async function ProgramDetailPage({
         {/* Back Link */}
         <Link
           href="/programs"
-          className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold mb-8"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#52715e] transition-colors hover:text-[#176345]"
         >
           ← Back to Programs
         </Link>
 
         {/* Main Content */}
-        <article className="rounded-3xl border-2 border-neutral-200 bg-white p-8 shadow-lg sm:p-10">
+        <article className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-9">
           {/* Header */}
-          <div className={`${colors.bg} rounded-2xl p-6 mb-8`}>
+          <div className="mb-8 rounded-xl bg-[#f1f5f0] p-6 sm:p-8">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <div className="text-4xl mb-3">{icon}</div>
-                <h1 className="text-4xl font-bold text-neutral-900 sm:text-5xl">
+                <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#176345] shadow-sm">
+                  <CategoryIcon aria-hidden="true" className="text-lg" />
+                </span>
+                <h1 className="text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
                   {String(program.title)}
                 </h1>
               </div>
-              <div className={`rounded-full ${colors.bg} border-2 border-current px-4 py-2 ${colors.text} font-semibold whitespace-nowrap`}>
+              <div className={`rounded-full px-3 py-1.5 text-xs font-semibold ${colors.bg} ${colors.text}`}>
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </div>
             </div>
           </div>
 
           {program.imageUrl && (
-            <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100">
+            <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl bg-[#edf2ed]">
               <Image
                 src={String(program.imageUrl)}
                 alt=""
@@ -122,45 +136,47 @@ export default async function ProgramDetailPage({
           )}
 
           {/* Meta Information */}
-          <div className="grid gap-6 md:grid-cols-2 mb-8">
-            <div className="rounded-xl bg-slate-50 p-4">
-              <p className="text-sm text-slate-600 font-semibold">Location</p>
-              <p className="text-lg text-neutral-900 mt-1">
-                📍 {String(program.location)}
+          <div className="mb-8 grid gap-3 md:grid-cols-2">
+            <div className="rounded-xl border border-[#e5ebe5] bg-[#fafcf9] p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Location</p>
+              <p className="mt-2 flex items-center gap-2 text-sm font-medium text-neutral-900">
+                <FaLocationDot aria-hidden="true" className="text-[#668570]" />
+                {String(program.location)}
               </p>
             </div>
-            <div className="rounded-xl bg-slate-50 p-4">
-              <p className="text-sm text-slate-600 font-semibold">Status</p>
-              <p className="text-lg text-green-700 mt-1 font-semibold">
-                ✓ Active Program
+            <div className="rounded-xl border border-[#e5ebe5] bg-[#fafcf9] p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Status</p>
+              <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#176345]">
+                <FaCircleCheck aria-hidden="true" />
+                Active Program
               </p>
             </div>
           </div>
 
           {/* Description */}
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-neutral-900 mb-4">
+            <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#183b2c]">
               About This Program
             </h2>
-            <p className="text-lg text-neutral-700 leading-relaxed whitespace-pre-wrap">
+            <p className="text-base leading-7 text-[#52645a] whitespace-pre-wrap">
               {String(program.description)}
             </p>
           </section>
 
           {/* Creator Info */}
-          <section className="mb-10 rounded-xl bg-sky-50 border-2 border-sky-200 p-6">
-            <h3 className="text-lg font-bold text-neutral-900 mb-3">
+          <section className="mb-10 rounded-xl border border-[#dce5de] bg-[#f6f8f5] p-6">
+            <h3 className="mb-4 text-base font-semibold text-[#183b2c]">
               Program Information
             </h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <p className="text-sm text-slate-600">Managed By</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">Managed by</p>
                 <p className="text-neutral-900 font-semibold">
                   {String(createdBy?.name || "One World Hands")}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-slate-600">Started</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">Started</p>
                 <p className="text-neutral-900 font-semibold">
                   {createdDate.toLocaleDateString("en-US", {
                     year: "numeric",
@@ -173,34 +189,34 @@ export default async function ProgramDetailPage({
           </section>
 
           {/* CTA Section */}
-          <section className="bg-linear-to-r from-sky-600 to-blue-600 rounded-2xl p-8 text-white mb-10">
-            <h2 className="text-2xl font-bold mb-3">Support This Program</h2>
-            <p className="mb-6 text-sky-100">
+          <section className="mb-10 rounded-xl bg-[#173d30] p-6 text-white sm:p-8">
+            <h2 className="mb-3 text-xl font-semibold">Support This Program</h2>
+            <p className="mb-6 max-w-2xl text-sm leading-6 text-white/75">
               Your donation directly helps us continue this vital work and expand
               our impact in the community.
             </p>
             <Link
               href="/donation-funds"
-              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-lg font-bold text-sky-600 hover:bg-sky-50 transition-all hover:scale-105"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#dcebdd] px-6 text-sm font-semibold text-[#173d30] transition-colors hover:bg-white"
             >
-              💝 Donate Now
+              Donate Now <FaArrowRight aria-hidden="true" className="text-xs" />
             </Link>
           </section>
 
           {/* Resources Link */}
-          <section className="border-2 border-neutral-200 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-neutral-900 mb-3">
+          <section className="rounded-xl border border-[#dce5de] p-6 sm:p-8">
+            <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#183b2c]">
               Learn More
             </h2>
-            <p className="text-neutral-700 mb-4">
+            <p className="mb-5 text-sm leading-6 text-[#52645a]">
               Check out our resources section for more information, case studies, and
               impact reports related to this program.
             </p>
             <Link
               href="/resources"
-              className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-6 py-2.5 text-white font-semibold hover:bg-sky-700 transition-all hover:scale-105"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-[#dce5de] px-5 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1]"
             >
-              📚 View Resources →
+              View Resources <FaArrowRight aria-hidden="true" className="text-xs" />
             </Link>
           </section>
         </article>
@@ -208,23 +224,26 @@ export default async function ProgramDetailPage({
         {/* Related Programs */}
         {relatedPrograms.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-3xl font-bold text-neutral-900 mb-6">
+            <h2 className="mb-6 text-2xl font-semibold tracking-tight text-[#183b2c]">
               Similar Programs
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {relatedPrograms.map((relatedProgram) => {
-                const relatedIcon = categoryIcons[String(relatedProgram.category)];
+                const RelatedIcon =
+                  categoryIcons[String(relatedProgram.category)] || FaTag;
                 return (
                   <Link
                     key={String(relatedProgram._id)}
                     href={`/programs/${relatedProgram._id}`}
-                    className="group rounded-2xl border-2 border-neutral-200 bg-white p-6 shadow-md hover:shadow-lg hover:border-sky-400 transition-all"
+                    className="group rounded-xl border border-[#dce5de] bg-white p-5 transition-all hover:border-[#b8d2c0] hover:shadow-md"
                   >
-                    <div className="text-3xl mb-3">{relatedIcon}</div>
-                    <h3 className="font-bold text-neutral-900 group-hover:text-sky-600 transition-colors">
+                    <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#edf5ef] text-[#176345]">
+                      <RelatedIcon aria-hidden="true" />
+                    </span>
+                    <h3 className="font-semibold text-[#183b2c] transition-colors group-hover:text-[#176345]">
                       {String(relatedProgram.title)}
                     </h3>
-                    <p className="text-sm text-neutral-600 mt-2 line-clamp-2">
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#5b6d62]">
                       {String(relatedProgram.description)}
                     </p>
                   </Link>
@@ -238,7 +257,7 @@ export default async function ProgramDetailPage({
         <div className="mt-12 text-center">
           <Link
             href="/programs"
-            className="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-6 py-3 text-neutral-900 font-semibold hover:bg-neutral-200 transition-all"
+            className="inline-flex items-center gap-2 rounded-full border border-[#dce5de] bg-white px-6 py-3 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1]"
           >
             ← Explore All Programs
           </Link>

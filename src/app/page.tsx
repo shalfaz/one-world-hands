@@ -51,9 +51,9 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-white font-sans text-foreground">
-      <div className="w-full border-b border-sky-100 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-3 text-center text-sm font-bold text-[#0084d1] sm:px-6 lg:px-8">
+    <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
+      <div className="w-full border-b border-[#e3ebe4] bg-[#f1f5f0]">
+        <div className="mx-auto max-w-7xl px-4 py-2 text-center text-xs font-semibold tracking-wide text-[#365b47] sm:px-6 lg:px-8">
           Where Magic Hands Unite, Wonders Arise.
         </div>
       </div>
@@ -78,34 +78,37 @@ export default async function Home() {
         </div>
 
         <section aria-labelledby="about-preview-title">
-          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <div className="mb-10">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <div className="mb-9 max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+                Who we are
+              </p>
               <h2
                 id="about-preview-title"
-                className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl"
+                className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl"
               >
                 Our Vision & Mission
               </h2>
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2">
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.28)]">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-sky-500" />
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-700">
+              <div className="group relative overflow-hidden rounded-2xl border border-[#dce5de] bg-white p-7 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.35)] sm:p-8">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#176345]" />
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
                   Vision
                 </p>
-                <p className="mt-5 text-lg leading-8 text-neutral-700 sm:text-xl">
+                <p className="mt-4 text-lg leading-8 text-[#42584b] sm:text-xl">
                   A world where every human being has opportunity, dignity, and
                   support to live a better life.
                 </p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.28)]">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-emerald-500" />
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+              <div className="group relative overflow-hidden rounded-2xl border border-[#dce5de] bg-white p-7 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.35)] sm:p-8">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#c99a53]" />
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
                   Mission
                 </p>
-                <p className="mt-5 text-lg leading-8 text-neutral-700 sm:text-xl">
+                <p className="mt-4 text-lg leading-8 text-[#42584b] sm:text-xl">
                   To empower individuals, support communities, and address social,
                   economic, and environmental challenges through direct action,
                   education, and collaboration.
@@ -116,7 +119,7 @@ export default async function Home() {
             <div className="mt-10 flex justify-center">
               <a
                 href="/about-us"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-sky-600 to-blue-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#176345] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
               >
                 Know More
               </a>
@@ -129,21 +132,24 @@ export default async function Home() {
         <DonationFundsCarousel funds={publicFunds} />
 
         <section aria-labelledby="why-support-title">
-          <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
-            <div>
+          <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+                Our approach
+              </p>
               <h2
                 id="why-support-title"
-                className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl"
+                className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl"
               >
                 Why Support Us
               </h2>
-              <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
+              <p className="mt-3 max-w-2xl text-base leading-7 text-[#52645a]">
                 Trust is built through consistent care, transparency, and
                 measurable learning.
               </p>
             </div>
 
-            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {[
                 {
                   title: "Compassion-Driven Action",
@@ -164,13 +170,13 @@ export default async function Home() {
               ].map((pillar) => (
                 <div
                   key={pillar.title}
-                  className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-30px_rgba(15,23,42,0.24)]"
+                  className="group relative overflow-hidden rounded-2xl border border-[#dce5de] bg-white p-6 transition-shadow duration-200 hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.35)]"
                 >
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-sky-500" />
-                  <h3 className="text-lg font-bold leading-7 text-neutral-950">
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#176345]" />
+                  <h3 className="text-base font-semibold leading-7 text-[#183b2c]">
                     {pillar.title}
                   </h3>
-                  <p className="mt-4 text-base leading-7 text-neutral-700">
+                  <p className="mt-3 text-sm leading-6 text-[#52645a]">
                     {pillar.body}
                   </p>
                 </div>
@@ -180,10 +186,13 @@ export default async function Home() {
         </section>
 
         <section aria-labelledby="resources-title">
-          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#52715e]">
+              Learn and share
+            </p>
             <h2
               id="resources-title"
-              className="text-3xl font-bold tracking-tight bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-700 bg-clip-text text-transparent sm:text-4xl"
+              className="mt-2 text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl"
             >
               Resources Preview
             </h2>
@@ -193,7 +202,7 @@ export default async function Home() {
             </p>
 
             <div className="mt-8">
-              <div className="grid w-full grid-cols-2 gap-2 rounded-full bg-sky-500 p-2 text-white sm:grid-cols-3 lg:grid-cols-7">
+              <div className="flex flex-wrap gap-2">
                 {[
                   { label: "Photo", href: "/resources?type=photo" },
                   { label: "Video", href: "/resources?type=video" },
@@ -206,7 +215,7 @@ export default async function Home() {
                   <a
                     key={category.label}
                     href={category.href}
-                    className="flex items-center justify-center rounded-full px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                    className="inline-flex items-center justify-center rounded-full border border-[#dce5de] bg-white px-4 py-2.5 text-center text-sm font-medium text-[#365b47] transition-colors hover:border-[#b8d2c0] hover:bg-[#f1f6f1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176345] focus-visible:ring-offset-2"
                   >
                     {category.label}
                   </a>

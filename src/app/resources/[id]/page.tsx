@@ -3,41 +3,22 @@ import { notFound } from "next/navigation";
 import PageShell from "@/components/PageShell";
 import { getPublishedResources } from "@/lib/services/resourceService";
 import React from "react";
+import {
+  FaArrowRight,
+  FaFile,
+  FaFileArrowDown,
+  FaFileLines,
+  FaPhotoFilm,
+  FaVideo,
+} from "react-icons/fa6";
+import type { IconType } from "react-icons";
 
-const typeIcons: Record<string, string> = {
-  photo: "📷",
-  document: "📄",
-  blog: "📝",
-  report: "📊",
-  webinar: "🎥",
-};
-
-const typeColors: Record<string, { bg: string; text: string; border: string }> = {
-  photo: {
-    bg: "bg-sky-50",
-    text: "text-sky-700",
-    border: "border-sky-200",
-  },
-  document: {
-    bg: "bg-amber-50",
-    text: "text-amber-700",
-    border: "border-amber-200",
-  },
-  blog: {
-    bg: "bg-emerald-50",
-    text: "text-emerald-700",
-    border: "border-emerald-200",
-  },
-  report: {
-    bg: "bg-violet-50",
-    text: "text-violet-700",
-    border: "border-violet-200",
-  },
-  webinar: {
-    bg: "bg-red-50",
-    text: "text-red-700",
-    border: "border-red-200",
-  },
+const typeIcons: Record<string, IconType> = {
+  photo: FaPhotoFilm,
+  document: FaFileLines,
+  blog: FaFileLines,
+  report: FaFileLines,
+  webinar: FaVideo,
 };
 
 export const generateMetadata = async ({
@@ -88,8 +69,8 @@ export default async function ResourceDetailPage({
   }
 
   const type = String(resource.type || "other");
-  const colors = typeColors[type] || typeColors.document;
-  const icon = typeIcons[type] || "📌";
+  const colors = { bg: "bg-[#edf5ef]", text: "text-[#45624e]" };
+  const ResourceIcon = typeIcons[type] || FaFile;
   const createdBy = resource.createdBy as Record<string, unknown>;
   const createdDate = new Date(String(resource.createdAt));
 
@@ -104,37 +85,39 @@ export default async function ResourceDetailPage({
         {/* Back Link */}
         <Link
           href="/resources"
-          className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold mb-8"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#52715e] transition-colors hover:text-[#176345]"
         >
           ← Back to Resources
         </Link>
 
         {/* Main Content */}
-        <article className="rounded-3xl border-2 border-neutral-200 bg-white p-8 shadow-lg sm:p-10">
+        <article className="rounded-2xl border border-[#dce5de] bg-white p-6 sm:p-9">
           {/* Header */}
-          <div className={`${colors.bg} rounded-2xl p-8 mb-8 border-2 ${colors.border}`}>
-            <div className="flex items-start justify-between gap-4 mb-4">
-              <div className="text-5xl">{icon}</div>
-              <div className={`rounded-full ${colors.bg} border-2 ${colors.border} px-4 py-2 ${colors.text} font-semibold whitespace-nowrap`}>
+          <div className="mb-8 rounded-xl bg-[#f1f5f0] p-6 sm:p-8">
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#176345] shadow-sm">
+                <ResourceIcon aria-hidden="true" className="text-lg" />
+              </span>
+              <div className={`rounded-full px-3 py-1.5 text-xs font-semibold ${colors.bg} ${colors.text}`}>
                 {type.charAt(0).toUpperCase() + type.slice(1)}
               </div>
             </div>
-            <h1 className="text-4xl font-bold text-neutral-900 sm:text-5xl">
+            <h1 className="text-3xl font-semibold tracking-tight text-[#183b2c] sm:text-4xl">
               {String(resource.title)}
             </h1>
           </div>
 
           {/* Meta Information */}
-          <div className="grid gap-6 md:grid-cols-2 mb-8">
-            <div className="rounded-xl bg-slate-50 p-4">
-              <p className="text-sm text-slate-600 font-semibold">Created By</p>
-              <p className="text-lg text-neutral-900 mt-1">
+          <div className="mb-8 grid gap-3 md:grid-cols-2">
+            <div className="rounded-xl border border-[#e5ebe5] bg-[#fafcf9] p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Created by</p>
+              <p className="mt-2 text-sm font-medium text-neutral-900">
                 {String(createdBy?.name || "One World Hands")}
               </p>
             </div>
-            <div className="rounded-xl bg-slate-50 p-4">
-              <p className="text-sm text-slate-600 font-semibold">Published</p>
-              <p className="text-lg text-neutral-900 mt-1">
+            <div className="rounded-xl border border-[#e5ebe5] bg-[#fafcf9] p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Published</p>
+              <p className="mt-2 text-sm font-medium text-neutral-900">
                 {createdDate.toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -147,10 +130,10 @@ export default async function ResourceDetailPage({
           {/* Description */}
           {resource.description && (
             <section className="mb-10">
-              <h2 className="text-2xl font-bold text-neutral-900 mb-4">
+              <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#183b2c]">
                 About This Resource
               </h2>
-              <p className="text-lg text-neutral-700 leading-relaxed whitespace-pre-wrap">
+              <p className="text-base leading-7 text-[#52645a] whitespace-pre-wrap">
                 {String(resource.description)}
               </p>
             </section>
@@ -158,8 +141,8 @@ export default async function ResourceDetailPage({
 
           {/* Content for Blog */}
           {type === "blog" && resource.content && (
-            <section className="mb-10 rounded-xl bg-slate-50 border-2 border-slate-200 p-8">
-              <h2 className="text-2xl font-bold text-neutral-900 mb-4">
+            <section className="mb-10 rounded-xl border border-[#dce5de] bg-[#f6f8f5] p-6 sm:p-8">
+              <h2 className="mb-4 text-xl font-semibold tracking-tight text-[#183b2c]">
                 Blog Content
               </h2>
               <div className="prose prose-neutral max-w-none">
@@ -172,9 +155,10 @@ export default async function ResourceDetailPage({
 
           {/* File Download for Documents */}
           {type === "document" && resource.fileUrl && (
-            <section className="mb-10 rounded-xl bg-sky-50 border-2 border-sky-200 p-8">
-              <h2 className="text-2xl font-bold text-neutral-900 mb-4">
-                📥 Download Document
+            <section className="mb-10 rounded-xl border border-[#dce5de] bg-[#f6f8f5] p-6 sm:p-8">
+              <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold tracking-tight text-[#183b2c]">
+                <FaFileArrowDown aria-hidden="true" className="text-[#176345]" />
+                Download Document
               </h2>
               <p className="text-neutral-700 mb-4">
                 Access the {String(resource.fileType || "document").toUpperCase()} file:
@@ -184,20 +168,20 @@ export default async function ResourceDetailPage({
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-                className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-8 py-3 text-white font-semibold hover:bg-sky-700 transition-all hover:scale-105"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-[#176345] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#104b34]"
               >
-                📄 Download {String(resource.fileType || "File").toUpperCase()}
+                Download {String(resource.fileType || "File").toUpperCase()}
               </a>
             </section>
           )}
 
           {/* YouTube for Webinar */}
           {type === "webinar" && resource.youtubeLink && (
-            <section className="mb-10 rounded-xl overflow-hidden border-2 border-red-200">
-              <h2 className="text-2xl font-bold text-neutral-900 mb-4 px-8 pt-8">
-                🎥 Watch Webinar
+            <section className="mb-10 overflow-hidden rounded-xl border border-[#dce5de]">
+              <h2 className="mb-4 px-6 pt-6 text-xl font-semibold tracking-tight text-[#183b2c] sm:px-8 sm:pt-8">
+                Watch Webinar
               </h2>
-              <div className="relative w-full pb-[56.25%] h-0 overflow-hidden">
+              <div className="relative h-0 w-full overflow-hidden pb-[56.25%]">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
                   src={getYouTubeEmbedUrl(String(resource.youtubeLink))}
@@ -206,12 +190,12 @@ export default async function ResourceDetailPage({
                   allowFullScreen
                 />
               </div>
-              <div className="p-8">
+              <div className="p-6 sm:p-8">
                 <a
                   href={String(resource.youtubeLink)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#176345] hover:text-[#104b34]"
                 >
                   Watch on YouTube →
                 </a>
@@ -222,10 +206,10 @@ export default async function ResourceDetailPage({
           {/* Photo Display */}
           {type === "photo" && resource.fileUrl && (
             <section className="mb-10">
-              <h2 className="text-2xl font-bold text-neutral-900 mb-4">
-                📷 Photo Gallery
+              <h2 className="mb-4 text-xl font-semibold tracking-tight text-[#183b2c]">
+                Photo Gallery
               </h2>
-              <div className="rounded-xl overflow-hidden border-2 border-sky-200 shadow-lg">
+              <div className="overflow-hidden rounded-xl border border-[#dce5de]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={String(resource.fileUrl)}
@@ -238,17 +222,17 @@ export default async function ResourceDetailPage({
           )}
 
           {/* CTA Section */}
-          <section className="bg-linear-to-r from-sky-600 to-blue-600 rounded-2xl p-8 text-white mb-10">
-            <h2 className="text-2xl font-bold mb-3">Learn More About Our Work</h2>
-            <p className="mb-6 text-sky-100">
+          <section className="mb-10 rounded-xl bg-[#173d30] p-6 text-white sm:p-8">
+            <h2 className="mb-3 text-xl font-semibold">Learn More About Our Work</h2>
+            <p className="mb-6 max-w-2xl text-sm leading-6 text-white/75">
               Explore more resources and discover how we&apos;re making an impact in
               communities worldwide.
             </p>
             <Link
               href="/resources"
-              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-lg font-bold text-sky-600 hover:bg-sky-50 transition-all hover:scale-105"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#dcebdd] px-6 text-sm font-semibold text-[#173d30] transition-colors hover:bg-white"
             >
-              Browse All Resources
+              Browse All Resources <FaArrowRight aria-hidden="true" className="text-xs" />
             </Link>
           </section>
         </article>
@@ -256,7 +240,7 @@ export default async function ResourceDetailPage({
         {/* Related Resources */}
         {relatedResources.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-3xl font-bold text-neutral-900 mb-6">
+            <h2 className="mb-6 text-2xl font-semibold tracking-tight text-[#183b2c]">
               Related {type.charAt(0).toUpperCase() + type.slice(1)}s
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -264,15 +248,15 @@ export default async function ResourceDetailPage({
                 <Link
                   key={String(relatedResource._id)}
                   href={`/resources/${relatedResource._id}`}
-                  className="group rounded-2xl border-2 border-neutral-200 bg-white p-6 shadow-md hover:shadow-lg hover:border-sky-400 transition-all"
+                  className="group rounded-xl border border-[#dce5de] bg-white p-5 transition-all hover:border-[#b8d2c0] hover:shadow-md"
                 >
-                  <div className="text-3xl mb-3">
-                    {typeIcons[String(relatedResource.type)] || "📌"}
-                  </div>
-                  <h3 className="font-bold text-neutral-900 group-hover:text-sky-600 transition-colors line-clamp-2">
+                  <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#edf5ef] text-[#176345]">
+                    {React.createElement(typeIcons[String(relatedResource.type)] || FaFile, { "aria-hidden": true })}
+                  </span>
+                  <h3 className="line-clamp-2 font-semibold text-[#183b2c] transition-colors group-hover:text-[#176345]">
                     {String(relatedResource.title)}
                   </h3>
-                  <p className="text-xs text-neutral-500 mt-2">
+                  <p className="mt-2 text-xs text-neutral-500">
                     {new Date(String(relatedResource.createdAt)).toLocaleDateString()}
                   </p>
                 </Link>
@@ -285,7 +269,7 @@ export default async function ResourceDetailPage({
         <div className="mt-12 text-center">
           <Link
             href="/resources"
-            className="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-6 py-3 text-neutral-900 font-semibold hover:bg-neutral-200 transition-all"
+            className="inline-flex items-center gap-2 rounded-full border border-[#dce5de] bg-white px-6 py-3 text-sm font-semibold text-[#365b47] transition-colors hover:bg-[#f1f6f1]"
           >
             ← Explore All Resources
           </Link>

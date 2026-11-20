@@ -133,7 +133,7 @@ export default function ProgramList({
                 <div className="flex gap-2">
                   <button
                     onClick={() => onEdit(program)}
-                    className="px-3 py-1 rounded-lg bg-sky-100 text-sky-700 hover:bg-sky-200 transition-colors text-xs font-medium"
+                    className="rounded-lg bg-[#edf5ef] px-3 py-1 text-xs font-medium text-[#45624e] transition-colors hover:bg-[#dcebdd]"
                   >
                     Edit
                   </button>

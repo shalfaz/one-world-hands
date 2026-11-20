@@ -102,7 +102,7 @@ export default function ResourceForm({
               key={option.value}
               className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
                 selectedType === option.value
-                  ? "border-sky-600 bg-sky-50"
+                  ? "border-[#176345] bg-[#f1f6f1]"
                   : "border-slate-200 hover:border-slate-300"
               }`}
             >
@@ -257,7 +257,7 @@ export default function ResourceForm({
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700 disabled:opacity-50 transition-all"
+        className="w-full rounded-full bg-[#176345] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#104b34] disabled:opacity-50"
       >
         {loading
           ? "Processing..."

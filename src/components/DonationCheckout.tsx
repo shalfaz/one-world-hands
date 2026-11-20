@@ -14,7 +14,6 @@ const paymentMethods = [
 ] as const;
 
 export default function DonationCheckout({ fund }: DonationCheckoutProps) {
-  const [step, setStep] = useState<1 | 2>(1);
   const [amount, setAmount] = useState(String(fund.suggestedAmounts[0] ?? 500));
   const [customAmount, setCustomAmount] = useState("");
   const [donorName, setDonorName] = useState("");
@@ -27,7 +26,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
 
   const selectedAmount = customAmount || amount;
 
-  function continueToPayment(event: FormEvent<HTMLFormElement>) {
+  async function submitDonation(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
 
@@ -36,17 +35,20 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
       return;
     }
 
+    if (!donorName.trim()) {
+      setError("Enter your full name.");
+      return;
+    }
+
     if (!email.trim() && !phone.trim()) {
       setError("Add an email address or phone number so we can contact you.");
       return;
     }
 
-    setStep(2);
-  }
-
-  async function submitDonation(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setError("");
+    if (!paymentMethods.some((method) => method.id === paymentMethod)) {
+      setError("Choose a payment method.");
+      return;
+    }
 
     try {
       setSubmitting(true);
@@ -84,38 +86,20 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
       className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-[0_8px_30px_rgba(20,55,35,0.08)]"
     >
       <div className="bg-[#008744] px-5 py-5 text-white sm:px-7 sm:py-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs font-bold uppercase text-white/75">
-              {submitted ? "Thank you" : `Step ${step} of 2`}
-            </p>
-            <h2 id="donation-form-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">
-              {submitted ? "Donation details received" : step === 1 ? "Make a difference today" : "Choose how to donate"}
-            </h2>
-            <p className="mt-2 max-w-md text-sm leading-5 text-white/90">
-              {submitted
-                ? fund.name
-                : step === 1
-                  ? `Support ${fund.name} and help strengthen its work.`
-                  : "Review your gift and select a payment method."}
-            </p>
-          </div>
-          {!submitted && (
-            <div className="flex shrink-0 gap-1.5 pt-1" aria-label={`Step ${step} of 2`}>
-              <span className="h-1.5 w-7 rounded-full bg-white" />
-              <span className={`h-1.5 w-7 rounded-full ${step === 2 ? "bg-white" : "bg-white/35"}`} />
-            </div>
-          )}
+        <div>
+          <p className="text-xs font-bold uppercase text-white/75">
+            {submitted ? "Thank you" : "Make an impact"}
+          </p>
+          <h2 id="donation-form-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">
+            {submitted ? "Donation details received" : "Make a difference today"}
+          </h2>
+          <p className="mt-2 max-w-md text-sm leading-5 text-white/90">
+            {submitted ? fund.name : `Support ${fund.name} and help strengthen its work.`}
+          </p>
         </div>
       </div>
 
       <div className="p-5 sm:p-7">
-        {!submitted && step === 1 && (
-          <p className="mb-4 border-b border-neutral-200 pb-4 text-sm font-medium text-neutral-700">
-            Your payment method can be selected on the next step.
-          </p>
-        )}
-
       {submitted ? (
         <div role="status" aria-live="polite">
           <p className="text-base leading-7 text-neutral-800">
@@ -125,8 +109,8 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
             Online payment processing is not enabled yet, so no payment was taken.
           </p>
         </div>
-      ) : step === 1 ? (
-        <form onSubmit={continueToPayment}>
+      ) : (
+        <form onSubmit={submitDonation}>
           <fieldset>
             <legend className="text-sm font-semibold text-neutral-800">Select an amount</legend>
             <div className="mt-3 grid grid-cols-3 gap-2">
@@ -208,22 +192,7 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
             </div>
           </div>
 
-          {error && <p className="mt-4 text-sm font-medium text-red-700" role="alert">{error}</p>}
-          <button
-            type="submit"
-            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-[#008744] px-5 text-sm font-bold text-white transition-colors hover:bg-[#006b36] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#008744] focus-visible:ring-offset-2"
-          >
-            Next Step <span aria-hidden="true" className="ml-2">→</span>
-          </button>
-        </form>
-      ) : (
-        <form onSubmit={submitDonation}>
-          <div className="flex items-center justify-between border-b border-neutral-200 pb-4 text-sm">
-            <span className="text-neutral-600">Your donation</span>
-            <span className="font-bold text-neutral-950">৳{Number(selectedAmount).toLocaleString()}</span>
-          </div>
-
-          <fieldset className="mt-5">
+          <fieldset className="mt-6 border-t border-neutral-200 pt-5">
             <legend className="text-sm font-semibold text-neutral-800">Choose a payment method</legend>
             <div className="mt-3 grid gap-2">
               {paymentMethods.map((method) => (
@@ -254,22 +223,13 @@ export default function DonationCheckout({ fund }: DonationCheckoutProps) {
             Payment processing is not enabled. Submitting records a pending donation request; no payment will be taken.
           </p>
           {error && <p className="mt-4 text-sm font-medium text-red-700" role="alert">{error}</p>}
-          <div className="mt-6 flex gap-3">
-            <button
-              type="button"
-              onClick={() => setStep(1)}
-              className="h-12 rounded-md border border-neutral-300 px-4 text-sm font-semibold text-neutral-800 hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500"
-            >
-              Back
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="inline-flex h-12 flex-1 items-center justify-center rounded-md bg-[#008744] px-5 text-sm font-bold text-white transition-colors hover:bg-[#006b36] disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#008744] focus-visible:ring-offset-2"
-            >
-              {submitting ? "Submitting..." : "Donate"}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-[#008744] px-5 text-sm font-bold text-white transition-colors hover:bg-[#006b36] disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#008744] focus-visible:ring-offset-2"
+          >
+            {submitting ? "Submitting..." : "Donate"}
+          </button>
         </form>
       )}
       </div>

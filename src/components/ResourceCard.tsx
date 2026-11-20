@@ -26,26 +26,25 @@ export default function ResourceCard({
     <Link href={resource.href || "#"}>
       <article
         className={[
-          "group h-full rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all cursor-pointer",
-          "hover:-translate-y-0.5 hover:shadow-md hover:border-sky-400",
-          resource.accent.bg,
+          "group h-full rounded-xl border border-[#dce5de] bg-white p-5 transition-all duration-200 sm:p-6",
+          "hover:-translate-y-0.5 hover:border-[#b8d2c0] hover:shadow-[0_18px_42px_-30px_rgba(24,59,44,0.38)]",
         ].join(" ")}
       >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#668570]">
             {categoryLabelOverride ?? resource.category}
           </p>
-          <h3 className="mt-2 text-lg font-semibold tracking-tight text-neutral-950">
+          <h3 className="mt-2 text-lg font-semibold tracking-tight text-[#183b2c]">
             {resource.title}
           </h3>
         </div>
 
-        <span className="mt-1 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white ring-1 ring-neutral-200">
+        <span className="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf5ef]">
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
-            className={`h-5 w-5 ${resource.accent.text}`}
+            className="h-5 w-5 text-[#176345]"
             fill="none"
           >
             <path
@@ -65,7 +64,7 @@ export default function ResourceCard({
       </div>
 
       {hasPreview && (
-        <div className="mt-4 overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+        <div className="mt-4 overflow-hidden rounded-xl border border-[#e5ebe5] bg-[#f7faf7]">
           <img
             src={resource.previewUrl}
             alt={resource.title}
@@ -74,19 +73,19 @@ export default function ResourceCard({
         </div>
       )}
 
-      <p className="mt-4 text-sm leading-6 text-neutral-700">
+      <p className="mt-4 text-sm leading-6 text-[#5b6d62]">
         {resource.description}
       </p>
 
       <div className="mt-6">
         <span
-          className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition-colors group-hover:border-sky-300 group-hover:bg-sky-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[#176345] transition-colors group-hover:text-[#104b34]"
         >
           View
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
-            className="h-4 w-4 text-sky-700"
+            className="h-4 w-4 text-[#176345]"
             fill="none"
           >
             <path
