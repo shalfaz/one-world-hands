@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { loginUser } from "../app/login/actions";
+import { useLanguage } from "@/context/LanguageContext";
 
 type AuthModalProps = {
   open: boolean;
@@ -9,6 +10,7 @@ type AuthModalProps = {
 };
 
 export default function AuthModal({ open, onClose }: AuthModalProps) {
+  const { t } = useLanguage();
   const [mode, setMode] = useState<"login" | "signup">("login");
 
   useEffect(() => {
@@ -55,12 +57,12 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                 id="auth-modal-title"
                 className="text-2xl font-semibold tracking-tight text-[#174A70]"
               >
-                {mode === "login" ? "Welcome Back" : "Create an Account"}
+                {mode === "login" ? t.auth.login.title : t.auth.login.createAccount}
               </h2>
               <p className="mt-2 max-w-md text-sm leading-6 text-neutral-600">
                 {mode === "login"
-                  ? "Sign in with your account to continue to your role dashboard."
-                  : "Self-signup is disabled for now. Admin can create accounts from the database."}
+                  ? t.auth.modal.loginSubtitle
+                  : t.auth.modal.signupSubtitle}
               </p>
             </div>
 
@@ -68,7 +70,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
               type="button"
               onClick={onClose}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#D9E2EC] bg-white text-neutral-700 transition-colors hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
-              aria-label="Close authentication modal"
+              aria-label={t.auth.modal.closeAriaLabel}
             >
               <svg
                 aria-hidden="true"
@@ -91,26 +93,26 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
               type="button"
               onClick={() => setMode("login")}
               className={[
-                "rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
+                "whitespace-nowrap rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
                 mode === "login"
                   ? "bg-white text-[#009EDB] shadow-sm"
                   : "text-neutral-600 hover:text-neutral-900",
               ].join(" ")}
             >
-              Login
+              {t.auth.modal.loginTab}
             </button>
 
             <button
               type="button"
               onClick={() => setMode("signup")}
               className={[
-                "rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
+                "whitespace-nowrap rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
                 mode === "signup"
                   ? "bg-white text-[#009EDB] shadow-sm"
                   : "text-neutral-600 hover:text-neutral-900",
               ].join(" ")}
             >
-              Sign Up
+              {t.auth.modal.signupTab}
             </button>
           </div>
 
@@ -121,13 +123,13 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                   htmlFor="login-email"
                   className="mb-2 block text-sm font-semibold text-neutral-900"
                 >
-                  Email
+                  {t.auth.fields.email}
                 </label>
                 <input
                   id="login-email"
                   name="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t.auth.placeholders.enterEmail}
                   className="h-11 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                   required
                 />
@@ -138,13 +140,13 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                   htmlFor="login-password"
                   className="mb-2 block text-sm font-semibold text-neutral-900"
                 >
-                  Password
+                  {t.auth.fields.password}
                 </label>
                 <input
                   id="login-password"
                   name="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={t.auth.placeholders.enterPassword}
                   className="h-11 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-neutral-900 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                   required
                 />
@@ -152,30 +154,29 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
 
               <button
                 type="submit"
-                className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#009EDB] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+                className="inline-flex h-11 w-full items-center justify-center whitespace-nowrap rounded-full bg-[#009EDB] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
               >
-                Sign In
+                {t.auth.login.signInButton}
               </button>
 
               <p className="text-center text-xs text-neutral-500">
-                Admin, employee, and volunteer users can sign in here.
+                {t.auth.modal.rolesHelper}
               </p>
             </form>
           ) : (
             <div className="mt-5 space-y-4">
               <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
                 <p className="text-sm leading-6 text-[#475569]">
-                  Public sign-up is currently disabled. Account creation should be
-                  managed by your organization.
+                  {t.auth.modal.signupDisabledNotice}
                 </p>
               </div>
 
               <button
                 type="button"
                 disabled
-                className="inline-flex h-11 w-full items-center justify-center rounded-2xl bg-neutral-200 px-4 text-sm font-semibold text-neutral-500"
+                className="inline-flex h-11 w-full items-center justify-center whitespace-nowrap rounded-2xl bg-neutral-200 px-4 text-sm font-semibold text-neutral-500"
               >
-                Sign Up Coming Soon
+                {t.auth.modal.signupComingSoon}
               </button>
             </div>
           )}

@@ -3,6 +3,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { loginUser } from "./actions";
 import PageShell from "@/components/PageShell";
+import T from "@/components/T";
+import AuthInput from "@/components/i18n/AuthInput";
+import type { TranslationKey } from "@/context/i18n-utils";
 import connectToDatabase from "@/lib/mongoose";
 import User from "@/lib/models/User";
 import {
@@ -23,13 +26,16 @@ function getDashboardPathByRole(role: string) {
   return "/dashboard";
 }
 
-function getErrorMessage(error?: string) {
-  if (error === "unauthorized") return "Your session expired. Please sign in with an administrator account.";
-  if (error === "missing") return "Please enter your email and password.";
-  if (error === "user") return "No account found with this email.";
-  if (error === "password") return "Incorrect password.";
-  if (error === "db") return "Database error. Please try again.";
-  return "Invalid login credentials.";
+const LOGIN_ERROR_KEYS: Record<string, TranslationKey> = {
+  unauthorized: "auth.login.errors.unauthorized",
+  missing: "auth.login.errors.missing",
+  user: "auth.login.errors.user",
+  password: "auth.login.errors.password",
+  db: "auth.login.errors.db",
+};
+
+function getErrorKey(error?: string): TranslationKey {
+  return (error && LOGIN_ERROR_KEYS[error]) || "auth.login.errors.invalid";
 }
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
@@ -87,10 +93,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             </div>
           </div>
           <h1 className="text-3xl font-semibold tracking-tight text-[#174A70]">
-            Welcome Back
+            <T k="auth.login.title" />
           </h1>
           <p className="mt-2 text-sm text-slate-600">
-            Sign in to your account to continue
+            <T k="auth.login.subtitle" />
           </p>
         </div>
 
@@ -111,7 +117,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                   d="M12 8v4m0 4v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>{getErrorMessage(error)}</span>
+              <span><T k={getErrorKey(error)} /></span>
             </div>
           </div>
         )}
@@ -124,13 +130,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 htmlFor="email"
                 className="mb-2 block text-sm font-semibold text-slate-900"
               >
-                Email Address
+                <T k="auth.fields.emailAddress" />
               </label>
-              <input
+              <AuthInput
                 id="email"
                 name="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholderKey="auth.placeholders.emailExample"
                 className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 required
               />
@@ -141,13 +147,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 htmlFor="password"
                 className="mb-2 block text-sm font-semibold text-slate-900"
               >
-                Password
+                <T k="auth.fields.password" />
               </label>
-              <input
+              <AuthInput
                 id="password"
                 name="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholderKey="auth.placeholders.enterPassword"
                 className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 required
               />
@@ -159,34 +165,34 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                   type="checkbox"
                   className="h-4 w-4 rounded border-slate-300 text-[#009EDB] focus:ring-[#009EDB]"
                 />
-                <span className="text-sm text-slate-600">Remember me</span>
+                <span className="text-sm text-slate-600"><T k="auth.login.rememberMe" /></span>
               </label>
               <a href="/forgot-password" className="text-sm font-semibold text-[#174A70] hover:text-[#009EDB]">
-                Forgot password?
+                <T k="auth.login.forgotPassword" />
               </a>
             </div>
 
             <button
               type="submit"
-              className="mt-6 h-12 w-full rounded-full bg-[#009EDB] font-semibold text-white transition-colors hover:bg-[#0088be]"
+              className="mt-6 h-12 w-full whitespace-nowrap rounded-full bg-[#009EDB] font-semibold text-white transition-colors hover:bg-[#0088be]"
             >
-              Sign In
+              <T k="auth.login.signInButton" />
             </button>
           </form>
 
           {/* Divider */}
           <div className="my-6 flex items-center gap-3">
             <div className="h-px flex-1 bg-slate-200"></div>
-            <span className="text-xs text-slate-500">New to us?</span>
+            <span className="text-xs text-slate-500"><T k="auth.login.newToUs" /></span>
             <div className="h-px flex-1 bg-slate-200"></div>
           </div>
 
           {/* Signup Link */}
           <Link
             href="/signup"
-            className="block rounded-full border border-[#D9E2EC] py-3 text-center font-semibold text-[#009EDB] transition-colors hover:bg-[#EAF6FB]"
+            className="block whitespace-nowrap rounded-full border border-[#D9E2EC] py-3 text-center font-semibold text-[#009EDB] transition-colors hover:bg-[#EAF6FB]"
           >
-            Create an Account
+            <T k="auth.login.createAccount" />
           </Link>
         </div>
 
@@ -196,7 +202,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             href="/"
             className="text-sm font-medium text-slate-600 transition-colors hover:text-[#009EDB]"
           >
-            ← Back to Website
+            <T k="auth.common.backToWebsite" />
           </Link>
         </div>
 
@@ -217,8 +223,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               />
             </svg>
             <div className="text-xs text-slate-600">
-              <p className="font-semibold text-slate-900">Secure login</p>
-              <p className="mt-1">Your credentials are encrypted and secure.</p>
+              <p className="font-semibold text-slate-900"><T k="auth.login.securityTitle" /></p>
+              <p className="mt-1"><T k="auth.login.securityDesc" /></p>
             </div>
           </div>
         </div>

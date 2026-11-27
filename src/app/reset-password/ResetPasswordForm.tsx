@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { resetPasswordAction } from '../forgot-password/actions';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface ResetPasswordFormProps {
   token: string;
@@ -9,6 +10,7 @@ interface ResetPasswordFormProps {
 }
 
 export default function ResetPasswordForm({ token, email }: ResetPasswordFormProps) {
+  const { t } = useLanguage();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,7 +23,7 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordFormPro
     if (!password || !confirmPassword) {
       setMessage({
         type: 'error',
-        text: 'Please fill in all fields.',
+        text: t.auth.signup.errors.missing,
       });
       return;
     }
@@ -29,7 +31,7 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordFormPro
     if (password !== confirmPassword) {
       setMessage({
         type: 'error',
-        text: 'Passwords do not match.',
+        text: t.auth.signup.errors.mismatch,
       });
       return;
     }
@@ -37,7 +39,7 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordFormPro
     if (password.length < 8) {
       setMessage({
         type: 'error',
-        text: 'Password must be at least 8 characters long.',
+        text: t.auth.signup.errors.shortPassword,
       });
       return;
     }
@@ -68,7 +70,7 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordFormPro
     } catch (error) {
       setMessage({
         type: 'error',
-        text: 'An unexpected error occurred.',
+        text: t.auth.common.unexpectedError,
       });
     } finally {
       setLoading(false);
@@ -79,14 +81,14 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordFormPro
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="password" className="mb-1 block text-sm font-medium text-[#174A70]">
-          New Password
+          {t.auth.fields.newPassword}
         </label>
         <input
           id="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="At least 8 characters"
+          placeholder={t.auth.placeholders.passwordMin}
           required
           className="w-full rounded-lg border border-[#D9E2EC] px-4 py-3 text-sm outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
         />
@@ -94,14 +96,14 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordFormPro
 
       <div>
         <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium text-[#174A70]">
-          Confirm Password
+          {t.auth.fields.confirmPassword}
         </label>
         <input
           id="confirmPassword"
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Re-enter password"
+          placeholder={t.auth.placeholders.reenterPassword}
           required
           className="w-full rounded-lg border border-[#D9E2EC] px-4 py-3 text-sm outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
         />
@@ -110,9 +112,9 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordFormPro
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-full bg-[#009EDB] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:cursor-not-allowed disabled:bg-[#009EDB]/40"
+        className="w-full whitespace-nowrap rounded-full bg-[#009EDB] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:cursor-not-allowed disabled:bg-[#009EDB]/40"
       >
-        {loading ? 'Resetting...' : 'Reset Password'}
+        {loading ? t.auth.resetPassword.resetting : t.auth.resetPassword.resetButton}
       </button>
 
       {message && (

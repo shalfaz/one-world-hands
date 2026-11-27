@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { logoutUser } from "../login/actions";
+import T from "@/components/T";
 
 export default async function EmployeeDashboardPage() {
   const cookieStore = await cookies();
@@ -20,30 +21,38 @@ export default async function EmployeeDashboardPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
-                Employee Dashboard
+                <T k="roleDash.employee.eyebrow" />
               </p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70]">
-                Welcome, {name || "Employee"}
+                {name ? (
+                  <T k="roleDash.employee.welcome" vars={{ name }} />
+                ) : (
+                  <T k="roleDash.employee.welcomeFallback" />
+                )}
               </h1>
               <p className="mt-2 text-sm text-slate-500">
-                Signed in as {email || "employee account"}
+                {email ? (
+                  <T k="roleDash.employee.signedInAs" vars={{ email }} />
+                ) : (
+                  <T k="roleDash.employee.signedInAsFallback" />
+                )}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-5 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
+                className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-full border border-[#D9E2EC] bg-white px-5 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
               >
-                Back to Website
+                <T k="roleDash.employee.backToWebsite" />
               </Link>
 
               <form action={logoutUser}>
                 <button
                   type="submit"
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be]"
+                  className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-full bg-[#009EDB] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be]"
                 >
-                  Logout
+                  <T k="roleDash.employee.logout" />
                 </button>
               </form>
             </div>
@@ -52,31 +61,28 @@ export default async function EmployeeDashboardPage() {
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-5">
               <h2 className="text-base font-semibold text-[#174A70]">
-                Assigned Work
+                <T k="roleDash.employee.cards.assignedWorkTitle" />
               </h2>
               <p className="mt-2 text-sm text-slate-600">
-                This section can later show employee-specific assigned tasks,
-                programs, and reports.
+                <T k="roleDash.employee.cards.assignedWorkDesc" />
               </p>
             </div>
 
             <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-5">
               <h2 className="text-base font-semibold text-[#174A70]">
-                Program Coordination
+                <T k="roleDash.employee.cards.coordinationTitle" />
               </h2>
               <p className="mt-2 text-sm text-slate-600">
-                Employee-specific access can be added here for internal program
-                management.
+                <T k="roleDash.employee.cards.coordinationDesc" />
               </p>
             </div>
 
             <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-5">
               <h2 className="text-base font-semibold text-[#174A70]">
-                Reports & Notes
+                <T k="roleDash.employee.cards.reportsTitle" />
               </h2>
               <p className="mt-2 text-sm text-slate-600">
-                Add employee report submission, resource access, and team notes
-                later.
+                <T k="roleDash.employee.cards.reportsDesc" />
               </p>
             </div>
           </div>

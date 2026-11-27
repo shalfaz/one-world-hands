@@ -6,15 +6,16 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { logoutUser } from "@/app/login/actions";
 import { FaUser } from "react-icons/fa6";
+import { useLanguage } from "@/context/LanguageContext";
 
 const navItems = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about-us" },
-  { label: "Programs", href: "/programs" },
-  { label: "Donations", href: "/donation-funds" },
-  { label: "Resources", href: "/resources" },
-  { label: "Contact", href: "/contact" },
-];
+  { key: "home", href: "/" },
+  { key: "about", href: "/about-us" },
+  { key: "programs", href: "/programs" },
+  { key: "donations", href: "/donation-funds" },
+  { key: "resources", href: "/resources" },
+  { key: "contact", href: "/contact" },
+] as const;
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,7 +24,7 @@ export default function Header() {
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [language, setLanguage] = useState<"bn" | "en">("en");
+  const { lang: language, setLang, t } = useLanguage();
   const pathname = usePathname();
   const userDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -52,17 +53,6 @@ export default function Header() {
     }
   }, [pathname]);
 
-  useEffect(() => {
-    const savedLanguage = window.localStorage.getItem("owh_language");
-    const initialLanguage = savedLanguage === "bn" ? "bn" : "en";
-    const timer = window.setTimeout(() => setLanguage(initialLanguage), 0);
-    return () => window.clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = language === "bn" ? "bn" : "en";
-  }, [language]);
-
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -83,8 +73,7 @@ export default function Header() {
   };
 
   const selectLanguage = (nextLanguage: "bn" | "en") => {
-    setLanguage(nextLanguage);
-    window.localStorage.setItem("owh_language", nextLanguage);
+    setLang(nextLanguage);
   };
 
   const languageButton = (value: "bn" | "en", label: string) => (
@@ -92,7 +81,7 @@ export default function Header() {
       type="button"
       onClick={() => selectLanguage(value)}
       aria-pressed={language === value}
-      className={`min-w-9 rounded-md px-2 py-1.5 text-xs font-bold transition-colors ${
+      className={`min-w-9 whitespace-nowrap rounded-md px-2.5 py-1.5 text-xs font-bold transition-colors ${
         language === value
           ? "bg-white text-[#174A70] shadow-sm"
           : "text-white/85 hover:text-white"
@@ -118,30 +107,30 @@ export default function Header() {
               />
             </div>
             <div className="block leading-tight">
-              <p className="text-base font-bold leading-none tracking-tight text-white">One World</p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-white">Hands</p>
+              <p className="whitespace-nowrap text-base font-bold leading-none tracking-tight text-white">{t.header.brandLine1}</p>
+              <p className="mt-1 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.16em] text-white">{t.header.brandLine2}</p>
             </div>
           </Link>
 
-          <nav aria-label="Main navigation" className="hidden flex-1 items-center justify-center gap-1 lg:flex">
+          <nav aria-label={t.header.mainNavigation} className="hidden flex-1 items-center justify-center gap-1 lg:flex">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
-                className={`rounded-lg px-3 py-2.5 text-sm transition-colors xl:px-3.5 ${
+                className={`whitespace-nowrap rounded-lg px-2.5 py-2.5 text-sm transition-colors xl:px-3.5 ${
                   isActive(item.href)
                     ? "bg-[#EAF6FB] font-semibold text-[#174A70]"
                     : "font-medium text-white hover:bg-white/15 hover:text-white"
                 }`}
               >
-                {item.label}
+                {t.nav[item.key]}
               </Link>
             ))}
           </nav>
 
           <div className="ml-auto flex shrink-0 items-center gap-2.5 lg:ml-0">
-            <div className="hidden overflow-hidden rounded-lg border border-white/30 bg-white/15 p-0.5 sm:flex" aria-label="Language">
+            <div className="hidden overflow-hidden rounded-lg border border-white/30 bg-white/15 p-0.5 sm:flex" aria-label={t.header.language}>
               {languageButton("bn", "বাং")}
               {languageButton("en", "EN")}
             </div>
@@ -151,8 +140,8 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  aria-label="Open user menu"
-                  title="Profile"
+                  aria-label={t.header.openUserMenu}
+                  title={t.header.profile}
                   aria-expanded={userDropdownOpen}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:border-white/60 hover:bg-white/20 hover:text-white"
                 >
@@ -163,23 +152,23 @@ export default function Header() {
                     <div className="border-b border-neutral-100 bg-[#F7FAFC] px-4 py-3">
                       <p className="text-sm font-semibold text-neutral-900">{userName}</p>
                       <p className="mt-0.5 text-xs text-neutral-500">{userEmail}</p>
-                      <span className="mt-2 inline-block rounded-full bg-[#EAF6FB] px-2.5 py-1 text-xs font-semibold capitalize text-[#174A70]">
-                        {userRole}
+                      <span className="mt-2 inline-block whitespace-nowrap rounded-full bg-[#EAF6FB] px-2.5 py-1 text-xs font-semibold capitalize text-[#174A70]">
+                        {(t.dashboard.users.roles as Record<string, string>)[userRole.toLowerCase()] ?? userRole}
                       </span>
                     </div>
                     <div className="py-2">
                       {userRole === "admin" && (
-                        <Link href="/dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>Admin Dashboard</Link>
+                        <Link href="/dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>{t.header.adminDashboard}</Link>
                       )}
                       {userRole === "employee" && (
-                        <Link href="/employee-dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>Employee Dashboard</Link>
+                        <Link href="/employee-dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>{t.header.employeeDashboard}</Link>
                       )}
                       {userRole === "volunteer" && (
-                        <Link href="/volunteer-dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>Volunteer Dashboard</Link>
+                        <Link href="/volunteer-dashboard" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>{t.header.volunteerDashboard}</Link>
                       )}
-                      <Link href="/profile" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>Profile</Link>
+                      <Link href="/profile" className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50" onClick={() => setUserDropdownOpen(false)}>{t.header.profile}</Link>
                       <form action={logoutUser}>
-                        <button type="submit" className="w-full px-4 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50">Sign Out</button>
+                        <button type="submit" className="w-full px-4 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50">{t.header.signOut}</button>
                       </form>
                     </div>
                   </div>
@@ -188,8 +177,8 @@ export default function Header() {
             ) : (
               <Link
                 href="/login"
-                aria-label="Account"
-                title="Account"
+                aria-label={t.header.account}
+                title={t.header.account}
                 className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:border-white/60 hover:bg-white/20 hover:text-white sm:inline-flex"
               >
                 <FaUser className="h-3.5 w-3.5" />
@@ -198,16 +187,16 @@ export default function Header() {
 
             <Link
               href="/donation-funds"
-              className="hidden h-10 items-center rounded-full bg-[#174A70] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#103652] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#174A70] focus-visible:ring-offset-2 sm:inline-flex"
+              className="hidden h-10 items-center whitespace-nowrap rounded-full bg-[#174A70] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#103652] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#174A70] focus-visible:ring-offset-2 sm:inline-flex"
             >
-              <span>Donate</span>
+              <span>{t.header.donate}</span>
             </Link>
 
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors hover:bg-white/15 lg:hidden"
-              aria-label="Toggle menu"
+              aria-label={t.header.toggleMenu}
               aria-expanded={mobileMenuOpen}
             >
               <svg
@@ -247,19 +236,19 @@ export default function Header() {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`block rounded-lg px-4 py-3 text-sm transition-colors ${
+                  className={`block whitespace-nowrap rounded-lg px-4 py-3 text-sm transition-colors ${
                     isActive(item.href)
                       ? "bg-[#EAF6FB] font-semibold text-[#174A70]"
                       : "font-medium text-white hover:bg-white/15"
                   }`}
                 >
-                  {item.label}
+                  {t.nav[item.key]}
                 </Link>
               ))}
 
               <div className="mt-3 space-y-2 border-t border-white/20 pt-4">
                 <div className="flex">
-                  <div className="flex w-full overflow-hidden rounded-lg border border-white/30 bg-white/15 p-0.5" aria-label="Language">
+                  <div className="flex w-full overflow-hidden rounded-lg border border-white/30 bg-white/15 p-0.5" aria-label={t.header.language}>
                     <div className="flex w-full [&>button]:flex-1">
                       {languageButton("bn", "বাং")}
                       {languageButton("en", "EN")}
@@ -271,7 +260,7 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex h-11 w-full items-center justify-center rounded-full bg-[#174A70] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#103652]"
                 >
-                  Donate
+                  {t.header.donate}
                 </Link>
 
                 {isAuthenticated ? (
@@ -282,7 +271,7 @@ export default function Header() {
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                       >
-                        Admin Dashboard
+                        {t.header.adminDashboard}
                       </Link>
                     )}
                     {userRole === "employee" && (
@@ -291,7 +280,7 @@ export default function Header() {
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                       >
-                        Employee Dashboard
+                        {t.header.employeeDashboard}
                       </Link>
                     )}
                     {userRole === "volunteer" && (
@@ -300,7 +289,7 @@ export default function Header() {
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                       >
-                        Volunteer Dashboard
+                        {t.header.volunteerDashboard}
                       </Link>
                     )}
                     <Link
@@ -308,14 +297,14 @@ export default function Header() {
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                     >
-                      Profile
+                      {t.header.profile}
                     </Link>
                     <form action={logoutUser}>
                       <button
                         type="submit"
                         className="h-11 w-full rounded-full border border-red-200 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50"
                       >
-                        Sign Out
+                        {t.header.signOut}
                       </button>
                     </form>
                   </>
@@ -325,7 +314,7 @@ export default function Header() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex h-11 w-full items-center justify-center rounded-full border border-white/30 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                   >
-                    Account
+                    {t.header.account}
                   </Link>
                 )}
               </div>

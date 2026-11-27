@@ -1,5 +1,7 @@
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
+import T from "@/components/T";
+import type { TranslationKey } from "@/context/i18n-utils";
 
 export const metadata = {
   title: "About One World Hands | Our Mission, Vision & Values",
@@ -24,31 +26,28 @@ export default function AboutUsPage() {
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
-                  Who we are
+                  <T k="about.hero.eyebrow" />
                 </p>
                 <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
-                  About One World Hands
+                  <T k="about.hero.title" />
                 </h1>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-700">
-                  For the world, with a magic touch. We empower individuals,
-                  support communities, and address social, economic, and
-                  environmental challenges through direct action, education,
-                  and collaboration.
+                  <T k="about.hero.subtitle" />
                 </p>
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/donation-funds"
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+                  className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
                 >
-                  Donate Now
+                  <T k="about.hero.donateCta" />
                 </Link>
                 <Link
                   href="/programs"
-                  className="inline-flex h-11 items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-6 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+                  className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-full border border-[#D9E2EC] bg-white px-6 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
                 >
-                  Explore Programs
+                  <T k="about.hero.programsCta" />
                 </Link>
               </div>
             </div>
@@ -59,19 +58,17 @@ export default function AboutUsPage() {
             <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
               <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-8">
                 <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
-                  How we support people
+                  <T k="about.overview.title" />
                 </h2>
                 <p className="mt-3 text-base leading-7 text-neutral-700">
-                  We work alongside community partners to understand needs
-                  directly, respond with practical support, and share what we
-                  learn along the way—so help stays useful and effective.
+                  <T k="about.overview.description" />
                 </p>
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   {[
                     {
-                      title: "Direct action",
-                      desc: "Support designed around urgent, practical needs.",
+                      titleKey: "about.overview.cards.directAction.title" as const satisfies TranslationKey,
+                      descKey: "about.overview.cards.directAction.desc" as const satisfies TranslationKey,
                       icon: (
                         <svg
                           aria-hidden="true"
@@ -89,8 +86,8 @@ export default function AboutUsPage() {
                       ),
                     },
                     {
-                      title: "Education",
-                      desc: "Learning that helps people build stability.",
+                      titleKey: "about.overview.cards.education.title" as const satisfies TranslationKey,
+                      descKey: "about.overview.cards.education.desc" as const satisfies TranslationKey,
                       icon: (
                         <svg
                           aria-hidden="true"
@@ -114,8 +111,8 @@ export default function AboutUsPage() {
                       ),
                     },
                     {
-                      title: "Collaboration",
-                      desc: "Partners shape outcomes with local insight.",
+                      titleKey: "about.overview.cards.collaboration.title" as const satisfies TranslationKey,
+                      descKey: "about.overview.cards.collaboration.desc" as const satisfies TranslationKey,
                       icon: (
                         <svg
                           aria-hidden="true"
@@ -151,8 +148,8 @@ export default function AboutUsPage() {
                       ),
                     },
                     {
-                      title: "Accountability",
-                      desc: "Transparent updates and community feedback.",
+                      titleKey: "about.overview.cards.accountability.title" as const satisfies TranslationKey,
+                      descKey: "about.overview.cards.accountability.desc" as const satisfies TranslationKey,
                       icon: (
                         <svg
                           aria-hidden="true"
@@ -171,7 +168,7 @@ export default function AboutUsPage() {
                     },
                   ].map((c) => (
                     <div
-                      key={c.title}
+                      key={c.titleKey}
                       className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4"
                     >
                       <div className="flex items-center gap-3">
@@ -179,11 +176,11 @@ export default function AboutUsPage() {
                           {c.icon}
                         </span>
                         <p className="text-sm font-semibold text-neutral-900">
-                          {c.title}
+                          <T k={c.titleKey} />
                         </p>
                       </div>
                       <p className="mt-3 text-sm leading-6 text-neutral-700">
-                        {c.desc}
+                        <T k={c.descKey} />
                       </p>
                     </div>
                   ))}
@@ -192,34 +189,33 @@ export default function AboutUsPage() {
 
               <div className="rounded-2xl border border-[#D9E2EC] bg-[#F7FAFC] p-6 sm:p-8">
                 <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-                  Our promise
+                  <T k="about.promise.heading" />
                 </h3>
                 <p className="mt-3 text-base leading-7 text-neutral-700">
-                  We prioritize dignity, listening, and practical support—so
-                  communities aren’t just served; they’re supported to lead.
+                  <T k="about.promise.body" />
                 </p>
 
                 <div className="mt-6 space-y-3">
                   {[
                     {
-                      label: "Partner-led",
-                      value: "Community insight guides decisions.",
+                      labelKey: "about.promise.items.partnerLed.label" as const satisfies TranslationKey,
+                      valueKey: "about.promise.items.partnerLed.value" as const satisfies TranslationKey,
                     },
                     {
-                      label: "Evidence-informed",
-                      value: "Learning improves how we help.",
+                      labelKey: "about.promise.items.evidenceInformed.label" as const satisfies TranslationKey,
+                      valueKey: "about.promise.items.evidenceInformed.value" as const satisfies TranslationKey,
                     },
                     {
-                      label: "Dignity-first",
-                      value: "Help is delivered with respect and care.",
+                      labelKey: "about.promise.items.dignityFirst.label" as const satisfies TranslationKey,
+                      valueKey: "about.promise.items.dignityFirst.value" as const satisfies TranslationKey,
                     },
                   ].map((item) => (
-                    <div key={item.label}>
+                    <div key={item.labelKey}>
                       <p className="text-sm font-semibold text-neutral-900">
-                        {item.label}
+                        <T k={item.labelKey} />
                       </p>
                       <p className="mt-1 text-sm leading-6 text-neutral-700">
-                        {item.value}
+                        <T k={item.valueKey} />
                       </p>
                     </div>
                   ))}
@@ -233,18 +229,18 @@ export default function AboutUsPage() {
             <div className="grid gap-5 lg:grid-cols-2">
               <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-8">
                 <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
-                  Vision
+                  <T k="about.visionMission.visionTitle" />
                 </h2>
                 <p className="mt-4 text-base leading-7 text-neutral-700">
-                  {`A world where every human being has opportunity, dignity, and support to live a better life.`}
+                  <T k="about.visionMission.visionBody" />
                 </p>
               </div>
               <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-8">
                 <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
-                  Mission
+                  <T k="about.visionMission.missionTitle" />
                 </h2>
                 <p className="mt-4 text-base leading-7 text-neutral-700">
-                  {`To empower individuals, support communities, and address social, economic, and environmental challenges through direct action, education, and collaboration.`}
+                  <T k="about.visionMission.missionBody" />
                 </p>
               </div>
             </div>
@@ -254,43 +250,42 @@ export default function AboutUsPage() {
           <section className="mt-10" aria-labelledby="core-values">
             <div>
               <h2 id="core-values" className="text-2xl font-semibold tracking-tight text-neutral-950">
-                Core Values
+                <T k="about.values.title" />
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
-                Values that keep our work trustworthy, humane, and focused on
-                real outcomes.
+                <T k="about.values.subtitle" />
               </p>
             </div>
 
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               {[
                 {
-                  title: "Dignity and Safety",
-                  body: "We design support that respects people’s choices and protects wellbeing.",
+                  titleKey: "about.values.items.dignityAndSafety.title" as const satisfies TranslationKey,
+                  bodyKey: "about.values.items.dignityAndSafety.body" as const satisfies TranslationKey,
                   icon: "heart",
                   cls: "bg-[#EAF6FB] ring-[#D9E2EC] text-[#009EDB]",
                 },
                 {
-                  title: "Transparent Giving",
-                  body: "We share clear updates and learning notes so supporters can follow progress.",
+                  titleKey: "about.values.items.transparentGiving.title" as const satisfies TranslationKey,
+                  bodyKey: "about.values.items.transparentGiving.body" as const satisfies TranslationKey,
                   icon: "report",
                   cls: "bg-[#EAF6FB] ring-[#D9E2EC] text-[#009EDB]",
                 },
                 {
-                  title: "Community Partnership",
-                  body: "Local people guide priorities, delivery, and feedback.",
+                  titleKey: "about.values.items.communityPartnership.title" as const satisfies TranslationKey,
+                  bodyKey: "about.values.items.communityPartnership.body" as const satisfies TranslationKey,
                   icon: "users",
                   cls: "bg-[#EAF6FB] ring-[#D9E2EC] text-[#009EDB]",
                 },
                 {
-                  title: "Sustainable Change",
-                  body: "We support practices that endure—skills, stewardship, and community ownership.",
+                  titleKey: "about.values.items.sustainableChange.title" as const satisfies TranslationKey,
+                  bodyKey: "about.values.items.sustainableChange.body" as const satisfies TranslationKey,
                   icon: "leaf",
                   cls: "bg-[#EAF6FB] ring-[#D9E2EC] text-[#17634B]",
                 },
               ].map((v) => (
                 <div
-                  key={v.title}
+                  key={v.titleKey}
                   className="rounded-xl border border-[#D9E2EC] bg-white p-6 transition-shadow hover:shadow-md"
                 >
                   <div className="flex items-center gap-3">
@@ -389,11 +384,11 @@ export default function AboutUsPage() {
                       )}
                     </span>
                     <p className="text-sm font-semibold text-neutral-950">
-                      {v.title}
+                      <T k={v.titleKey} />
                     </p>
                   </div>
                   <p className="mt-4 text-sm leading-6 text-neutral-700">
-                    {v.body}
+                    <T k={v.bodyKey} />
                   </p>
                 </div>
               ))}
@@ -405,28 +400,27 @@ export default function AboutUsPage() {
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
               <div>
                 <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
-                  Why One World Hands exists
+                  <T k="about.why.title" />
                 </h2>
                 <p className="mt-3 text-base leading-7 text-neutral-700">
-                  People deserve help that feels safe, dignified, and human.
-                  When communities receive support designed with them—not just
-                  delivered to them—outcomes last longer and learning improves
-                  future response.
+                  <T k="about.why.body" />
                 </p>
               </div>
 
               <div>
                 <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-                  What we focus on
+                  <T k="about.why.focusHeading" />
                 </h3>
                 <ul className="mt-4 space-y-3">
-                  {[
-                    "Dignity-first response for urgent needs.",
-                    "Education and skill-building for stability.",
-                    "Partner-led delivery and transparent reporting.",
-                    "Support that strengthens community resilience over time.",
-                  ].map((t) => (
-                    <li key={t} className="flex items-start gap-3">
+                  {(
+                    [
+                      "about.why.focusItems.item1",
+                      "about.why.focusItems.item2",
+                      "about.why.focusItems.item3",
+                      "about.why.focusItems.item4",
+                    ] as const satisfies readonly TranslationKey[]
+                  ).map((itemKey) => (
+                    <li key={itemKey} className="flex items-start gap-3">
                       <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white ring-1 ring-neutral-200">
                         <svg
                           aria-hidden="true"
@@ -444,7 +438,7 @@ export default function AboutUsPage() {
                         </svg>
                       </span>
                       <span className="text-sm leading-6 text-neutral-700">
-                        {t}
+                        <T k={itemKey} />
                       </span>
                     </li>
                   ))}
@@ -457,37 +451,36 @@ export default function AboutUsPage() {
           <section className="mt-10">
             <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
               <h2 className="text-2xl font-semibold tracking-tight text-neutral-950">
-                Looking Ahead
+                <T k="about.timeline.title" />
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
-                Our future goals are guided by what communities ask for most:
-                dignity, stability, learning, and sustainable care.
+                <T k="about.timeline.subtitle" />
               </p>
 
               <div className="mt-8 grid gap-5 md:grid-cols-3">
                 {[
                   {
-                    title: "Next 12 months",
-                    body: "Strengthen community partnerships and expand learning support alongside urgent essentials.",
+                    titleKey: "about.timeline.steps.next12Months.title" as const satisfies TranslationKey,
+                    bodyKey: "about.timeline.steps.next12Months.body" as const satisfies TranslationKey,
                   },
                   {
-                    title: "Next 2–3 years",
-                    body: "Deepen long-term stewardship through training and maintenance practices for water, wellbeing, and resilience.",
+                    titleKey: "about.timeline.steps.next2To3Years.title" as const satisfies TranslationKey,
+                    bodyKey: "about.timeline.steps.next2To3Years.body" as const satisfies TranslationKey,
                   },
                   {
-                    title: "Long-term goal",
-                    body: "Help communities build self-sustaining pathways so support continues beyond each program cycle.",
+                    titleKey: "about.timeline.steps.longTerm.title" as const satisfies TranslationKey,
+                    bodyKey: "about.timeline.steps.longTerm.body" as const satisfies TranslationKey,
                   },
                 ].map((step) => (
                   <div
-                    key={step.title}
+                    key={step.titleKey}
                     className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-5"
                   >
                     <p className="text-sm font-semibold text-neutral-950">
-                      {step.title}
+                      <T k={step.titleKey} />
                     </p>
                     <p className="mt-3 text-sm leading-6 text-neutral-700">
-                      {step.body}
+                      <T k={step.bodyKey} />
                     </p>
                   </div>
                 ))}

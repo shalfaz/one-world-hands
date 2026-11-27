@@ -3,6 +3,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { signupUser } from "./actions";
 import PageShell from "@/components/PageShell";
+import T from "@/components/T";
+import AuthInput from "@/components/i18n/AuthInput";
+import type { TranslationKey } from "@/context/i18n-utils";
 
 type SignupPageProps = {
   searchParams?: Promise<{
@@ -11,13 +14,16 @@ type SignupPageProps = {
   }>;
 };
 
-function getErrorMessage(error?: string) {
-  if (error === "missing") return "Please fill in all fields.";
-  if (error === "short_password") return "Password must be at least 8 characters long.";
-  if (error === "mismatch") return "Passwords do not match.";
-  if (error === "exists") return "This email is already registered.";
-  if (error === "server") return "Server error. Please try again.";
-  return "Signup failed. Please try again.";
+const SIGNUP_ERROR_KEYS: Record<string, TranslationKey> = {
+  missing: "auth.signup.errors.missing",
+  short_password: "auth.signup.errors.shortPassword",
+  mismatch: "auth.signup.errors.mismatch",
+  exists: "auth.signup.errors.exists",
+  server: "auth.signup.errors.server",
+};
+
+function getErrorKey(error?: string): TranslationKey {
+  return (error && SIGNUP_ERROR_KEYS[error]) || "auth.signup.errors.default";
 }
 
 export default async function SignupPage({ searchParams }: SignupPageProps) {
@@ -62,10 +68,10 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
             </div>
           </div>
           <h1 className="text-3xl font-semibold tracking-tight text-[#174A70]">
-            Join Our Community
+            <T k="auth.signup.title" />
           </h1>
           <p className="mt-2 text-sm text-slate-600">
-            Create an account to start making a difference
+            <T k="auth.signup.subtitle" />
           </p>
         </div>
 
@@ -86,7 +92,7 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
                   d="M12 8v4m0 4v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>{getErrorMessage(error)}</span>
+              <span><T k={getErrorKey(error)} /></span>
             </div>
           </div>
         )}
@@ -108,7 +114,7 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>Account created successfully! Please log in.</span>
+              <span><T k="auth.signup.successRegistered" /></span>
             </div>
           </div>
         )}
@@ -122,13 +128,13 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
                 htmlFor="name"
                 className="mb-2 block text-sm font-semibold text-slate-900"
               >
-                Full Name
+                <T k="auth.fields.fullName" />
               </label>
-              <input
+              <AuthInput
                 id="name"
                 name="name"
                 type="text"
-                placeholder="John Doe"
+                placeholderKey="auth.placeholders.fullName"
                 className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 required
               />
@@ -140,18 +146,18 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
                 htmlFor="email"
                 className="mb-2 block text-sm font-semibold text-slate-900"
               >
-                Email Address
+                <T k="auth.fields.emailAddress" />
               </label>
-              <input
+              <AuthInput
                 id="email"
                 name="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholderKey="auth.placeholders.emailExample"
                 className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 required
               />
               <p className="mt-1 text-xs text-slate-500">
-                We&apos;ll never share your email with anyone else.
+                <T k="auth.signup.emailHelper" />
               </p>
             </div>
 
@@ -161,18 +167,18 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
                 htmlFor="password"
                 className="mb-2 block text-sm font-semibold text-slate-900"
               >
-                Password
+                <T k="auth.fields.password" />
               </label>
-              <input
+              <AuthInput
                 id="password"
                 name="password"
                 type="password"
-                placeholder="At least 8 characters"
+                placeholderKey="auth.placeholders.passwordMin"
                 className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 required
               />
               <p className="mt-1 text-xs text-slate-500">
-                Use uppercase, numbers, and special characters for security.
+                <T k="auth.signup.passwordHelper" />
               </p>
             </div>
 
@@ -182,13 +188,13 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
                 htmlFor="confirmPassword"
                 className="mb-2 block text-sm font-semibold text-slate-900"
               >
-                Confirm Password
+                <T k="auth.fields.confirmPassword" />
               </label>
-              <input
+              <AuthInput
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirm your password"
+                placeholderKey="auth.placeholders.confirmPassword"
                 className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
                 required
               />
@@ -204,39 +210,40 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
                 required
               />
               <label htmlFor="terms" className="text-xs text-slate-600">
-                I agree to the{" "}
+                <T k="auth.signup.termsPrefix" />{" "}
                 <a href="#" className="font-semibold text-[#174A70] hover:text-[#009EDB]">
-                  Terms & Conditions
+                  <T k="auth.signup.termsLink" />
                 </a>{" "}
-                and{" "}
+                <T k="auth.signup.termsAnd" />{" "}
                 <a href="#" className="font-semibold text-[#174A70] hover:text-[#009EDB]">
-                  Privacy Policy
+                  <T k="auth.signup.privacyLink" />
                 </a>
+                <T k="auth.signup.termsSuffix" />
               </label>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="mt-6 h-12 w-full rounded-full bg-[#009EDB] font-semibold text-white transition-colors hover:bg-[#0088be]"
+              className="mt-6 h-12 w-full whitespace-nowrap rounded-full bg-[#009EDB] font-semibold text-white transition-colors hover:bg-[#0088be]"
             >
-              Create Account
+              <T k="auth.signup.createAccountButton" />
             </button>
           </form>
 
           {/* Divider */}
           <div className="my-6 flex items-center gap-3">
             <div className="h-px flex-1 bg-slate-200"></div>
-            <span className="text-xs text-slate-500">Already have an account?</span>
+            <span className="text-xs text-slate-500"><T k="auth.signup.alreadyHaveAccount" /></span>
             <div className="h-px flex-1 bg-slate-200"></div>
           </div>
 
           {/* Login Link */}
           <Link
             href="/login"
-            className="block rounded-full border border-[#D9E2EC] py-3 text-center font-semibold text-[#009EDB] transition-colors hover:bg-[#EAF6FB]"
+            className="block whitespace-nowrap rounded-full border border-[#D9E2EC] py-3 text-center font-semibold text-[#009EDB] transition-colors hover:bg-[#EAF6FB]"
           >
-            Sign In Instead
+            <T k="auth.signup.signInInstead" />
           </Link>
         </div>
 
@@ -246,7 +253,7 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
             href="/"
             className="text-sm font-medium text-slate-600 transition-colors hover:text-[#009EDB]"
           >
-            ← Back to Website
+            <T k="auth.common.backToWebsite" />
           </Link>
         </div>
 
@@ -267,9 +274,9 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
               />
             </svg>
             <div className="text-xs text-slate-600">
-              <p className="font-semibold text-slate-900">Your data is secure</p>
+              <p className="font-semibold text-slate-900"><T k="auth.signup.securityTitle" /></p>
               <p className="mt-1">
-                We use industry-standard encryption to protect your information.
+                <T k="auth.signup.securityDesc" />
               </p>
             </div>
           </div>

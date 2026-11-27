@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { deleteFund } from "./actions";
 import Swal from "sweetalert2";
+import { useLanguage } from "@/context/LanguageContext";
 
 const statusColors: Record<string, string> = {
   active: "bg-emerald-50 text-[#17634B]",
@@ -20,18 +21,21 @@ export default function FundList({
   onEdit: (fund: Record<string, unknown>) => void;
   onDelete: () => void | Promise<void>;
 }) {
+  const { t, tr } = useLanguage();
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const categoryLabels = t.manage.common.categories as Record<string, string>;
+  const statusLabels = t.manage.common.statuses as Record<string, string>;
 
   const handleDelete = async (fundId: string, fundName: string) => {
     const result = await Swal.fire({
-      title: "Delete Fund?",
-      text: `Are you sure you want to delete "${fundName}"? This action cannot be undone.`,
+      title: t.manage.funds.list.deleteTitle,
+      text: tr("manage.funds.list.deleteConfirmText", { name: fundName }),
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#dc2626",
       cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "Cancel",
+      confirmButtonText: t.manage.common.yesDeleteIt,
+      cancelButtonText: t.manage.common.cancel,
     });
 
     if (result.isConfirmed) {
@@ -41,15 +45,15 @@ export default function FundList({
         if (!result.success) {
           await Swal.fire({
             icon: "error",
-            title: "Could not delete fund",
+            title: t.manage.funds.list.deleteErrorTitle,
             text: result.error,
           });
           return;
         }
         Swal.fire({
           icon: "success",
-          title: "Deleted!",
-          text: "Fund deleted successfully",
+          title: t.manage.common.deletedTitle,
+          text: t.manage.funds.list.deletedText,
           timer: 1500,
         });
         await onDelete();
@@ -57,8 +61,8 @@ export default function FundList({
         console.error("Delete error:", error);
         Swal.fire({
           icon: "error",
-          title: "Could not delete fund",
-          text: error instanceof Error ? error.message : "Please try again.",
+          title: t.manage.funds.list.deleteErrorTitle,
+          text: error instanceof Error ? error.message : t.manage.common.tryAgain,
         });
       } finally {
         setDeletingId(null);
@@ -69,7 +73,7 @@ export default function FundList({
   if (funds.length === 0) {
     return (
       <div className="flex h-40 items-center justify-center text-slate-500">
-        No funds found. Create your first fund!
+        {t.manage.funds.list.empty}
       </div>
     );
   }
@@ -79,21 +83,29 @@ export default function FundList({
       <table className="min-w-full text-sm">
         <thead>
           <tr className="border-b border-slate-200 text-left text-slate-500">
-            <th className="px-3 py-3">Fund Name</th>
-            <th className="px-3 py-3">Category</th>
-            <th className="px-3 py-3">Target</th>
-            <th className="px-3 py-3">Raised</th>
-            <th className="px-3 py-3">Status</th>
-            <th className="px-3 py-3">Created By</th>
-            <th className="px-3 py-3">Date</th>
-            <th className="px-3 py-3">Actions</th>
+            <th className="px-3 py-3">{t.manage.funds.list.colFundName}</th>
+            <th className="px-3 py-3">{t.manage.common.category}</th>
+            <th className="px-3 py-3">{t.manage.funds.list.colTarget}</th>
+            <th className="px-3 py-3">{t.manage.funds.list.colRaised}</th>
+            <th className="px-3 py-3">{t.manage.common.status}</th>
+            <th className="px-3 py-3">{t.manage.common.createdBy}</th>
+            <th className="px-3 py-3">{t.manage.common.date}</th>
+            <th className="px-3 py-3">{t.manage.common.actions}</th>
           </tr>
         </thead>
         <tbody>
           {funds.map((fund) => {
             const createdBy = fund.createdBy as Record<string, unknown>;
             const createdAt = new Date(String(fund.createdAt));
-            const statusClass = statusColors[String(fund.status) || "draft"];
+            const statusKey = String(fund.status || "draft");
+            const statusClass = statusColors[statusKey];
+            const categoryKey = String(fund.category || "");
+            const categoryLabel =
+              categoryLabels[categoryKey] ??
+              (categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1));
+            const statusLabel =
+              statusLabels[statusKey] ??
+              (statusKey.charAt(0).toUpperCase() + statusKey.slice(1));
 
             return (
               <tr
@@ -104,8 +116,7 @@ export default function FundList({
                   {String(fund.name)}
                 </td>
                 <td className="px-3 py-3 text-slate-600">
-                  {String(fund.category).charAt(0).toUpperCase() +
-                    String(fund.category).slice(1)}
+                  {categoryLabel}
                 </td>
                 <td className="px-3 py-3 text-slate-600">
                   ৳{Number(fund.targetAmount || 0).toLocaleString()}
@@ -115,16 +126,15 @@ export default function FundList({
                 </td>
                 <td className="px-3 py-3">
                   <span
-                    className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${statusClass}`}
+                    className={`inline-block whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ${statusClass}`}
                   >
-                    {String(fund.status).charAt(0).toUpperCase() +
-                      String(fund.status).slice(1)}
+                    {statusLabel}
                   </span>
                 </td>
                 <td className="px-3 py-3">
                   <div className="text-sm">
                     <p className="font-medium text-slate-900">
-                      {String(createdBy?.name || "Unknown")}
+                      {String(createdBy?.name || t.manage.common.unknown)}
                     </p>
                     <p className="text-xs text-slate-500">
                       {String(createdBy?.email || "unknown@example.com")}
@@ -139,20 +149,20 @@ export default function FundList({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(fund)}
-                      className="rounded-lg bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70] transition-colors hover:bg-[#009EDB] hover:text-white"
+                      className="whitespace-nowrap rounded-lg bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70] transition-colors hover:bg-[#009EDB] hover:text-white"
                     >
-                      Edit
+                      {t.manage.common.edit}
                     </button>
                     <button
                       onClick={() =>
                         handleDelete(String(fund._id), String(fund.name))
                       }
                       disabled={deletingId !== null}
-                      className="rounded-lg bg-red-100 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-200 disabled:opacity-50 transition-colors"
+                      className="whitespace-nowrap rounded-lg bg-red-100 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-200 disabled:opacity-50 transition-colors"
                     >
                       {deletingId === String(fund._id)
-                        ? "Deleting..."
-                        : "Delete"}
+                        ? t.manage.common.deleting
+                        : t.manage.common.delete}
                     </button>
                   </div>
                 </td>

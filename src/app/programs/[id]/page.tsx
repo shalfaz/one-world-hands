@@ -2,6 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import PageShell from "@/components/PageShell";
+import T from "@/components/T";
+import {
+  ProgramCategoryLabel,
+  ProgramTranslatedField,
+} from "@/components/i18n/ProgramsHelpers";
 import { getPublishedPrograms } from "@/lib/services/programService";
 import {
   FaArrowRight,
@@ -15,15 +20,6 @@ import {
   FaUsers,
 } from "react-icons/fa6";
 import type { IconType } from "react-icons";
-
-const categoryColors: Record<string, { bg: string; text: string }> = {
-  health: { bg: "bg-rose-50", text: "text-rose-700" },
-  education: { bg: "bg-sky-50", text: "text-sky-700" },
-  community: { bg: "bg-[#EAF6FB]", text: "text-[#174A70]" },
-  livelihood: { bg: "bg-amber-50", text: "text-amber-700" },
-  relief: { bg: "bg-orange-50", text: "text-orange-700" },
-  other: { bg: "bg-neutral-100", text: "text-neutral-700" },
-};
 
 const categoryIcons: Record<string, IconType> = {
   health: FaHeartPulse,
@@ -82,7 +78,6 @@ export default async function ProgramDetailPage({
   }
 
   const category = String(program.category || "other");
-  const colors = categoryColors[category] || categoryColors.other;
   const CategoryIcon = categoryIcons[category] || FaTag;
   const createdBy = program.createdBy as Record<string, unknown>;
   const createdDate = new Date(String(program.createdAt));
@@ -100,7 +95,7 @@ export default async function ProgramDetailPage({
           href="/programs"
           className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#174A70] transition-colors hover:text-[#009EDB]"
         >
-          ← Back to Programs
+          <T k="programs.detail.backToPrograms" />
         </Link>
 
         {/* Main Content */}
@@ -113,11 +108,15 @@ export default async function ProgramDetailPage({
                   <CategoryIcon aria-hidden="true" className="text-lg" />
                 </span>
                 <h1 className="text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
-                  {String(program.title)}
+                  <ProgramTranslatedField
+                    field="title"
+                    programTitle={String(program.title)}
+                    fallback={String(program.title)}
+                  />
                 </h1>
               </div>
-              <div className={`rounded-full px-3 py-1.5 text-xs font-semibold ${colors.bg} ${colors.text}`}>
-                {category.charAt(0).toUpperCase() + category.slice(1)}
+              <div className="shrink-0 whitespace-nowrap rounded-full bg-[#EAF6FB] px-3 py-1.5 text-xs font-semibold text-[#174A70]">
+                <ProgramCategoryLabel category={category} />
               </div>
             </div>
           </div>
@@ -138,17 +137,21 @@ export default async function ProgramDetailPage({
           {/* Meta Information */}
           <div className="mb-8 grid gap-3 md:grid-cols-2">
             <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Location</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500"><T k="programs.detail.location" /></p>
               <p className="mt-2 flex items-center gap-2 text-sm font-medium text-neutral-900">
                 <FaLocationDot aria-hidden="true" className="text-[#009EDB]" />
-                {String(program.location)}
+                <ProgramTranslatedField
+                  field="location"
+                  programTitle={String(program.title)}
+                  fallback={String(program.location)}
+                />
               </p>
             </div>
             <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Status</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500"><T k="programs.detail.status" /></p>
               <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#009EDB]">
                 <FaCircleCheck aria-hidden="true" />
-                Active Program
+                <T k="programs.detail.activeProgram" />
               </p>
             </div>
           </div>
@@ -156,27 +159,31 @@ export default async function ProgramDetailPage({
           {/* Description */}
           <section className="mb-10">
             <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#174A70]">
-              About This Program
+              <T k="programs.detail.aboutTitle" />
             </h2>
             <p className="text-base leading-7 text-[#475569] whitespace-pre-wrap">
-              {String(program.description)}
+              <ProgramTranslatedField
+                field="description"
+                programTitle={String(program.title)}
+                fallback={String(program.description)}
+              />
             </p>
           </section>
 
           {/* Creator Info */}
           <section className="mb-10 rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-6">
             <h3 className="mb-4 text-base font-semibold text-[#174A70]">
-              Program Information
+              <T k="programs.detail.infoTitle" />
             </h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">Managed by</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-neutral-500"><T k="programs.detail.managedBy" /></p>
                 <p className="text-neutral-900 font-semibold">
-                  {String(createdBy?.name || "One World Hands")}
+                  {createdBy?.name ? String(createdBy.name) : <T k="programs.detail.defaultOrg" />}
                 </p>
               </div>
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">Started</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-neutral-500"><T k="programs.detail.started" /></p>
                 <p className="text-neutral-900 font-semibold">
                   {createdDate.toLocaleDateString("en-US", {
                     year: "numeric",
@@ -190,33 +197,31 @@ export default async function ProgramDetailPage({
 
           {/* CTA Section */}
           <section className="mb-10 rounded-xl bg-[#174A70] p-6 text-white sm:p-8">
-            <h2 className="mb-3 text-xl font-semibold">Support This Program</h2>
+            <h2 className="mb-3 text-xl font-semibold"><T k="programs.detail.supportTitle" /></h2>
             <p className="mb-6 max-w-2xl text-sm leading-6 text-white/75">
-              Your donation directly helps us continue this vital work and expand
-              our impact in the community.
+              <T k="programs.detail.supportDescription" />
             </p>
             <Link
               href="/donation-funds"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#EAF6FB] px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-white"
+              className="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#EAF6FB] px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-white"
             >
-              Donate Now <FaArrowRight aria-hidden="true" className="text-xs" />
+              <T k="programs.detail.donateNow" /> <FaArrowRight aria-hidden="true" className="text-xs" />
             </Link>
           </section>
 
           {/* Resources Link */}
           <section className="rounded-xl border border-[#D9E2EC] p-6 sm:p-8">
             <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#174A70]">
-              Learn More
+              <T k="programs.detail.learnMoreTitle" />
             </h2>
             <p className="mb-5 text-sm leading-6 text-[#475569]">
-              Check out our resources section for more information, case studies, and
-              impact reports related to this program.
+              <T k="programs.detail.learnMoreDescription" />
             </p>
             <Link
               href="/resources"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-[#D9E2EC] px-5 text-sm font-semibold text-[#174A70] transition-colors hover:bg-[#EAF6FB]"
+              className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full border border-[#D9E2EC] px-5 text-sm font-semibold text-[#174A70] transition-colors hover:bg-[#EAF6FB]"
             >
-              View Resources <FaArrowRight aria-hidden="true" className="text-xs" />
+              <T k="programs.detail.viewResources" /> <FaArrowRight aria-hidden="true" className="text-xs" />
             </Link>
           </section>
         </article>
@@ -225,7 +230,7 @@ export default async function ProgramDetailPage({
         {relatedPrograms.length > 0 && (
           <section className="mt-12">
             <h2 className="mb-6 text-2xl font-semibold tracking-tight text-[#174A70]">
-              Similar Programs
+              <T k="programs.detail.similarTitle" />
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {relatedPrograms.map((relatedProgram) => {
@@ -241,10 +246,18 @@ export default async function ProgramDetailPage({
                       <RelatedIcon aria-hidden="true" />
                     </span>
                     <h3 className="font-semibold text-[#174A70] transition-colors group-hover:text-[#009EDB]">
-                      {String(relatedProgram.title)}
+                      <ProgramTranslatedField
+                        field="title"
+                        programTitle={String(relatedProgram.title)}
+                        fallback={String(relatedProgram.title)}
+                      />
                     </h3>
                     <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#475569]">
-                      {String(relatedProgram.description)}
+                      <ProgramTranslatedField
+                        field="description"
+                        programTitle={String(relatedProgram.title)}
+                        fallback={String(relatedProgram.description)}
+                      />
                     </p>
                   </Link>
                 );
@@ -257,9 +270,9 @@ export default async function ProgramDetailPage({
         <div className="mt-12 text-center">
           <Link
             href="/programs"
-            className="inline-flex items-center gap-2 rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
+            className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
           >
-            ← Explore All Programs
+            <T k="programs.detail.exploreAll" />
           </Link>
         </div>
       </div>

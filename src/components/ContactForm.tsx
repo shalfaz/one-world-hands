@@ -2,13 +2,22 @@
 
 import { useState } from "react";
 import { submitContactMessage } from "@/app/contact/actions";
+import { useLanguage } from "@/context/LanguageContext";
+
+type MessageKey =
+  | "nameRequired"
+  | "emailInvalid"
+  | "messageTooShort"
+  | "sendSuccess"
+  | "sendError";
 
 type Status =
   | { kind: "idle" }
-  | { kind: "error"; message: string }
-  | { kind: "success"; message: string };
+  | { kind: "error"; messageKey: MessageKey }
+  | { kind: "success"; messageKey: MessageKey };
 
 export default function ContactForm() {
+  const { t } = useLanguage();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -29,17 +38,17 @@ export default function ContactForm() {
         const trimmedMessage = message.trim();
 
         if (trimmedName.length < 2) {
-          setStatus({ kind: "error", message: "Please enter your name." });
+          setStatus({ kind: "error", messageKey: "nameRequired" });
           return;
         }
         if (!/^\S+@\S+\.\S+$/.test(trimmedEmail)) {
-          setStatus({ kind: "error", message: "Please enter a valid email address." });
+          setStatus({ kind: "error", messageKey: "emailInvalid" });
           return;
         }
         if (trimmedMessage.length < 10) {
           setStatus({
             kind: "error",
-            message: "Please include a short message (at least 10 characters).",
+            messageKey: "messageTooShort",
           });
           return;
         }
@@ -49,7 +58,7 @@ export default function ContactForm() {
           await submitContactMessage(trimmedName, trimmedEmail, trimmedMessage);
           setStatus({
             kind: "success",
-            message: "Thanks for reaching out. We will respond within 2-3 days.",
+            messageKey: "sendSuccess",
           });
           setName("");
           setEmail("");
@@ -57,7 +66,7 @@ export default function ContactForm() {
         } catch {
           setStatus({
             kind: "error",
-            message: "Something went wrong while sending your message. Please try again.",
+            messageKey: "sendError",
           });
         } finally {
           setSending(false);
@@ -67,7 +76,7 @@ export default function ContactForm() {
       <div className="grid gap-2 sm:grid-cols-2">
         <div className="grid gap-1">
           <label htmlFor="contact-name" className="text-sm font-semibold text-neutral-900">
-            Name
+            {t.contact.form.nameLabel}
           </label>
           <input
             id="contact-name"
@@ -76,14 +85,14 @@ export default function ContactForm() {
             onChange={(e) => setName(e.target.value)}
             autoComplete="name"
             className="h-11 rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#009EDB]/30 focus:border-[#009EDB]"
-            placeholder="Your name"
+            placeholder={t.contact.form.namePlaceholder}
             required
           />
         </div>
 
         <div className="grid gap-1">
           <label htmlFor="contact-email" className="text-sm font-semibold text-neutral-900">
-            Email
+            {t.contact.form.emailLabel}
           </label>
           <input
             id="contact-email"
@@ -93,7 +102,7 @@ export default function ContactForm() {
             autoComplete="email"
             inputMode="email"
             className="h-11 rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#009EDB]/30 focus:border-[#009EDB]"
-            placeholder="you@example.com"
+            placeholder={t.contact.form.emailPlaceholder}
             required
           />
         </div>
@@ -101,7 +110,7 @@ export default function ContactForm() {
 
       <div className="grid gap-1">
         <label htmlFor="contact-message" className="text-sm font-semibold text-neutral-900">
-          Message
+          {t.contact.form.messageLabel}
         </label>
         <textarea
           id="contact-message"
@@ -110,20 +119,20 @@ export default function ContactForm() {
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
           className="rounded-lg border border-[#D9E2EC] bg-white px-4 py-3 text-sm text-neutral-900 transition-shadow focus:outline-none focus:ring-2 focus:ring-[#009EDB]/30 focus:border-[#009EDB]"
-          placeholder="Tell us how we can help—donations, volunteering, or partnerships."
+          placeholder={t.contact.form.messagePlaceholder}
           required
         />
       </div>
 
       {status.kind === "error" && (
         <p className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-800">
-          {status.message}
+          {t.contact.form.messages[status.messageKey]}
         </p>
       )}
 
       {status.kind === "success" && (
         <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-[#17634B]">
-          {status.message}
+          {t.contact.form.messages[status.messageKey]}
         </p>
       )}
 
@@ -131,13 +140,13 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={sending}
-          className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:cursor-not-allowed disabled:bg-[#009EDB]/40"
+          className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:cursor-not-allowed disabled:bg-[#009EDB]/40"
         >
-          Send Message
+          {t.contact.form.submitButton}
         </button>
 
         <p className="text-xs leading-5 text-neutral-600">
-          We will respond within 2-3 days.
+          {t.contact.form.responseNote}
         </p>
       </div>
     </form>

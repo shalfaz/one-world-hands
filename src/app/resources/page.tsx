@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import PageShell from "../../components/PageShell";
 import ResourcesClientPage from "../../components/ResourcesClientPage";
+import T from "@/components/T";
 import { getPublishedResources } from "@/lib/services/resourceService";
 
 export default async function ResourcesPage() {
@@ -19,7 +20,7 @@ export default async function ResourcesPage() {
 
   return (
     <PageShell>
-      <Suspense fallback={<div className="container mx-auto py-12 text-center">Loading resources...</div>}>
+      <Suspense fallback={<div className="container mx-auto py-12 text-center"><T k="resources.loading" /></div>}>
         <ResourcesClientPage resources={resources ?? []} error={false} />
       </Suspense>
     </PageShell>

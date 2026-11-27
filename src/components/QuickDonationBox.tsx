@@ -2,9 +2,15 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
 
 type QuickDonationFund = {
   id: string;
+  slug?: string;
+  name: string;
+};
+
+type TranslatedFundItem = {
   name: string;
 };
 
@@ -13,6 +19,12 @@ export default function QuickDonationBox({
 }: {
   funds: QuickDonationFund[];
 }) {
+  const { t } = useLanguage();
+  const translatedFunds = t.funds.items as Record<string, TranslatedFundItem>;
+  const getFundDisplayName = (fund: QuickDonationFund) => {
+    const key = fund.slug ?? fund.id;
+    return translatedFunds[key]?.name ?? fund.name;
+  };
   const [fundId, setFundId] = useState("");
   const [contact, setContact] = useState<string>("");
   const [amount, setAmount] = useState<string>("50");
@@ -49,14 +61,14 @@ export default function QuickDonationBox({
     e.preventDefault();
 
     if (!fundId) {
-      setStatus({ kind: "error", message: "Please select a donation fund." });
+      setStatus({ kind: "error", message: t.home.quickDonation.errorSelectFund });
       return;
     }
 
     if (!contact.trim()) {
       setStatus({
         kind: "error",
-        message: "Please enter your phone number or email.",
+        message: t.home.quickDonation.errorContact,
       });
       return;
     }
@@ -66,7 +78,7 @@ export default function QuickDonationBox({
     if (!Number.isFinite(amt) || amt <= 0) {
       setStatus({
         kind: "error",
-        message: "Please enter a valid donation amount.",
+        message: t.home.quickDonation.errorAmount,
       });
       return;
     }
@@ -90,10 +102,12 @@ export default function QuickDonationBox({
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result?.error || "Failed to save donation.");
+        throw new Error(result?.error || t.home.quickDonation.errorSaveFailed);
       }
 
-      const fundName = selectedFund?.name ?? "Donation Fund";
+      const fundName = selectedFund
+        ? getFundDisplayName(selectedFund)
+        : t.home.quickDonation.defaultFundName;
 
       setStatus({
         kind: "success",
@@ -111,7 +125,7 @@ export default function QuickDonationBox({
         message:
           error instanceof Error
             ? error.message
-            : "Something went wrong. Please try again.",
+            : t.home.quickDonation.errorGeneric,
       });
     } finally {
       setSubmitting(false);
@@ -128,10 +142,10 @@ export default function QuickDonationBox({
                 id="quick-donate-title"
                 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl"
               >
-                Make Your Donation
+                {t.home.quickDonation.title}
               </h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-white/75 sm:text-base">
-                Choose a donation fund and share support in seconds.
+                {t.home.quickDonation.subtitle}
               </p>
             </div>
           </div>
@@ -143,19 +157,20 @@ export default function QuickDonationBox({
               aria-live="polite"
             >
               <p className="text-sm font-semibold text-[#17634B]">
-                Thank you for your support.
+                {t.home.quickDonation.successTitle}
               </p>
               <p className="mt-2 text-sm leading-6 text-[#174A70]">
-                Donation saved:{" "}
-                <span className="font-semibold">৳ {status.amount}</span> to{" "}
+                {t.home.quickDonation.successSavedPrefix}{" "}
+                <span className="font-semibold">৳ {status.amount}</span>{" "}
+                {t.home.quickDonation.successSavedTo}{" "}
                 <span className="font-semibold">{status.fundName}</span>.
               </p>
               <p className="mt-2 text-sm leading-6 text-[#174A70]">
-                Contact: <span className="font-semibold">{status.contact}</span>
+                {t.home.quickDonation.successContactLabel}{" "}
+                <span className="font-semibold">{status.contact}</span>
               </p>
               <p className="mt-2 text-xs leading-5 text-[#17634B]">
-                Your donation request has been recorded in the system with
-                pending status.
+                {t.home.quickDonation.successNote}
               </p>
             </div>
           ) : (
@@ -167,40 +182,40 @@ export default function QuickDonationBox({
               )}
 
               <form
-                className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-[1.1fr_1fr_0.9fr_0.9fr]"
+                className="mt-8 grid items-end gap-4 md:grid-cols-2 lg:grid-cols-[1.15fr_1fr_0.9fr_auto]"
                 onSubmit={handleSubmit}
               >
-                <div className="flex flex-col gap-2">
+                <div className="flex min-w-0 flex-col gap-2">
                   <label
                     htmlFor="donation-fund"
-                    className="text-sm font-medium text-white/90"
+                    className="whitespace-nowrap text-sm font-medium text-white/90"
                   >
-                    Donation Fund <span className="text-red-500">*</span>
+                    {t.home.quickDonation.fundLabel} <span className="text-red-500">*</span>
                   </label>
                   <select
                     id="donation-fund"
                     name="donationFund"
                     value={fundId}
                     onChange={(e) => setFundId(e.target.value)}
-                    className="h-12 rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-[#174A70]"
+                    className="h-12 w-full rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-[#174A70]"
                   >
                     <option value="" disabled>
-                      Select a fund
+                      {t.home.quickDonation.fundPlaceholder}
                     </option>
                     {funds.map((f) => (
                       <option key={f.id} value={f.id}>
-                        {f.name}
+                        {getFundDisplayName(f)}
                       </option>
                     ))}
                   </select>
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex min-w-0 flex-col gap-2">
                   <label
                     htmlFor="donor-contact"
-                    className="text-sm font-medium text-white/90"
+                    className="whitespace-nowrap text-sm font-medium text-white/90"
                   >
-                    Phone / Email <span className="text-red-500">*</span>
+                    {t.home.quickDonation.contactLabel} <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="donor-contact"
@@ -208,20 +223,20 @@ export default function QuickDonationBox({
                     type="text"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    placeholder="Type mobile/email"
+                    placeholder={t.home.quickDonation.contactPlaceholder}
                     className="h-12 w-full rounded-lg border border-white/15 bg-white px-4 text-sm text-neutral-900 shadow-sm transition-shadow placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#174A70]"
                   />
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex min-w-0 flex-col gap-2">
                   <label
                     htmlFor="donation-amount"
-                    className="text-sm font-medium text-white/90"
+                    className="whitespace-nowrap text-sm font-medium text-white/90"
                   >
-                    Donation Amount <span className="text-red-500">*</span>
+                    {t.home.quickDonation.amountLabel} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <span                     className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-neutral-500">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-neutral-500">
                       ৳
                     </span>
                     <input
@@ -239,26 +254,28 @@ export default function QuickDonationBox({
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="invisible text-sm font-semibold">
-                    Donate
+                  <label className="hidden text-sm font-semibold lg:invisible lg:block">
+                    {t.home.quickDonation.donateLabel}
                   </label>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex h-12 items-center justify-center rounded-full bg-[#EAF6FB] px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                    className="inline-flex h-12 w-full items-center justify-center whitespace-nowrap rounded-full bg-[#EAF6FB] px-7 text-sm font-semibold text-[#174A70] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 lg:w-auto"
                   >
-                    {submitting ? "Saving..." : "Donate Now"}
+                    {submitting
+                      ? t.home.quickDonation.saving
+                      : t.home.quickDonation.submitButton}
                   </button>
                 </div>
               </form>
 
               <p className="mt-4 text-center text-xs text-white/75">
-                You will receive tax relief when you donate.{" "}
+                {t.home.quickDonation.taxReliefBefore}{" "}
                 <a
                   href="#"
                     className="font-semibold text-white underline-offset-2 hover:underline"
                 >
-                  Click here to learn more
+                  {t.home.quickDonation.taxReliefLink}
                 </a>
               </p>
             </>

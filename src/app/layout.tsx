@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Hind_Siliguri, Inter, JetBrains_Mono } from "next/font/google";
 import StructuredData from "@/components/StructuredData";
+import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const hindSiliguri = Hind_Siliguri({
+  variable: "--font-bengali",
+  subsets: ["bengali", "latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const jetBrainsMono = JetBrains_Mono({
@@ -100,7 +108,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetBrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${hindSiliguri.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <head>
         <StructuredData />
@@ -110,7 +118,7 @@ export default function RootLayout({
         <link rel="canonical" href="https://oneworldhands.org" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

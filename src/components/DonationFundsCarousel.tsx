@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import FundCard from "@/components/FundCard";
+import { useLanguage } from "@/context/LanguageContext";
 
 type CarouselFund = {
   id: string;
@@ -24,6 +25,7 @@ export default function DonationFundsCarousel({
 }: {
   funds: CarouselFund[];
 }) {
+  const { t } = useLanguage();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",
@@ -72,10 +74,10 @@ export default function DonationFundsCarousel({
             id="funds-title"
             className="text-2xl font-semibold tracking-tight text-[#174A70] sm:text-3xl"
           >
-            Donation Funds
+            {t.home.fundsCarousel.title}
           </h2>
           <p className="mt-3 max-w-2xl text-base leading-7 text-neutral-700">
-            Let&apos;s Make Change Together
+            {t.home.fundsCarousel.subtitle}
           </p>
         </div>
 
@@ -87,13 +89,13 @@ export default function DonationFundsCarousel({
           onTouchStart={stopAutoplay}
           onTouchEnd={startAutoplay}
         >
-          <div className="flex select-none">
+          <div className="flex items-stretch select-none">
             {funds.map((fund) => (
               <div
                 key={fund.id}
-                className="min-w-0 flex-[0_0_100%] px-2 sm:flex-[0_0_50%] lg:flex-[0_0_25%]"
+                className="flex min-w-0 flex-[0_0_100%] px-2 sm:flex-[0_0_50%] lg:flex-[0_0_25%]"
               >
-                <div className="h-full">
+                <div className="h-full w-full">
                   <FundCard fund={fund} />
                 </div>
               </div>
@@ -104,9 +106,9 @@ export default function DonationFundsCarousel({
         <div className="mt-10 flex justify-center">
           <Link
             href="/donation-funds"
-            className="inline-flex items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
           >
-            Explore All Donation Funds
+            {t.home.fundsCarousel.exploreAll}
           </Link>
         </div>
       </div>

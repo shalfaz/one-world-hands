@@ -1,0 +1,1320 @@
+{
+  "auth": {
+    "common": {
+      "backToWebsite": "← Back to Website",
+      "unexpectedError": "An unexpected error occurred."
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "emailAddress": "Email Address",
+      "password": "Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "placeholders": {
+      "fullName": "John Doe",
+      "emailExample": "you@example.com",
+      "yourEmail": "your@email.com",
+      "enterEmail": "Enter your email",
+      "enterPassword": "Enter your password",
+      "passwordMin": "At least 8 characters",
+      "confirmPassword": "Confirm your password",
+      "reenterPassword": "Re-enter password"
+    },
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your account to continue",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "signInButton": "Sign In",
+      "newToUs": "New to us?",
+      "createAccount": "Create an Account",
+      "securityTitle": "Secure login",
+      "securityDesc": "Your credentials are encrypted and secure.",
+      "errors": {
+        "unauthorized": "Your session expired. Please sign in with an administrator account.",
+        "missing": "Please enter your email and password.",
+        "user": "No account found with this email.",
+        "password": "Incorrect password.",
+        "db": "Database error. Please try again.",
+        "invalid": "Invalid login credentials."
+      }
+    },
+    "signup": {
+      "title": "Join Our Community",
+      "subtitle": "Create an account to start making a difference",
+      "emailHelper": "We'll never share your email with anyone else.",
+      "passwordHelper": "Use uppercase, numbers, and special characters for security.",
+      "termsPrefix": "I agree to the",
+      "termsLink": "Terms & Conditions",
+      "termsAnd": "and",
+      "privacyLink": "Privacy Policy",
+      "termsSuffix": "",
+      "createAccountButton": "Create Account",
+      "alreadyHaveAccount": "Already have an account?",
+      "signInInstead": "Sign In Instead",
+      "securityTitle": "Your data is secure",
+      "securityDesc": "We use industry-standard encryption to protect your information.",
+      "successRegistered": "Account created successfully! Please log in.",
+      "errors": {
+        "missing": "Please fill in all fields.",
+        "shortPassword": "Password must be at least 8 characters long.",
+        "mismatch": "Passwords do not match.",
+        "exists": "This email is already registered.",
+        "server": "Server error. Please try again.",
+        "default": "Signup failed. Please try again."
+      },
+      "alerts": {
+        "agreementTitle": "Agreement Required",
+        "agreementText": "Please agree to the Terms & Conditions",
+        "creatingTitle": "Creating your account...",
+        "errorTitle": "Error!",
+        "errorText": "Failed to create account"
+      }
+    },
+    "forgotPassword": {
+      "title": "Forgot Password?",
+      "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+      "rememberPassword": "Remember your password?",
+      "signInHere": "Sign in here",
+      "demoLabel": "Demo:",
+      "demoText": "Use your registered email address. A reset link will be sent to your inbox.",
+      "sending": "Sending...",
+      "sendResetLink": "Send Reset Link",
+      "defaultSuccess": "Password reset email sent! Check your inbox.",
+      "defaultError": "An error occurred. Please try again."
+    },
+    "resetPassword": {
+      "invalidTitle": "Invalid Reset Link",
+      "invalidDescription": "The password reset link is missing or invalid. Please request a new one.",
+      "requestNewLink": "Request New Reset Link",
+      "title": "Reset Password",
+      "subtitle": "Enter your new password below.",
+      "backToSignIn": "Back to Sign In",
+      "resetting": "Resetting...",
+      "resetButton": "Reset Password"
+    },
+    "modal": {
+      "loginSubtitle": "Sign in with your account to continue to your role dashboard.",
+      "signupSubtitle": "Self-signup is disabled for now. Admin can create accounts from the database.",
+      "closeAriaLabel": "Close authentication modal",
+      "loginTab": "Login",
+      "signupTab": "Sign Up",
+      "rolesHelper": "Admin, employee, and volunteer users can sign in here.",
+      "signupDisabledNotice": "Public sign-up is currently disabled. Account creation should be managed by your organization.",
+      "signupComingSoon": "Sign Up Coming Soon"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "programs": "Programs",
+    "donations": "Donations",
+    "resources": "Resources",
+    "contact": "Contact"
+  },
+  "header": {
+    "brandLine1": "One World",
+    "brandLine2": "Hands",
+    "donate": "Donate",
+    "adminDashboard": "Admin Dashboard",
+    "employeeDashboard": "Employee Dashboard",
+    "volunteerDashboard": "Volunteer Dashboard",
+    "profile": "Profile",
+    "signOut": "Sign Out",
+    "account": "Account",
+    "mainNavigation": "Main navigation",
+    "language": "Language",
+    "openUserMenu": "Open user menu",
+    "toggleMenu": "Toggle menu"
+  },
+  "footer": {
+    "brand": "One World Hands",
+    "tagline1": "For the world, with a magic touch. We empower individuals and support communities through education, direct action, and collaboration.",
+    "tagline2": "A global initiative for humanity, unity, and hope.",
+    "explore": "Explore",
+    "programs": "Programs",
+    "donationFunds": "Donation funds",
+    "contact": "Contact",
+    "followOurWork": "Follow our work",
+    "allPrograms": "All programs",
+    "allFunds": "All funds",
+    "cityCountry": "City, Country",
+    "rights": "© {year} One World Hands. All rights reserved.",
+    "privacy": "Privacy",
+    "exploreLinks": {
+      "home": "Home",
+      "aboutUs": "About us",
+      "programs": "Programs",
+      "donationFunds": "Donation funds",
+      "resources": "Resources",
+      "updates": "Updates",
+      "contact": "Contact"
+    },
+    "programLinks": {
+      "foodAssistance": "Food assistance",
+      "emergencyRelief": "Emergency relief",
+      "medicalAssistance": "Medical assistance",
+      "winterSupport": "Winter support",
+      "educationSupport": "Education support"
+    },
+    "fundLinks": {
+      "hungerRelief": "Hunger relief",
+      "emergencyRelief": "Emergency relief",
+      "medicalAid": "Medical aid",
+      "winterSupport": "Winter support",
+      "generalDonation": "General donation"
+    }
+  },
+  "dashboard": {
+    "common": {
+      "tryAgain": "Please try again.",
+      "cancel": "Cancel"
+    },
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "failed": "Failed",
+      "refunded": "Refunded",
+      "active": "Active",
+      "inactive": "Inactive",
+      "paused": "Paused",
+      "closed": "Closed",
+      "draft": "Draft"
+    },
+    "layout": {
+      "openNavigation": "Open navigation",
+      "administration": "Administration",
+      "brandName": "One World Hands",
+      "viewWebsite": "View website"
+    },
+    "sidebar": {
+      "brandName": "One World Hands",
+      "administration": "Administration",
+      "closeNavigation": "Close navigation",
+      "closeNavigationOverlay": "Close navigation overlay",
+      "backToWebsite": "Back to website",
+      "workspace": "Workspace",
+      "signOut": "Sign out",
+      "nav": {
+        "overview": "Overview",
+        "donations": "Donations",
+        "funds": "Funds",
+        "programs": "Programs",
+        "resources": "Resources",
+        "messages": "Messages",
+        "users": "Users"
+      }
+    },
+    "overview": {
+      "eyebrow": "Overview",
+      "title": "NGO Admin Dashboard",
+      "subtitle": "Real-time overview from your database.",
+      "anonymous": "Anonymous",
+      "generalDonation": "General donation",
+      "stats": {
+        "totalAmount": "Total Amount",
+        "totalDonations": "Total Donations",
+        "totalDonors": "Total Donors",
+        "funds": "Funds",
+        "programs": "Programs",
+        "resources": "Resources",
+        "activeCount": "Active: {count}"
+      },
+      "recentDonations": {
+        "title": "Recent Donations",
+        "subtitle": "Latest donation records from database.",
+        "columns": {
+          "name": "Name",
+          "email": "Email",
+          "fund": "Fund",
+          "amount": "Amount",
+          "status": "Status"
+        },
+        "empty": "No donations found yet."
+      },
+      "latestFunds": {
+        "title": "Latest Funds",
+        "subtitle": "Real funds from database.",
+        "empty": "No funds available yet."
+      }
+    },
+    "donations": {
+      "eyebrow": "Donations",
+      "title": "Donations Management",
+      "subtitle": "View latest donor payments and transaction statuses.",
+      "generalFund": "General",
+      "empty": "No donations found.",
+      "saving": "Saving…",
+      "statusAriaLabel": "Status for donation {id}",
+      "columns": {
+        "id": "ID",
+        "name": "Name",
+        "emailContact": "Email / Contact",
+        "fund": "Fund",
+        "amount": "Amount",
+        "payment": "Payment",
+        "status": "Status",
+        "date": "Date"
+      },
+      "paymentMethods": {
+        "bkash": "bKash",
+        "nagad": "Nagad",
+        "card": "Card",
+        "bank": "Bank",
+        "cash": "Cash",
+        "rocket": "Rocket"
+      },
+      "alerts": {
+        "updatedTitle": "Donation updated",
+        "updatedText": "Status changed to {status}.",
+        "updateErrorTitle": "Could not update donation"
+      }
+    },
+    "messages": {
+      "title": "Messages",
+      "loadError": "Error loading messages",
+      "countSingular": "{count} message",
+      "countPlural": "{count} messages",
+      "empty": "No messages yet.",
+      "yourReply": "Your Reply",
+      "replyPlaceholder": "Type your reply...",
+      "savingReply": "Saving...",
+      "saveReply": "Save Reply",
+      "status": {
+        "unread": "unread",
+        "read": "read",
+        "replied": "replied"
+      },
+      "alerts": {
+        "updateErrorTitle": "Could not update message",
+        "replySavedTitle": "Reply saved",
+        "replySavedText": "The reply is saved in the dashboard. It has not been emailed to the sender.",
+        "replyErrorTitle": "Could not save reply"
+      }
+    },
+    "users": {
+      "eyebrow": "Users",
+      "title": "User Management",
+      "subtitle": "Create employee, volunteer, or admin accounts and manage roles and passwords from one place.",
+      "createTitle": "Create New User",
+      "existingTitle": "Existing Users",
+      "totalUsers": "Total users: {count}",
+      "loadError": "Could not load users. Please try again.",
+      "empty": "No users found. Create your first user above.",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "created": "Created"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "roles": {
+        "user": "User",
+        "admin": "Admin",
+        "employee": "Employee",
+        "volunteer": "Volunteer"
+      },
+      "form": {
+        "fullNamePlaceholder": "Full name",
+        "emailPlaceholder": "Email address",
+        "passwordPlaceholder": "Temporary password",
+        "creating": "Creating user...",
+        "submit": "Create User"
+      },
+      "actions": {
+        "saving": "Saving...",
+        "delete": "Delete"
+      },
+      "alerts": {
+        "updateRoleTitle": "Update Role?",
+        "updateRoleText": "Change role from \"{from}\" to \"{to}\"?",
+        "updateRoleConfirm": "Yes, update it!",
+        "successTitle": "Success!",
+        "roleUpdatedText": "Role updated successfully",
+        "errorTitle": "Error!",
+        "deleteUserTitle": "Delete User?",
+        "deleteUserText": "This action cannot be undone!",
+        "deleteUserConfirm": "Yes, delete it!",
+        "deletedTitle": "Deleted!",
+        "userDeletedText": "User deleted successfully",
+        "createErrorTitle": "Could not create user",
+        "userCreatedTitle": "User created",
+        "userCreatedText": "User \"{name}\" created successfully. Invitation sent to {email}."
+      }
+    }
+  },
+  "funds": {
+    "list": {
+      "eyebrow": "Give with purpose",
+      "title": "Donation Funds",
+      "description": "Choose where your support helps most. Each fund is designed for dignity-first outcomes and community-led priorities.",
+      "donateNow": "Donate Now",
+      "explorePrograms": "Explore Programs",
+      "listAriaLabel": "Donation funds list"
+    },
+    "card": {
+      "donate": "Donate",
+      "donateToAria": "Donate to {fundName}"
+    },
+    "detail": {
+      "backToAll": "All donation funds",
+      "categoryFund": "{category} fund",
+      "supportNote": "Your contribution helps support this fund's work and the people and communities it serves. Every gift, at any amount, is welcome.",
+      "prioritiesTitle": "Fund priorities",
+      "prioritiesIntro": "Contributions support the activities described for this fund:"
+    },
+    "checkout": {
+      "thankYouEyebrow": "Thank you",
+      "impactEyebrow": "Make an impact",
+      "receivedTitle": "Donation details received",
+      "formTitle": "Make a difference today",
+      "supportFund": "Support {fundName} and help strengthen its work.",
+      "submittedSummary": "Your ৳{amount} donation details for {fundName} were submitted.",
+      "noPaymentTaken": "Online payment processing is not enabled yet, so no payment was taken.",
+      "selectAmount": "Select an amount",
+      "orEnterAmount": "Or enter another amount",
+      "enterAmountPlaceholder": "Enter amount",
+      "yourInformation": "Your information",
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "choosePaymentMethod": "Choose a payment method",
+      "paymentMethods": {
+        "bkash": {
+          "label": "bKash",
+          "detail": "Mobile wallet"
+        },
+        "nagad": {
+          "label": "Nagad",
+          "detail": "Mobile wallet"
+        },
+        "card": {
+          "label": "Card",
+          "detail": "Debit or credit"
+        }
+      },
+      "paymentDisclaimer": "Payment processing is not enabled. Submitting records a pending donation request; no payment will be taken.",
+      "submitting": "Submitting...",
+      "donateButton": "Donate",
+      "errors": {
+        "invalidAmount": "Enter a donation amount greater than zero.",
+        "missingName": "Enter your full name.",
+        "missingContact": "Add an email address or phone number so we can contact you.",
+        "missingPaymentMethod": "Choose a payment method.",
+        "submitFailed": "Unable to submit donation details.",
+        "genericError": "Something went wrong. Please try again."
+      }
+    },
+    "categories": {
+      "general": "General",
+      "food": "Food",
+      "health": "Health",
+      "education": "Education",
+      "livelihood": "Livelihood",
+      "community": "Community",
+      "environment": "Environment",
+      "emergency": "Emergency",
+      "seasonal": "Seasonal",
+      "zakat": "Zakat",
+      "sadaqah": "Sadaqah",
+      "other": "Other"
+    },
+    "items": {
+      "general-donation": {
+        "name": "General Donation Fund",
+        "description": "Support our overall humanitarian mission and help us respond wherever the need is greatest.",
+        "impactSummary": "Flexible support for urgent and emerging community priorities.",
+        "categoryLabel": "General"
+      },
+      "hunger-relief": {
+        "name": "Hunger Relief Fund",
+        "description": "Provide nutritious meals and food assistance to families facing hunger and food insecurity.",
+        "impactSummary": "Meals and food packages for families in crisis.",
+        "categoryLabel": "Food"
+      },
+      "medical-aid": {
+        "name": "Medical Aid Fund",
+        "description": "Deliver essential healthcare, medicine, and treatment to people who cannot afford medical care.",
+        "impactSummary": "Medicine, check-ups, and emergency treatment support.",
+        "categoryLabel": "Health"
+      },
+      "education-support": {
+        "name": "Education Support Fund",
+        "description": "Help children and youth access quality education, school supplies, and safe learning spaces.",
+        "impactSummary": "Books, tuition support, and learning materials for students.",
+        "categoryLabel": "Education"
+      },
+      "merit-scholarship": {
+        "name": "Merit Scholarship Fund",
+        "description": "Award scholarships to deserving students pursuing higher education and vocational training.",
+        "impactSummary": "Scholarships for talented students with limited means.",
+        "categoryLabel": "Education"
+      },
+      "self-reliance-livelihood": {
+        "name": "Self-Reliance & Livelihood Fund",
+        "description": "Empower families with skills training, tools, and income-generating opportunities.",
+        "impactSummary": "Vocational training and small business startup support.",
+        "categoryLabel": "Livelihood"
+      },
+      "clean-water": {
+        "name": "Clean Water Fund",
+        "description": "Install wells and water systems to bring safe drinking water to underserved communities.",
+        "impactSummary": "Clean water access for families and schools.",
+        "categoryLabel": "Community"
+      },
+      "tree-plantation": {
+        "name": "Tree Plantation Fund",
+        "description": "Plant trees to protect the environment, prevent erosion, and support sustainable communities.",
+        "impactSummary": "Tree planting drives and green community initiatives.",
+        "categoryLabel": "Environment"
+      },
+      "emergency-relief": {
+        "name": "Emergency Relief Fund",
+        "description": "Respond quickly to disasters and crises with urgent shelter, food, and humanitarian aid.",
+        "impactSummary": "Rapid response for floods, fires, and sudden emergencies.",
+        "categoryLabel": "Emergency"
+      },
+      "winter-support": {
+        "name": "Winter Support Fund",
+        "description": "Provide warm clothing, blankets, and heating support to families during cold months.",
+        "impactSummary": "Winter kits and warmth for vulnerable households.",
+        "categoryLabel": "Seasonal"
+      },
+      "ramadan-food-iftar": {
+        "name": "Ramadan Food & Iftar Fund",
+        "description": "Distribute food packages and iftar meals to families during the holy month of Ramadan.",
+        "impactSummary": "Iftar meals and Ramadan food baskets for families in need.",
+        "categoryLabel": "Seasonal"
+      },
+      "zakat": {
+        "name": "Zakat Fund",
+        "description": "Fulfill your Zakat obligation through transparent, dignified distribution to eligible recipients.",
+        "impactSummary": "Sharia-compliant Zakat collection and distribution.",
+        "categoryLabel": "Zakat"
+      },
+      "sadaqah-jariyah": {
+        "name": "Sadaqah Jariyah Fund",
+        "description": "Support ongoing charitable projects that continue benefiting communities for years to come.",
+        "impactSummary": "Long-lasting charity through water, education, and community assets.",
+        "categoryLabel": "Sadaqah"
+      }
+    }
+  },
+  "home": {
+    "banner": "Where Magic Hands Unite, Wonders Arise.",
+    "hero": {
+      "badge": "Community-led humanitarian support",
+      "title": "One World Hands",
+      "taglineBefore": "For the World, with a",
+      "taglineHighlight": "Magic Touch.",
+      "description": "Where magic hands unite, wonders arise. We empower individuals and support communities through direct action, education, and collaboration with dignity-first approaches.",
+      "aboutButton": "About our work",
+      "programsButton": "Explore programs",
+      "commitments": {
+        "dignityLabel": "Dignity first",
+        "dignityDetail": "Every step guided by respect",
+        "communityLabel": "Community led",
+        "communityDetail": "Local partners shape our work",
+        "accountableLabel": "Accountable",
+        "accountableDetail": "Clear reporting and learning"
+      },
+      "impactLabel": "Our impact",
+      "impactTitle": "Practical support, shaped around people.",
+      "impactBody": "We work alongside communities with dignity-first, evidence-led programs that create lasting change.",
+      "areas": {
+        "rapidResponse": "Rapid response",
+        "educationSkills": "Education and skills",
+        "healthWellbeing": "Health and wellbeing"
+      },
+      "impactNote": "Local insight guides our response, and learning helps us improve how we work."
+    },
+    "quickDonation": {
+      "loading": "Preparing donation options...",
+      "title": "Make Your Donation",
+      "subtitle": "Choose a donation fund and share support in seconds.",
+      "fundLabel": "Donation Fund",
+      "fundPlaceholder": "Select a fund",
+      "defaultFundName": "Donation Fund",
+      "contactLabel": "Phone / Email",
+      "contactPlaceholder": "Type mobile/email",
+      "amountLabel": "Donation Amount",
+      "donateLabel": "Donate",
+      "submitButton": "Donate Now",
+      "saving": "Saving...",
+      "taxReliefBefore": "You will receive tax relief when you donate.",
+      "taxReliefLink": "Click here to learn more",
+      "errorSelectFund": "Please select a donation fund.",
+      "errorContact": "Please enter your phone number or email.",
+      "errorAmount": "Please enter a valid donation amount.",
+      "errorSaveFailed": "Failed to save donation.",
+      "errorGeneric": "Something went wrong. Please try again.",
+      "successTitle": "Thank you for your support.",
+      "successSavedPrefix": "Donation saved:",
+      "successSavedTo": "to",
+      "successContactLabel": "Contact:",
+      "successNote": "Your donation request has been recorded in the system with pending status."
+    },
+    "about": {
+      "eyebrow": "Who we are",
+      "title": "Our Vision & Mission",
+      "visionLabel": "Vision",
+      "visionBody": "A world where every human being has opportunity, dignity, and support to live a better life.",
+      "missionLabel": "Mission",
+      "missionBody": "To empower individuals, support communities, and address social, economic, and environmental challenges through direct action, education, and collaboration.",
+      "knowMore": "Know More"
+    },
+    "programsCarousel": {
+      "title": "Ongoing Programs",
+      "exploreAll": "Explore All Programs"
+    },
+    "fundsCarousel": {
+      "title": "Donation Funds",
+      "subtitle": "Let's Make Change Together",
+      "exploreAll": "Explore All Donation Funds"
+    },
+    "fundsSection": {
+      "eyebrow": "Donation Funds",
+      "title": "Support the fund that matters most",
+      "subtitle": "Explore our active donation funds and support community-led, dignity-first action where it is needed most.",
+      "viewAll": "View All Funds"
+    },
+    "why": {
+      "eyebrow": "Our approach",
+      "title": "Why Support Us",
+      "subtitle": "Trust is built through consistent care, transparency, and measurable learning.",
+      "pillars": {
+        "compassionTitle": "Compassion-Driven Action",
+        "compassionBody": "Support that starts with dignity and responds to real needs identified by community partners.",
+        "transparentTitle": "Transparent Giving",
+        "transparentBody": "Clear updates and learning notes so donors can see progress, challenges, and next steps.",
+        "communityTitle": "Community-Focused Impact",
+        "communityBody": "Programs designed with local people—so solutions fit the context and strengthen long-term capacity.",
+        "sustainableTitle": "Sustainable Change",
+        "sustainableBody": "We support practices that endure—training, stewardship, and collaboration that help communities continue after the initial support."
+      }
+    },
+    "resourcesPreview": {
+      "eyebrow": "Learn and share",
+      "title": "Resources Preview",
+      "subtitle": "Explore reports, publications, learning notes, and media from across our programs.",
+      "categories": {
+        "photo": "Photo",
+        "video": "Video",
+        "blogs": "Blogs",
+        "annualReport": "Annual Report",
+        "publications": "Publications",
+        "webinar": "Webinar",
+        "document": "Document"
+      }
+    },
+    "cta": {
+      "badge": "Join Us",
+      "title": "Get Involved: Make Support Feel Like Home",
+      "body": "Whether you donate, volunteer, or share our updates, you help us build dignity-first outcomes. Join a community of people making humanitarian support happen.",
+      "point1": "Help fund programs and emergency response.",
+      "point2": "Volunteer support and community outreach pathways.",
+      "point3": "Stay informed with transparent learning notes.",
+      "donateButton": "Donate Now",
+      "volunteerButton": "Volunteer",
+      "updatesButton": "Get Updates",
+      "disclaimer": "We only use your email for NGO communications. No spam."
+    },
+    "updates": {
+      "defaultTitle": "Latest Updates",
+      "subtitle": "Thoughtful notices and campaign progress—shared transparently with our community.",
+      "viewAll": "View all",
+      "viewAllUpdates": "View all updates",
+      "readMore": "Read more",
+      "readAriaLabel": "Read {title}",
+      "typeNotice": "Notice",
+      "typeCampaign": "Campaign",
+      "typeUpdate": "Update"
+    }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "Who we are",
+      "title": "About One World Hands",
+      "subtitle": "For the world, with a magic touch. We empower individuals, support communities, and address social, economic, and environmental challenges through direct action, education, and collaboration.",
+      "donateCta": "Donate Now",
+      "programsCta": "Explore Programs"
+    },
+    "overview": {
+      "title": "How we support people",
+      "description": "We work alongside community partners to understand needs directly, respond with practical support, and share what we learn along the way—so help stays useful and effective.",
+      "cards": {
+        "directAction": {
+          "title": "Direct action",
+          "desc": "Support designed around urgent, practical needs."
+        },
+        "education": {
+          "title": "Education",
+          "desc": "Learning that helps people build stability."
+        },
+        "collaboration": {
+          "title": "Collaboration",
+          "desc": "Partners shape outcomes with local insight."
+        },
+        "accountability": {
+          "title": "Accountability",
+          "desc": "Transparent updates and community feedback."
+        }
+      }
+    },
+    "promise": {
+      "heading": "Our promise",
+      "body": "We prioritize dignity, listening, and practical support—so communities aren’t just served; they’re supported to lead.",
+      "items": {
+        "partnerLed": {
+          "label": "Partner-led",
+          "value": "Community insight guides decisions."
+        },
+        "evidenceInformed": {
+          "label": "Evidence-informed",
+          "value": "Learning improves how we help."
+        },
+        "dignityFirst": {
+          "label": "Dignity-first",
+          "value": "Help is delivered with respect and care."
+        }
+      }
+    },
+    "visionMission": {
+      "visionTitle": "Vision",
+      "visionBody": "A world where every human being has opportunity, dignity, and support to live a better life.",
+      "missionTitle": "Mission",
+      "missionBody": "To empower individuals, support communities, and address social, economic, and environmental challenges through direct action, education, and collaboration."
+    },
+    "values": {
+      "title": "Core Values",
+      "subtitle": "Values that keep our work trustworthy, humane, and focused on real outcomes.",
+      "items": {
+        "dignityAndSafety": {
+          "title": "Dignity and Safety",
+          "body": "We design support that respects people’s choices and protects wellbeing."
+        },
+        "transparentGiving": {
+          "title": "Transparent Giving",
+          "body": "We share clear updates and learning notes so supporters can follow progress."
+        },
+        "communityPartnership": {
+          "title": "Community Partnership",
+          "body": "Local people guide priorities, delivery, and feedback."
+        },
+        "sustainableChange": {
+          "title": "Sustainable Change",
+          "body": "We support practices that endure—skills, stewardship, and community ownership."
+        }
+      }
+    },
+    "why": {
+      "title": "Why One World Hands exists",
+      "body": "People deserve help that feels safe, dignified, and human. When communities receive support designed with them—not just delivered to them—outcomes last longer and learning improves future response.",
+      "focusHeading": "What we focus on",
+      "focusItems": {
+        "item1": "Dignity-first response for urgent needs.",
+        "item2": "Education and skill-building for stability.",
+        "item3": "Partner-led delivery and transparent reporting.",
+        "item4": "Support that strengthens community resilience over time."
+      }
+    },
+    "timeline": {
+      "title": "Looking Ahead",
+      "subtitle": "Our future goals are guided by what communities ask for most: dignity, stability, learning, and sustainable care.",
+      "steps": {
+        "next12Months": {
+          "title": "Next 12 months",
+          "body": "Strengthen community partnerships and expand learning support alongside urgent essentials."
+        },
+        "next2To3Years": {
+          "title": "Next 2–3 years",
+          "body": "Deepen long-term stewardship through training and maintenance practices for water, wellbeing, and resilience."
+        },
+        "longTerm": {
+          "title": "Long-term goal",
+          "body": "Help communities build self-sustaining pathways so support continues beyond each program cycle."
+        }
+      }
+    }
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "Get in touch",
+      "title": "Contact",
+      "subtitle": "Reach out for partnerships, volunteering, or questions about our donation funds and programs."
+    },
+    "formSection": {
+      "title": "Send a message",
+      "subtitle": "We’ll respond within 2–3 days. This demo form doesn’t send data yet."
+    },
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Tell us how we can help—donations, volunteering, or partnerships.",
+      "submitButton": "Send Message",
+      "responseNote": "We will respond within 2-3 days.",
+      "messages": {
+        "nameRequired": "Please enter your name.",
+        "emailInvalid": "Please enter a valid email address.",
+        "messageTooShort": "Please include a short message (at least 10 characters).",
+        "sendSuccess": "Thanks for reaching out. We will respond within 2-3 days.",
+        "sendError": "Something went wrong while sending your message. Please try again."
+      }
+    },
+    "info": {
+      "title": "Get in touch",
+      "emailLabel": "Email",
+      "emailDesc": "Partnerships and general inquiries.",
+      "phoneLabel": "Phone",
+      "phoneDesc": "Placeholder number for future updates.",
+      "addressLabel": "Address",
+      "addressValue": "City, Country (Placeholder)",
+      "addressDesc": "We coordinate with community partners locally.",
+      "socialTitle": "Social media"
+    },
+    "cta": {
+      "volunteerTitle": "Volunteer with us",
+      "volunteerBody": "Help support community outreach and learning sessions. We’ll contact you with next steps.",
+      "volunteerButton": "Partner / Volunteer",
+      "partnershipTitle": "Partnership opportunities",
+      "partnershipBody": "Are you a community group, educator, or supporter looking to collaborate? We welcome thoughtful partnerships aligned with dignity-first outcomes.",
+      "exploreProgramsButton": "Explore Programs",
+      "supportDonationsButton": "Support with Donations"
+    }
+  },
+  "privacy": {
+    "eyebrow": "Your information",
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: March 2026. This policy describes how we treat information collected through this website. We may update it from time to time; the date above will reflect the latest revision.",
+    "sections": {
+      "collect": {
+        "title": "Information we may collect",
+        "body": "Depending on how you use our site, we may receive information you choose to provide (for example, when you contact us by email or through a form) such as your name, email address, and message content. If you donate through a third-party payment provider, that provider processes payment details according to their own policies; we do not store full card numbers on our web servers."
+      },
+      "use": {
+        "title": "How we use information",
+        "body": "We use contact and donation-related information to respond to inquiries, acknowledge support, send updates you have opted into, and improve our programs and communications. We do not sell your personal information."
+      },
+      "cookies": {
+        "title": "Cookies and analytics",
+        "body": "Our site may use essential cookies to operate securely. If we add optional analytics or marketing tools, we will describe them here and, where required, ask for your consent."
+      },
+      "choices": {
+        "title": "Your choices",
+        "body": "You may contact us to ask questions about this policy, to update your contact preferences, or to request reasonable access to personal information we hold in connection with this site."
+      },
+      "contact": {
+        "title": "Contact",
+        "lead": "Questions about privacy:"
+      }
+    }
+  },
+  "updates": {
+    "hero": {
+      "eyebrow": "News and progress",
+      "title": "Updates",
+      "subtitle": "Notices, campaign progress, and announcements shared transparently with our community."
+    },
+    "empty": {
+      "title": "No updates to share just yet",
+      "body": "We’ll share campaign progress and announcements here as they become available. In the meantime, explore our programs and resources.",
+      "cta": "Explore programs"
+    }
+  },
+  "manage": {
+    "common": {
+      "loading": "Loading...",
+      "cancel": "Cancel",
+      "cancelEditing": "Cancel Editing",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "processing": "Processing...",
+      "saving": "Saving...",
+      "uploadingImage": "Uploading image...",
+      "publishedOnWebsite": "Published on the website",
+      "tryAgain": "Please try again.",
+      "refreshAndTryAgain": "Please refresh the page and try again.",
+      "unknown": "Unknown",
+      "yesDeleteIt": "Yes, delete it!",
+      "successTitle": "Success!",
+      "updatedTitle": "Updated!",
+      "errorTitle": "Error",
+      "deletedTitle": "Deleted!",
+      "deletedTitleNoBang": "Deleted",
+      "selectCategory": "Select Category",
+      "description": "Description",
+      "status": "Status",
+      "category": "Category",
+      "createdBy": "Created By",
+      "date": "Date",
+      "actions": "Actions",
+      "title": "Title",
+      "statuses": {
+        "draft": "Draft",
+        "active": "Active",
+        "inactive": "Inactive",
+        "paused": "Paused",
+        "completed": "Completed",
+        "archived": "Archived",
+        "published": "Published"
+      },
+      "categories": {
+        "education": "Education",
+        "health": "Health",
+        "emergency": "Emergency",
+        "community": "Community",
+        "livelihood": "Livelihood",
+        "relief": "Relief",
+        "other": "Other"
+      }
+    },
+    "funds": {
+      "eyebrow": "Funds Management",
+      "title": "Funds Management",
+      "summaryLine": "Total funds: {total} | Active: {active} | Total Raised: ৳{raised}",
+      "stats": {
+        "totalFunds": "Total Funds",
+        "active": "Active",
+        "totalRaised": "Total Raised",
+        "draft": "Draft"
+      },
+      "editFund": "Edit Fund",
+      "createNewFund": "Create New Fund",
+      "importing": "Importing...",
+      "importDefaultFunds": "Import 13 Default Funds",
+      "allFunds": "All Funds",
+      "loadingFunds": "Loading funds...",
+      "alerts": {
+        "createdText": "Fund created successfully",
+        "updatedText": "Fund updated successfully",
+        "failedText": "Failed to process fund",
+        "loadErrorTitle": "Could not load funds",
+        "refreshErrorTitle": "Could not refresh funds",
+        "seedConfirmTitle": "Import Default Funds?",
+        "seedConfirmText": "This will add or update all 13 standard donation funds in the database.",
+        "seedConfirmBtn": "Yes, import funds",
+        "seedSuccessTitle": "Funds imported!",
+        "seedSuccessText": "Created {created}, updated {updated} ({total} total).",
+        "seedErrorTitle": "Import failed",
+        "seedErrorText": "Could not import default funds. Check your database connection and login."
+      },
+      "form": {
+        "saveErrorTitle": "Could not save fund",
+        "updatedTitle": "Fund Updated!",
+        "createdTitle": "Fund Created!",
+        "createdText": "New fund created successfully",
+        "namePlaceholder": "Fund name",
+        "categoryAria": "Fund category",
+        "targetPlaceholder": "Target amount (BDT)",
+        "statusAria": "Fund status",
+        "impactPlaceholder": "Impact summary",
+        "updateButton": "Update Fund",
+        "addButton": "+ Add New Fund"
+      },
+      "list": {
+        "deleteTitle": "Delete Fund?",
+        "deleteConfirmText": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+        "deleteErrorTitle": "Could not delete fund",
+        "deletedText": "Fund deleted successfully",
+        "empty": "No funds found. Create your first fund!",
+        "colFundName": "Fund Name",
+        "colTarget": "Target",
+        "colRaised": "Raised"
+      }
+    },
+    "programs": {
+      "eyebrow": "Programs",
+      "title": "Programs Management",
+      "summaryLine": "Total programs: {total} | Active: {active}",
+      "stats": {
+        "totalPrograms": "Total Programs",
+        "active": "Active"
+      },
+      "editProgram": "Edit Program",
+      "createNewProgram": "Create New Program",
+      "allPrograms": "All Programs",
+      "loadingPrograms": "Loading programs...",
+      "loadErrorFallback": "Could not load programs. Please try again.",
+      "form": {
+        "saveErrorTitle": "Could not save program",
+        "updatedTitle": "Program Updated",
+        "createdTitle": "Program Created",
+        "updatedText": "Program has been updated successfully",
+        "createdText": "New program has been created successfully",
+        "titlePlaceholder": "Program title",
+        "categoryAria": "Select program category",
+        "locationPlaceholder": "Location",
+        "statusAria": "Select program status",
+        "descriptionPlaceholder": "Description (optional)",
+        "objectivesPlaceholder": "Program objectives",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "updateButton": "Update Program",
+        "addButton": "+ Add New Program"
+      },
+      "list": {
+        "deleteTitle": "Delete Program?",
+        "deleteConfirmText": "Are you sure you want to delete \"{title}\"? This action cannot be undone.",
+        "deleteErrorTitle": "Could not delete program",
+        "deletedText": "Program has been deleted successfully",
+        "empty": "No programs found. Create your first program!",
+        "colLocation": "Location"
+      }
+    },
+    "resources": {
+      "eyebrow": "Resources",
+      "title": "Resources Management",
+      "summaryLine": "Total: {total} | Published: {published}",
+      "stats": {
+        "total": "Total",
+        "photos": "Photos",
+        "docs": "Docs",
+        "webinars": "Webinars",
+        "published": "Published"
+      },
+      "editResource": "Edit Resource",
+      "createNewResource": "Create New Resource",
+      "allResources": "All Resources",
+      "loadingResources": "Loading resources...",
+      "alerts": {
+        "createdText": "Resource created successfully",
+        "updatedText": "Resource updated successfully",
+        "failedText": "Failed to process resource",
+        "loadErrorTitle": "Could not load resources",
+        "refreshErrorTitle": "Could not refresh resources"
+      },
+      "types": {
+        "photo": "Photo",
+        "document": "Document (PDF/Word/Excel)",
+        "blog": "Blog Post",
+        "report": "Annual Report",
+        "webinar": "Webinar (YouTube)"
+      },
+      "typeShort": {
+        "photo": "Photo",
+        "document": "Document",
+        "blog": "Blog",
+        "report": "Report",
+        "webinar": "Webinar"
+      },
+      "form": {
+        "saveErrorTitle": "Could not save resource",
+        "updatedTitle": "Resource Updated!",
+        "createdTitle": "Resource Created!",
+        "createdText": "New resource created successfully",
+        "titleLabel": "Resource Title *",
+        "titlePlaceholder": "Enter resource title",
+        "typeLabel": "Resource Type *",
+        "descriptionPlaceholder": "Brief description of the resource",
+        "uploadDocLabel": "Upload Document (PDF, Word, Excel, PowerPoint)",
+        "uploadDocTitle": "Upload document file",
+        "blogContentLabel": "Blog Content",
+        "blogContentPlaceholder": "Write your blog content here...",
+        "youtubeLabel": "YouTube Link *",
+        "youtubeHelp": "Paste the full YouTube video URL",
+        "uploadPhotoLabel": "Upload Photo",
+        "uploadPhotoTitle": "Upload photo file",
+        "uploadReportLabel": "Upload Report",
+        "uploadReportTitle": "Upload report file",
+        "fileSelected": "{fileName} selected",
+        "statusAria": "Resource status",
+        "updateButton": "Update Resource",
+        "addButton": "+ Add New Resource"
+      },
+      "list": {
+        "deleteTitle": "Delete Resource?",
+        "deleteConfirmText": "Are you sure you want to delete \"{title}\"? This action cannot be undone.",
+        "deleteErrorTitle": "Could not delete resource",
+        "deletedText": "Resource deleted successfully",
+        "empty": "No resources found. Create your first resource!",
+        "colType": "Type",
+        "colContentType": "Content Type",
+        "contentText": "Text",
+        "viewLink": "(View)",
+        "watchLink": "(Watch)"
+      }
+    },
+    "imageField": {
+      "defaultLabel": "Cover image",
+      "invalidTypeError": "Choose a JPG, PNG, or WebP image.",
+      "sizeError": "Image must be smaller than 5 MB.",
+      "uploadFailed": "Upload failed",
+      "noUrlError": "Image storage returned no image URL.",
+      "removeAria": "Remove image",
+      "replace": "Replace",
+      "dropPrompt": "Drop an image here or choose a file",
+      "fileHint": "JPG, PNG or WebP · Max 5 MB"
+    }
+  },
+  "roleDash": {
+    "employee": {
+      "eyebrow": "Employee Dashboard",
+      "welcome": "Welcome, {name}",
+      "welcomeFallback": "Welcome, Employee",
+      "signedInAs": "Signed in as {email}",
+      "signedInAsFallback": "Signed in as employee account",
+      "backToWebsite": "Back to Website",
+      "logout": "Logout",
+      "cards": {
+        "assignedWorkTitle": "Assigned Work",
+        "assignedWorkDesc": "This section can later show employee-specific assigned tasks, programs, and reports.",
+        "coordinationTitle": "Program Coordination",
+        "coordinationDesc": "Employee-specific access can be added here for internal program management.",
+        "reportsTitle": "Reports & Notes",
+        "reportsDesc": "Add employee report submission, resource access, and team notes later."
+      }
+    },
+    "volunteer": {
+      "eyebrow": "Volunteer Dashboard",
+      "welcome": "Welcome, {name}",
+      "welcomeFallback": "Welcome, Volunteer",
+      "signedInAs": "Signed in as {email}",
+      "signedInAsFallback": "Signed in as volunteer account",
+      "backToWebsite": "Back to Website",
+      "logout": "Logout",
+      "cards": {
+        "tasksTitle": "Volunteer Tasks",
+        "tasksDesc": "This area can later show volunteer assignments, upcoming events, and participation details.",
+        "eventsTitle": "Event Participation",
+        "eventsDesc": "Add volunteer schedules, joining status, and activity tracking later.",
+        "learningTitle": "Learning & Resources",
+        "learningDesc": "Volunteer-specific resources, documents, and community guidance can be added here."
+      }
+    }
+  },
+  "programs": {
+    "hero": {
+      "eyebrow": "What we do",
+      "title": "Programs",
+      "description": "Each program is designed with communities to deliver dignified support, practical education, and lasting community capacity.",
+      "count": "Discover {count} active programs helping communities worldwide.",
+      "donateNow": "Donate Now",
+      "exploreResources": "Explore Resources"
+    },
+    "listAriaLabel": "Programs list",
+    "empty": {
+      "title": "No programs available at the moment",
+      "description": "Check back soon for updates on our humanitarian programs."
+    },
+    "categories": {
+      "health": "Health",
+      "education": "Education",
+      "community": "Community",
+      "livelihood": "Livelihood",
+      "relief": "Relief",
+      "other": "Other"
+    },
+    "categoriesSection": {
+      "title": "Program Categories",
+      "items": {
+        "health": {
+          "title": "Health",
+          "description": "Medical assistance and health support"
+        },
+        "education": {
+          "title": "Education",
+          "description": "Learning programs and scholarships"
+        },
+        "community": {
+          "title": "Community",
+          "description": "Community development initiatives"
+        },
+        "livelihood": {
+          "title": "Livelihood",
+          "description": "Skill training and employment"
+        },
+        "relief": {
+          "title": "Emergency Relief",
+          "description": "Crisis response and disaster aid"
+        },
+        "other": {
+          "title": "Other",
+          "description": "Special initiatives and projects"
+        }
+      }
+    },
+    "card": {
+      "learnMore": "Learn More",
+      "learnMoreArrow": "Learn More →",
+      "learnMoreAria": "Learn more about {title}"
+    },
+    "detail": {
+      "backToPrograms": "← Back to Programs",
+      "location": "Location",
+      "status": "Status",
+      "activeProgram": "Active Program",
+      "aboutTitle": "About This Program",
+      "infoTitle": "Program Information",
+      "managedBy": "Managed by",
+      "defaultOrg": "One World Hands",
+      "started": "Started",
+      "supportTitle": "Support This Program",
+      "supportDescription": "Your donation directly helps us continue this vital work and expand our impact in the community.",
+      "donateNow": "Donate Now",
+      "learnMoreTitle": "Learn More",
+      "learnMoreDescription": "Check out our resources section for more information, case studies, and impact reports related to this program.",
+      "viewResources": "View Resources",
+      "similarTitle": "Similar Programs",
+      "exploreAll": "← Explore All Programs"
+    },
+    "items": {
+      "food-assistance": {
+        "title": "Food Assistance Program",
+        "description": "Providing nutritious meals and food packages to vulnerable families, children, elderly, and displaced people in need."
+      },
+      "medical-assistance": {
+        "title": "Medical Assistance Program",
+        "description": "Free medical checkups, diagnostics, medicines, and emergency healthcare support for underprivileged communities."
+      },
+      "education-support": {
+        "title": "Education Support Program",
+        "description": "Scholarships and educational materials helping deserving students from low-income families access quality education."
+      },
+      "merit-scholarship": {
+        "title": "Merit Scholarship Program",
+        "description": "Awarding scholarships to high-achieving students from underprivileged backgrounds to pursue higher education."
+      },
+      "self-reliance-livelihood": {
+        "title": "Self-Reliance & Livelihood Program",
+        "description": "Vocational training in IT, tailoring, plumbing, and other trades to help people build marketable skills and become self-sufficient."
+      },
+      "women-empowerment": {
+        "title": "Women Empowerment Initiative",
+        "description": "Microfinance and business training supporting women entrepreneurs to become economically independent community leaders."
+      },
+      "clean-water": {
+        "title": "Clean Water Program",
+        "description": "Installing tube wells and water purification systems in rural areas so communities have safe water for health and dignity."
+      },
+      "tree-plantation": {
+        "title": "Tree Plantation Program",
+        "description": "Environmental conservation through large-scale tree planting and community awareness for a greener future."
+      },
+      "winter-support": {
+        "title": "Winter Support Program",
+        "description": "Distributing warm clothes, blankets, and shelter support to protect vulnerable families during harsh winter months."
+      },
+      "ramadan-food-iftar": {
+        "title": "Ramadan Food & Iftar Program",
+        "description": "Providing daily iftar meals and nutritious Ramadan food packages to fasting individuals and families in need."
+      },
+      "qurbani-eid": {
+        "title": "Qurbani for Everyone (Eid Project)",
+        "description": "Qurbani meat distribution and Eid gift packages so low-income families can celebrate Eid with dignity and joy."
+      },
+      "eid-clothes-eidi": {
+        "title": "Eid Clothes & Eidi Food Program",
+        "description": "Sharing new Eid clothes and festive food packages with underprivileged children and families so everyone celebrates Eid with joy."
+      },
+      "emergency-relief": {
+        "title": "Emergency Relief Program",
+        "description": "Rapid humanitarian assistance including food, clean water, medicine, and shelter for communities affected by crises and disasters."
+      }
+    },
+    "locations": {
+      "global": "Global",
+      "dhaka, bangladesh": "Dhaka, Bangladesh",
+      "chittagong, bangladesh": "Chittagong, Bangladesh",
+      "chattogram, bangladesh": "Chattogram, Bangladesh",
+      "sylhet, bangladesh": "Sylhet, Bangladesh",
+      "khulna, bangladesh": "Khulna, Bangladesh",
+      "rajshahi, bangladesh": "Rajshahi, Bangladesh",
+      "multiple locations": "Multiple locations",
+      "dhaka, chittagong": "Dhaka, Chittagong",
+      "rural bangladesh": "Rural Bangladesh",
+      "throughout bangladesh": "Throughout Bangladesh",
+      "northern regions": "Northern regions",
+      "nationwide": "Nationwide",
+      "various districts": "Various districts",
+      "bangladesh": "Bangladesh"
+    }
+  },
+  "resources": {
+    "loading": "Loading resources...",
+    "hero": {
+      "eyebrow": "Learning and transparency",
+      "title": "Resources",
+      "description": "Explore reports, publications, learning notes, and media from One World Hands programs."
+    },
+    "filters": {
+      "ariaLabel": "Filter resources by type",
+      "all": "All resources",
+      "photo": "Photo",
+      "video": "Video",
+      "blog": "Blogs",
+      "annualReport": "Annual Report",
+      "publication": "Publications",
+      "webinar": "Webinar",
+      "document": "Document"
+    },
+    "typeLabels": {
+      "photo": "Photo",
+      "video": "Video",
+      "blog": "Blog",
+      "report": "Report",
+      "annual report": "Annual Report",
+      "publication": "Publication",
+      "webinar": "Webinar",
+      "document": "Document",
+      "other": "Other",
+      "resource": "Resource"
+    },
+    "defaultDescriptions": {
+      "photo": "Uploaded photo resource from the dashboard.",
+      "video": "Uploaded video resource from the dashboard.",
+      "blog": "Published blog resource from the dashboard.",
+      "webinar": "Webinar resource uploaded and managed from the dashboard.",
+      "document": "Uploaded document or publication resource from the dashboard."
+    },
+    "error": {
+      "loadFailed": "Failed to load resources from database."
+    },
+    "empty": {
+      "title": "No resources found",
+      "description": "Try changing the type filter."
+    },
+    "card": {
+      "view": "View"
+    },
+    "detail": {
+      "backToResources": "← Back to Resources",
+      "createdBy": "Created by",
+      "defaultOrg": "One World Hands",
+      "published": "Published",
+      "aboutTitle": "About This Resource",
+      "blogContentTitle": "Blog Content",
+      "downloadDocumentTitle": "Download Document",
+      "accessFile": "Access the {fileType} file:",
+      "accessDocumentFile": "Access the DOCUMENT file:",
+      "downloadFileType": "Download {fileType}",
+      "downloadFile": "Download FILE",
+      "watchWebinar": "Watch Webinar",
+      "watchOnYouTube": "Watch on YouTube →",
+      "photoGallery": "Photo Gallery",
+      "ctaTitle": "Learn More About Our Work",
+      "ctaDescription": "Explore more resources and discover how we're making an impact in communities worldwide.",
+      "browseAll": "Browse All Resources",
+      "relatedByType": {
+        "photo": "Related Photos",
+        "video": "Related Videos",
+        "blog": "Related Blogs",
+        "report": "Related Reports",
+        "publication": "Related Publications",
+        "webinar": "Related Webinars",
+        "document": "Related Documents",
+        "other": "Related Others"
+      },
+      "relatedFallback": "Related {type}",
+      "exploreAll": "← Explore All Resources"
+    }
+  }
+}
