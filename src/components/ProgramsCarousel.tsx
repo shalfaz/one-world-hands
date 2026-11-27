@@ -5,12 +5,14 @@ import useEmblaCarousel from "embla-carousel-react";
 import Link from "next/link";
 import HomeProgramCard from "@/components/HomeProgramCard";
 import type { Program } from "@/types/ngo";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProgramsCarousel({
   programs,
 }: {
   programs: Program[];
 }) {
+  const { t } = useLanguage();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",
@@ -57,7 +59,7 @@ export default function ProgramsCarousel({
             id="programs-title"
             className="text-2xl font-semibold tracking-tight text-[#174A70] sm:text-3xl"
           >
-            Ongoing Programs
+            {t.home.programsCarousel.title}
           </h2>
         </div>
 
@@ -69,13 +71,13 @@ export default function ProgramsCarousel({
           onTouchStart={stopAutoplay}
           onTouchEnd={startAutoplay}
         >
-          <div className="flex select-none">
+          <div className="flex items-stretch select-none">
             {programs.map((program) => (
               <div
                 key={program.id}
-                className="min-w-0 flex-[0_0_100%] px-2 sm:flex-[0_0_50%] lg:flex-[0_0_25%]"
+                className="flex min-w-0 flex-[0_0_100%] px-2 sm:flex-[0_0_50%] lg:flex-[0_0_25%]"
               >
-                <div className="h-full">
+                <div className="h-full w-full">
                   <HomeProgramCard program={program} />
                 </div>
               </div>
@@ -86,9 +88,9 @@ export default function ProgramsCarousel({
         <div className="mt-10 flex justify-center">
           <Link
             href="/programs"
-            className="inline-flex items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
           >
-            Explore All Programs
+            {t.home.programsCarousel.exploreAll}
           </Link>
         </div>
       </div>

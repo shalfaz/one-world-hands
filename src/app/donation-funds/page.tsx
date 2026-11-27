@@ -1,6 +1,8 @@
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import FundCard from "@/components/FundCard";
+import T from "@/components/T";
+import FundsListSection from "@/components/i18n/FundsListSection";
 import { getPublicDonationFunds } from "@/lib/data/donationFunds";
 
 export const metadata = {
@@ -25,41 +27,40 @@ export default async function DonationFundsPage() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <section className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
-            Give with purpose
+            <T k="funds.list.eyebrow" />
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
-            Donation Funds
+            <T k="funds.list.title" />
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-[#475569]">
-            Choose where your support helps most. Each fund is designed for
-            dignity-first outcomes and community-led priorities.
+            <T k="funds.list.description" />
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               href="/#quick-donation"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0088be] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+              className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0088be] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
             >
-              Donate Now
+              <T k="funds.list.donateNow" />
             </Link>
             <Link
               href="/programs"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-[#D9E2EC] bg-white px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+              className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-full border border-[#D9E2EC] bg-white px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
             >
-              Explore Programs
+              <T k="funds.list.explorePrograms" />
             </Link>
           </div>
         </section>
 
-        <section className="mt-10" aria-label="Donation funds list">
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <FundsListSection>
+          <div className="grid items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
             {funds.map((fund) => (
-              <div key={fund.id} id={fund.slug} className="scroll-mt-28">
+              <div key={fund.id} id={fund.slug} className="h-full scroll-mt-28">
                 <FundCard fund={fund} />
               </div>
             ))}
           </div>
-        </section>
+        </FundsListSection>
       </div>
     </PageShell>
   );

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { deleteResource } from "./actions";
 import Swal from "sweetalert2";
+import { useLanguage } from "@/context/LanguageContext";
 
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-100 text-yellow-800",
@@ -18,21 +19,24 @@ export default function ResourceList({
   onEdit: (resource: Record<string, unknown>) => void;
   onDelete: () => void | Promise<void>;
 }) {
+  const { t, tr } = useLanguage();
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const typeLabels = t.manage.resources.typeShort as Record<string, string>;
+  const statusLabels = t.manage.common.statuses as Record<string, string>;
 
   const handleDelete = async (
     resourceId: string,
     resourceTitle: string
   ) => {
     const result = await Swal.fire({
-      title: "Delete Resource?",
-      text: `Are you sure you want to delete "${resourceTitle}"? This action cannot be undone.`,
+      title: t.manage.resources.list.deleteTitle,
+      text: tr("manage.resources.list.deleteConfirmText", { title: resourceTitle }),
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#dc2626",
       cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "Cancel",
+      confirmButtonText: t.manage.common.yesDeleteIt,
+      cancelButtonText: t.manage.common.cancel,
     });
 
     if (result.isConfirmed) {
@@ -42,15 +46,15 @@ export default function ResourceList({
         if (!result.success) {
           await Swal.fire({
             icon: "error",
-            title: "Could not delete resource",
+            title: t.manage.resources.list.deleteErrorTitle,
             text: result.error,
           });
           return;
         }
         Swal.fire({
           icon: "success",
-          title: "Deleted!",
-          text: "Resource deleted successfully",
+          title: t.manage.common.deletedTitle,
+          text: t.manage.resources.list.deletedText,
           timer: 1500,
         });
         await onDelete();
@@ -58,8 +62,8 @@ export default function ResourceList({
         console.error("Delete error:", error);
         Swal.fire({
           icon: "error",
-          title: "Could not delete resource",
-          text: error instanceof Error ? error.message : "Please try again.",
+          title: t.manage.resources.list.deleteErrorTitle,
+          text: error instanceof Error ? error.message : t.manage.common.tryAgain,
         });
       } finally {
         setDeletingId(null);
@@ -70,7 +74,7 @@ export default function ResourceList({
   if (resources.length === 0) {
     return (
       <div className="flex h-40 items-center justify-center text-slate-500">
-        No resources found. Create your first resource!
+        {t.manage.resources.list.empty}
       </div>
     );
   }
@@ -80,20 +84,28 @@ export default function ResourceList({
       <table className="min-w-full text-sm">
         <thead>
           <tr className="border-b border-slate-200 text-left text-slate-500">
-            <th className="px-3 py-3">Title</th>
-            <th className="px-3 py-3">Type</th>
-            <th className="px-3 py-3">Content Type</th>
-            <th className="px-3 py-3">Status</th>
-            <th className="px-3 py-3">Created By</th>
-            <th className="px-3 py-3">Date</th>
-            <th className="px-3 py-3">Actions</th>
+            <th className="px-3 py-3">{t.manage.common.title}</th>
+            <th className="px-3 py-3">{t.manage.resources.list.colType}</th>
+            <th className="px-3 py-3">{t.manage.resources.list.colContentType}</th>
+            <th className="px-3 py-3">{t.manage.common.status}</th>
+            <th className="px-3 py-3">{t.manage.common.createdBy}</th>
+            <th className="px-3 py-3">{t.manage.common.date}</th>
+            <th className="px-3 py-3">{t.manage.common.actions}</th>
           </tr>
         </thead>
         <tbody>
           {resources.map((resource) => {
             const createdBy = resource.createdBy as Record<string, unknown>;
             const createdAt = new Date(String(resource.createdAt));
-            const statusClass = statusColors[String(resource.status) || "draft"];
+            const statusKey = String(resource.status || "draft");
+            const statusClass = statusColors[statusKey];
+            const typeKey = String(resource.type || "");
+            const typeLabel =
+              typeLabels[typeKey] ??
+              (typeKey.charAt(0).toUpperCase() + typeKey.slice(1));
+            const statusLabel =
+              statusLabels[statusKey] ??
+              (statusKey.charAt(0).toUpperCase() + statusKey.slice(1));
 
             let contentType = "";
             if (resource.type === "document" && resource.fileUrl) {
@@ -101,7 +113,7 @@ export default function ResourceList({
             } else if (resource.type === "webinar" && resource.youtubeLink) {
               contentType = "YouTube";
             } else if (resource.type === "blog") {
-              contentType = "Text";
+              contentType = t.manage.resources.list.contentText;
             } else {
               contentType = String(resource.type).toUpperCase();
             }
@@ -115,9 +127,7 @@ export default function ResourceList({
                   {String(resource.title)}
                 </td>
                 <td className="px-3 py-3 text-slate-600">
-                  {String(resource.type)
-                    .charAt(0)
-                    .toUpperCase() + String(resource.type).slice(1)}
+                  {typeLabel}
                 </td>
                 <td className="px-3 py-3 text-xs text-slate-600">
                   {contentType}
@@ -130,7 +140,7 @@ export default function ResourceList({
                         rel="noopener noreferrer"
                         className="ml-2 text-[#009EDB] hover:underline"
                       >
-                        (View)
+                        {t.manage.resources.list.viewLink}
                       </a>
                     </>
                   )}
@@ -143,24 +153,22 @@ export default function ResourceList({
                         rel="noopener noreferrer"
                         className="ml-2 text-[#009EDB] hover:underline"
                       >
-                        (Watch)
+                        {t.manage.resources.list.watchLink}
                       </a>
                     </>
                   )}
                 </td>
                 <td className="px-3 py-3">
                   <span
-                    className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${statusClass}`}
+                    className={`inline-block whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ${statusClass}`}
                   >
-                    {String(resource.status)
-                      .charAt(0)
-                      .toUpperCase() + String(resource.status).slice(1)}
+                    {statusLabel}
                   </span>
                 </td>
                 <td className="px-3 py-3">
                   <div className="text-sm">
                     <p className="font-medium text-slate-900">
-                      {String(createdBy?.name || "Unknown")}
+                      {String(createdBy?.name || t.manage.common.unknown)}
                     </p>
                     <p className="text-xs text-slate-500">
                       {String(createdBy?.email || "unknown@example.com")}
@@ -175,9 +183,9 @@ export default function ResourceList({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(resource)}
-                      className="rounded-lg bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70] transition-colors hover:bg-[#009EDB] hover:text-white"
+                      className="whitespace-nowrap rounded-lg bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70] transition-colors hover:bg-[#009EDB] hover:text-white"
                     >
-                      Edit
+                      {t.manage.common.edit}
                     </button>
                     <button
                       onClick={() =>
@@ -187,11 +195,11 @@ export default function ResourceList({
                         )
                       }
                       disabled={deletingId !== null}
-                      className="rounded-lg bg-red-100 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-200 disabled:opacity-50 transition-colors"
+                      className="whitespace-nowrap rounded-lg bg-red-100 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-200 disabled:opacity-50 transition-colors"
                     >
                       {deletingId === String(resource._id)
-                        ? "Deleting..."
-                        : "Delete"}
+                        ? t.manage.common.deleting
+                        : t.manage.common.delete}
                     </button>
                   </div>
                 </td>

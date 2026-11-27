@@ -4,14 +4,15 @@ import { useState } from "react";
 import { createResource, updateResource } from "./actions";
 import Swal from "sweetalert2";
 import { getDashboardActionError } from "@/lib/dashboard/errors";
+import { useLanguage } from "@/context/LanguageContext";
 
 const typeOptions = [
-  { value: "photo", label: "Photo" },
-  { value: "document", label: "Document (PDF/Word/Excel)" },
-  { value: "blog", label: "Blog Post" },
-  { value: "report", label: "Annual Report" },
-  { value: "webinar", label: "Webinar (YouTube)" },
-];
+  { value: "photo" },
+  { value: "document" },
+  { value: "blog" },
+  { value: "report" },
+  { value: "webinar" },
+] as const;
 
 export default function ResourceForm({
   resource,
@@ -20,6 +21,7 @@ export default function ResourceForm({
   resource?: Record<string, unknown> | null;
   onSuccess?: () => void;
 }) {
+  const { t, tr } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [selectedType, setSelectedType] = useState(
     String(resource?.type || "photo")
@@ -45,7 +47,7 @@ export default function ResourceForm({
       if (!result.success) {
         await Swal.fire({
           icon: "error",
-          title: "Could not save resource",
+          title: t.manage.resources.form.saveErrorTitle,
           text: result.error,
         });
         return;
@@ -53,10 +55,10 @@ export default function ResourceForm({
 
       Swal.fire({
         icon: "success",
-        title: resource ? "Resource Updated!" : "Resource Created!",
+        title: resource ? t.manage.resources.form.updatedTitle : t.manage.resources.form.createdTitle,
         text: resource
-          ? "Resource updated successfully"
-          : "New resource created successfully",
+          ? t.manage.resources.alerts.updatedText
+          : t.manage.resources.form.createdText,
         timer: 2000,
       });
 
@@ -65,8 +67,8 @@ export default function ResourceForm({
       console.error("Form error:", error);
       Swal.fire({
         icon: "error",
-        title: "Could not save resource",
-        text: getDashboardActionError(error, "Please try again."),
+        title: t.manage.resources.form.saveErrorTitle,
+        text: getDashboardActionError(error, t.manage.common.tryAgain),
       });
     } finally {
       setLoading(false);
@@ -78,12 +80,12 @@ export default function ResourceForm({
       {/* Title */}
       <div>
         <label className="block text-xs font-semibold text-slate-700 mb-2">
-          Resource Title *
+          {t.manage.resources.form.titleLabel}
         </label>
         <input
           name="title"
           type="text"
-          placeholder="Enter resource title"
+          placeholder={t.manage.resources.form.titlePlaceholder}
           defaultValue={String(resource?.title || "")}
           maxLength={150}
           className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
@@ -94,7 +96,7 @@ export default function ResourceForm({
       {/* Type Selection */}
       <div>
         <label className="block text-xs font-semibold text-slate-700 mb-2">
-          Resource Type *
+          {t.manage.resources.form.typeLabel}
         </label>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
           {typeOptions.map((option) => (
@@ -117,7 +119,7 @@ export default function ResourceForm({
               />
               <div className="text-center">
                 <div className="text-xs font-semibold text-slate-700 mt-1">
-                  {option.label}
+                  {t.manage.resources.types[option.value]}
                 </div>
               </div>
             </label>
@@ -128,11 +130,11 @@ export default function ResourceForm({
       {/* Description */}
       <div>
         <label className="block text-xs font-semibold text-slate-700 mb-2">
-          Description
+          {t.manage.common.description}
         </label>
         <textarea
           name="description"
-          placeholder="Brief description of the resource"
+          placeholder={t.manage.resources.form.descriptionPlaceholder}
           defaultValue={String(resource?.description || "")}
           rows={2}
           className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
@@ -143,12 +145,12 @@ export default function ResourceForm({
       {selectedType === "document" && (
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-2">
-            Upload Document (PDF, Word, Excel, PowerPoint)
+            {t.manage.resources.form.uploadDocLabel}
           </label>
           <input
             name="file"
             type="file"
-            title="Upload document file"
+            title={t.manage.resources.form.uploadDocTitle}
             accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
             onChange={(e) =>
               setFileName(e.target.files?.[0]?.name || "")
@@ -164,11 +166,11 @@ export default function ResourceForm({
       {selectedType === "blog" && (
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-2">
-            Blog Content
+            {t.manage.resources.form.blogContentLabel}
           </label>
           <textarea
             name="content"
-            placeholder="Write your blog content here..."
+            placeholder={t.manage.resources.form.blogContentPlaceholder}
             defaultValue={String(resource?.content || "")}
             rows={4}
             className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
@@ -179,7 +181,7 @@ export default function ResourceForm({
       {selectedType === "webinar" && (
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-2">
-            YouTube Link *
+            {t.manage.resources.form.youtubeLabel}
           </label>
           <input
             name="youtubeLink"
@@ -190,7 +192,7 @@ export default function ResourceForm({
             required={selectedType === "webinar"}
           />
           <p className="text-xs text-slate-500 mt-1">
-            Paste the full YouTube video URL
+            {t.manage.resources.form.youtubeHelp}
           </p>
         </div>
       )}
@@ -198,12 +200,12 @@ export default function ResourceForm({
       {selectedType === "photo" && (
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-2">
-            Upload Photo
+            {t.manage.resources.form.uploadPhotoLabel}
           </label>
           <input
             name="file"
             type="file"
-            title="Upload photo file"
+            title={t.manage.resources.form.uploadPhotoTitle}
             accept="image/*"
             onChange={(e) =>
               setFileName(e.target.files?.[0]?.name || "")
@@ -211,7 +213,7 @@ export default function ResourceForm({
             className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           />
           {fileName && (
-            <p className="text-xs text-[#009EDB] font-medium mt-1">{fileName} selected</p>
+            <p className="text-xs text-[#009EDB] font-medium mt-1">{tr("manage.resources.form.fileSelected", { fileName })}</p>
           )}
         </div>
       )}
@@ -219,12 +221,12 @@ export default function ResourceForm({
       {selectedType === "report" && (
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-2">
-            Upload Report
+            {t.manage.resources.form.uploadReportLabel}
           </label>
           <input
             name="file"
             type="file"
-            title="Upload report file"
+            title={t.manage.resources.form.uploadReportTitle}
             accept=".pdf,.doc,.docx"
             onChange={(e) =>
               setFileName(e.target.files?.[0]?.name || "")
@@ -232,7 +234,7 @@ export default function ResourceForm({
             className="w-full h-11 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           />
           {fileName && (
-            <p className="text-xs text-[#009EDB] font-medium mt-1">{fileName} selected</p>
+            <p className="text-xs text-[#009EDB] font-medium mt-1">{tr("manage.resources.form.fileSelected", { fileName })}</p>
           )}
         </div>
       )}
@@ -240,16 +242,16 @@ export default function ResourceForm({
       {/* Status */}
       <div>
         <label className="block text-xs font-semibold text-slate-700 mb-2">
-          Status
+          {t.manage.common.status}
         </label>
         <select
           name="status"
           defaultValue={String(resource?.status || "draft")}
           className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
-          aria-label="Resource status"
+          aria-label={t.manage.resources.form.statusAria}
         >
-          <option value="draft">Draft</option>
-          <option value="published">Published</option>
+          <option value="draft">{t.manage.common.statuses.draft}</option>
+          <option value="published">{t.manage.common.statuses.published}</option>
         </select>
       </div>
 
@@ -260,10 +262,10 @@ export default function ResourceForm({
         className="w-full rounded-full bg-[#009EDB] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:opacity-50"
       >
         {loading
-          ? "Processing..."
+          ? t.manage.common.processing
           : resource
-            ? "Update Resource"
-            : "+ Add New Resource"}
+            ? t.manage.resources.form.updateButton
+            : t.manage.resources.form.addButton}
       </button>
     </form>
   );

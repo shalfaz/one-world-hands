@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { markMessageAsRead, replyToMessage } from "./actions";
+import { useLanguage } from "@/context/LanguageContext";
 
 export type Message = {
   _id: string;
@@ -21,6 +22,13 @@ export default function MessageList({ messages }: { messages: Message[] }) {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [replyText, setReplyText] = useState("");
   const [saving, setSaving] = useState(false);
+  const { t } = useLanguage();
+
+  const statusLabels: Record<string, string> = {
+    unread: t.dashboard.messages.status.unread,
+    read: t.dashboard.messages.status.read,
+    replied: t.dashboard.messages.status.replied,
+  };
 
   const handleSelect = async (message: Message) => {
     if (saving) return;
@@ -43,8 +51,8 @@ export default function MessageList({ messages }: { messages: Message[] }) {
       console.error("Could not mark message as read:", error);
       await Swal.fire({
         icon: "error",
-        title: "Could not update message",
-        text: error instanceof Error ? error.message : "Please try again.",
+        title: t.dashboard.messages.alerts.updateErrorTitle,
+        text: error instanceof Error ? error.message : t.dashboard.common.tryAgain,
       });
     } finally {
       setSaving(false);
@@ -74,15 +82,15 @@ export default function MessageList({ messages }: { messages: Message[] }) {
       setReplyText("");
       await Swal.fire({
         icon: "success",
-        title: "Reply saved",
-        text: "The reply is saved in the dashboard. It has not been emailed to the sender.",
+        title: t.dashboard.messages.alerts.replySavedTitle,
+        text: t.dashboard.messages.alerts.replySavedText,
       });
     } catch (error) {
       console.error("Could not save message reply:", error);
       await Swal.fire({
         icon: "error",
-        title: "Could not save reply",
-        text: error instanceof Error ? error.message : "Please try again.",
+        title: t.dashboard.messages.alerts.replyErrorTitle,
+        text: error instanceof Error ? error.message : t.dashboard.common.tryAgain,
       });
     } finally {
       setSaving(false);
@@ -95,7 +103,7 @@ export default function MessageList({ messages }: { messages: Message[] }) {
       <div className="rounded-2xl border border-slate-200 overflow-hidden">
         {messageRows.length === 0 ? (
           <div className="p-6 text-center text-slate-600">
-            <p>No messages yet.</p>
+            <p>{t.dashboard.messages.empty}</p>
           </div>
         ) : (
           <div className="divide-y">
@@ -112,7 +120,7 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                     <div className="flex items-center gap-2">
                       <h3 className="font-semibold text-slate-900">{msg.name}</h3>
                       <span
-                        className={`text-xs px-2 py-1 rounded-full ${
+                        className={`whitespace-nowrap text-xs px-2 py-1 rounded-full ${
                           msg.status === "unread"
                             ? "bg-[#EAF6FB] text-[#174A70]"
                             : msg.status === "replied"
@@ -120,7 +128,7 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                             : "bg-gray-200 text-gray-800"
                         }`}
                       >
-                        {msg.status}
+                        {statusLabels[msg.status] ?? msg.status}
                       </span>
                     </div>
                     <p className="text-sm text-slate-600">{msg.email}</p>
@@ -152,7 +160,7 @@ export default function MessageList({ messages }: { messages: Message[] }) {
 
           {selectedMessage.reply && (
             <div className="mt-4 rounded-lg bg-[#EAF6FB] p-3">
-              <p className="text-xs font-semibold text-[#174A70]">Your Reply</p>
+              <p className="text-xs font-semibold text-[#174A70]">{t.dashboard.messages.yourReply}</p>
               <p className="text-sm text-[#475569] whitespace-pre-wrap mt-1">
                 {selectedMessage.reply}
               </p>
@@ -162,7 +170,7 @@ export default function MessageList({ messages }: { messages: Message[] }) {
           <textarea
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
-            placeholder="Type your reply..."
+            placeholder={t.dashboard.messages.replyPlaceholder}
             className="mt-4 w-full rounded-lg border border-slate-200 p-2 text-sm"
             rows={4}
             disabled={saving}
@@ -171,9 +179,9 @@ export default function MessageList({ messages }: { messages: Message[] }) {
           <button
             onClick={handleReply}
             disabled={!replyText.trim() || saving}
-            className="mt-2 w-full rounded-lg bg-[#009EDB] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:bg-slate-300"
+            className="mt-2 w-full whitespace-nowrap rounded-lg bg-[#009EDB] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:bg-slate-300"
           >
-            {saving ? "Saving..." : "Save Reply"}
+            {saving ? t.dashboard.messages.savingReply : t.dashboard.messages.saveReply}
           </button>
         </div>
       )}

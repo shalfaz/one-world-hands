@@ -4,6 +4,7 @@ import { UserActions } from "./UserActions";
 import UserCreateForm from "./UserCreateForm";
 import { requireAdminUser } from "@/lib/auth/admin";
 import { getDashboardActionError } from "@/lib/dashboard/errors";
+import T from "@/components/T";
 
 type UserRecord = {
   _id: string;
@@ -18,6 +19,7 @@ interface PageProps {
 }
 
 const USERS_PER_PAGE = 10;
+const DEFAULT_LOAD_ERROR = "__DEFAULT_USERS_LOAD_ERROR__";
 
 export default async function DashboardUsersPage({ searchParams }: PageProps) {
   const params = await searchParams;
@@ -47,7 +49,7 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
     }));
   } catch (error) {
     console.error("Error fetching users:", error);
-    loadError = getDashboardActionError(error, "Could not load users. Please try again.");
+    loadError = getDashboardActionError(error, DEFAULT_LOAD_ERROR);
   }
 
   const totalPages = Math.ceil(totalUsers / USERS_PER_PAGE);
@@ -56,25 +58,24 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
     <div className="flex min-h-screen" style={{ backgroundColor: "#F7FAFC" }}>
       <div className="w-full">
         <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">Users</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]"><T k="dashboard.users.eyebrow" /></p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70]">
-            User Management
+            <T k="dashboard.users.title" />
           </h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
-            Create employee, volunteer, or admin accounts and manage roles and
-            passwords from one place.
+            <T k="dashboard.users.subtitle" />
           </p>
         </div>
 
         <div className="mt-6 rounded-2xl border border-[#D9E2EC] bg-white p-6">
           <h2 className="text-lg font-semibold text-[#174A70]">
-            Create New User
+            <T k="dashboard.users.createTitle" />
           </h2>
 
           <UserCreateForm />
           {loadError && (
             <p role="alert" className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
-              {loadError}
+              {loadError === DEFAULT_LOAD_ERROR ? <T k="dashboard.users.loadError" /> : loadError}
             </p>
           )}
         </div>
@@ -83,10 +84,10 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-xl font-semibold text-slate-950">
-                Existing Users
+                <T k="dashboard.users.existingTitle" />
               </h2>
               <p className="text-sm text-slate-500">
-                Total users: {totalUsers}
+                <T k="dashboard.users.totalUsers" vars={{ count: totalUsers }} />
               </p>
             </div>
             </div>
@@ -99,10 +100,10 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-slate-200">
-                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Name</th>
-                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Email</th>
-                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Role</th>
-                        <th className="px-4 py-3 text-left font-semibold text-slate-700">Created</th>
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700"><T k="dashboard.users.columns.name" /></th>
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700"><T k="dashboard.users.columns.email" /></th>
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700"><T k="dashboard.users.columns.role" /></th>
+                        <th className="px-4 py-3 text-left font-semibold text-slate-700"><T k="dashboard.users.columns.created" /></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -127,9 +128,9 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
                     {currentPage > 1 && (
                       <a
                         href={`?page=${currentPage - 1}`}
-                        className="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                        className="whitespace-nowrap rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
                       >
-                        Previous
+                        <T k="dashboard.users.pagination.previous" />
                       </a>
                     )}
 
@@ -150,16 +151,16 @@ export default async function DashboardUsersPage({ searchParams }: PageProps) {
                     {currentPage < totalPages && (
                       <a
                         href={`?page=${currentPage + 1}`}
-                        className="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                        className="whitespace-nowrap rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
                       >
-                        Next
+                        <T k="dashboard.users.pagination.next" />
                       </a>
                     )}
                   </div>
                 )}
               </>
             ) : (
-              <p className="text-center text-slate-500 py-8">No users found. Create your first user above.</p>
+              <p className="text-center text-slate-500 py-8"><T k="dashboard.users.empty" /></p>
             )}
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import ResetPasswordForm from './ResetPasswordForm';
 import PageShell from '@/components/PageShell';
+import T from '@/components/T';
 
 export const metadata: Metadata = {
   title: 'Reset Password | One World Hands',
@@ -19,12 +20,12 @@ export default function ResetPasswordPage({ searchParams }: ResetPasswordPagePro
       <PageShell>
         <div className="flex min-h-[65vh] items-center justify-center bg-[#F7FAFC] px-4 py-12">
           <div className="w-full max-w-md rounded-2xl border border-[#D9E2EC] bg-white p-7 text-center sm:p-8">
-            <h1 className="mb-2 text-2xl font-semibold tracking-tight text-[#174A70]">Invalid Reset Link</h1>
+            <h1 className="mb-2 text-2xl font-semibold tracking-tight text-[#174A70]"><T k="auth.resetPassword.invalidTitle" /></h1>
             <p className="mb-6 text-sm leading-6 text-[#627D98]">
-              The password reset link is missing or invalid. Please request a new one.
+              <T k="auth.resetPassword.invalidDescription" />
             </p>
             <a href="/forgot-password" className="font-semibold text-[#174A70] hover:text-[#009EDB]">
-              Request New Reset Link
+              <T k="auth.resetPassword.requestNewLink" />
             </a>
           </div>
         </div>
@@ -37,9 +38,9 @@ export default function ResetPasswordPage({ searchParams }: ResetPasswordPagePro
       <div className="flex min-h-[65vh] items-center justify-center bg-[#F7FAFC] px-4 py-12">
         <div className="w-full max-w-md rounded-2xl border border-[#D9E2EC] bg-white p-7 sm:p-8">
           <div className="text-center mb-8">
-            <h1 className="mb-2 text-3xl font-semibold tracking-tight text-[#174A70]">Reset Password</h1>
+            <h1 className="mb-2 text-3xl font-semibold tracking-tight text-[#174A70]"><T k="auth.resetPassword.title" /></h1>
             <p className="text-sm leading-6 text-[#627D98]">
-              Enter your new password below.
+              <T k="auth.resetPassword.subtitle" />
             </p>
           </div>
 
@@ -47,7 +48,7 @@ export default function ResetPasswordPage({ searchParams }: ResetPasswordPagePro
 
           <div className="mt-6 text-center">
             <a href="/login" className="text-sm font-semibold text-[#174A70] hover:text-[#009EDB]">
-              Back to Sign In
+              <T k="auth.resetPassword.backToSignIn" />
             </a>
           </div>
         </div>

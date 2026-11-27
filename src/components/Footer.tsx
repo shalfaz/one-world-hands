@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   FaEnvelope,
   FaFacebook,
@@ -10,29 +13,29 @@ import {
 } from "react-icons/fa6";
 
 const quickLinks = [
-  ["Home", "/"],
-  ["About us", "/about-us"],
-  ["Programs", "/programs"],
-  ["Donation funds", "/donation-funds"],
-  ["Resources", "/resources"],
-  ["Updates", "/updates"],
-  ["Contact", "/contact"],
+  ["home", "/"],
+  ["aboutUs", "/about-us"],
+  ["programs", "/programs"],
+  ["donationFunds", "/donation-funds"],
+  ["resources", "/resources"],
+  ["updates", "/updates"],
+  ["contact", "/contact"],
 ] as const;
 
 const programLinks = [
-  ["Food assistance", "/programs#food-assistance"],
-  ["Emergency relief", "/programs#emergency-relief"],
-  ["Medical assistance", "/programs#medical-assistance"],
-  ["Winter support", "/programs#winter-support"],
-  ["Education support", "/programs#education-support"],
+  ["foodAssistance", "/programs#food-assistance"],
+  ["emergencyRelief", "/programs#emergency-relief"],
+  ["medicalAssistance", "/programs#medical-assistance"],
+  ["winterSupport", "/programs#winter-support"],
+  ["educationSupport", "/programs#education-support"],
 ] as const;
 
 const fundLinks = [
-  ["Hunger relief", "/donation-funds#hunger-relief"],
-  ["Emergency relief", "/donation-funds#emergency-relief"],
-  ["Medical aid", "/donation-funds#medical-aid"],
-  ["Winter support", "/donation-funds#winter-support"],
-  ["General donation", "/donation-funds#general-donation"],
+  ["hungerRelief", "/donation-funds#hunger-relief"],
+  ["emergencyRelief", "/donation-funds#emergency-relief"],
+  ["medicalAid", "/donation-funds#medical-aid"],
+  ["winterSupport", "/donation-funds#winter-support"],
+  ["generalDonation", "/donation-funds#general-donation"],
 ] as const;
 
 const socialLinks = [
@@ -73,7 +76,7 @@ function FooterLinks({
           <li className="pt-1">
             <Link
               href={moreHref}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#EAF6FB] transition-colors hover:text-white"
+              className="inline-flex items-center gap-2 whitespace-nowrap text-sm font-semibold text-[#EAF6FB] transition-colors hover:text-white"
             >
               {moreLabel} <span aria-hidden="true">→</span>
             </Link>
@@ -85,39 +88,48 @@ function FooterLinks({
 }
 
 export default function Footer() {
+  const { t } = useLanguage();
+  const quickLinkItems = quickLinks.map(
+    ([key, href]) => [t.footer.exploreLinks[key], href] as const
+  );
+  const programLinkItems = programLinks.map(
+    ([key, href]) => [t.footer.programLinks[key], href] as const
+  );
+  const fundLinkItems = fundLinks.map(
+    ([key, href]) => [t.footer.fundLinks[key], href] as const
+  );
+
   return (
     <footer className="border-t border-white/10 bg-[#174A70] text-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.9fr_0.9fr_1.2fr] lg:gap-8">
           <div className="max-w-sm">
-            <p className="text-lg font-semibold tracking-tight">One World Hands</p>
+            <p className="text-lg font-semibold tracking-tight">{t.footer.brand}</p>
             <p className="mt-4 text-sm leading-6 text-white/75">
-              For the world, with a magic touch. We empower individuals and
-              support communities through education, direct action, and
-              collaboration.
+              {t.footer.tagline1}
             </p>
             <p className="mt-4 text-sm leading-6 text-white/75">
-              A global initiative for humanity, unity, and hope.
+              {t.footer.tagline2}
             </p>
           </div>
 
-          <FooterLinks title="Explore" links={quickLinks} />
+          <FooterLinks title={t.footer.explore} links={quickLinkItems} />
           <FooterLinks
-            title="Programs"
-            links={programLinks}
+            title={t.footer.programs}
+            links={programLinkItems}
             moreHref="/programs"
-            moreLabel="All programs"
+            moreLabel={t.footer.allPrograms}
           />
           <FooterLinks
-            title="Donation funds"
-            links={fundLinks}
+            title={t.footer.donationFunds}
+            links={fundLinkItems}
             moreHref="/donation-funds"
-            moreLabel="All funds"
+            moreLabel={t.footer.allFunds}
           />
 
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
-              Contact
+              {t.footer.contact}
             </h2>
             <ul className="mt-5 space-y-4 text-sm text-white/80">
               <li className="flex items-start gap-3">
@@ -134,12 +146,12 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <FaMapPin className="mt-0.5 shrink-0 text-[#EAF6FB]" aria-hidden="true" />
-                <span>City, Country</span>
+                <span>{t.footer.cityCountry}</span>
               </li>
             </ul>
 
             <h3 className="mt-7 text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
-              Follow our work
+              {t.footer.followOurWork}
             </h3>
             <div className="mt-3 flex gap-2">
               {socialLinks.map(({ label, href, icon: Icon }) => (
@@ -160,14 +172,14 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-white/15 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} One World Hands. All rights reserved.
+            {t.footer.rights.replace("{year}", String(new Date().getFullYear()))}
           </p>
           <div className="flex gap-6">
             <Link href="/privacy" className="transition-colors hover:text-white">
-              Privacy
+              {t.footer.privacy}
             </Link>
             <Link href="/contact" className="transition-colors hover:text-white">
-              Contact
+              {t.footer.contact}
             </Link>
           </div>
         </div>

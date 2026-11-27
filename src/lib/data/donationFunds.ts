@@ -248,7 +248,7 @@ export const DONATION_FUNDS: DonationFundRecord[] = [
 
 export async function getQuickDonationFunds() {
   const funds = await getPublicDonationFunds();
-  return funds.map(({ id, name }) => ({ id, name }));
+  return funds.map(({ id, slug, name }) => ({ id, slug, name }));
 }
 
 export async function getPublicDonationFunds(): Promise<DonationFundRecord[]> {

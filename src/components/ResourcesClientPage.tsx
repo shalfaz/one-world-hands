@@ -3,16 +3,21 @@
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import ResourceCard from "@/components/ResourceCard";
+import {
+  useLanguage,
+  type Dictionary,
+  type TranslationKey,
+} from "@/context/LanguageContext";
 
-const resourceTypes = [
-  { label: "All resources", value: "all" },
-  { label: "Photo", value: "photo" },
-  { label: "Video", value: "video" },
-  { label: "Blogs", value: "blog" },
-  { label: "Annual Report", value: "annual report" },
-  { label: "Publications", value: "publication" },
-  { label: "Webinar", value: "webinar" },
-  { label: "Document", value: "document" },
+const resourceTypes: { labelKey: TranslationKey; value: string }[] = [
+  { labelKey: "resources.filters.all", value: "all" },
+  { labelKey: "resources.filters.photo", value: "photo" },
+  { labelKey: "resources.filters.video", value: "video" },
+  { labelKey: "resources.filters.blog", value: "blog" },
+  { labelKey: "resources.filters.annualReport", value: "annual report" },
+  { labelKey: "resources.filters.publication", value: "publication" },
+  { labelKey: "resources.filters.webinar", value: "webinar" },
+  { labelKey: "resources.filters.document", value: "document" },
 ];
 
 
@@ -39,7 +44,7 @@ function getAccent() {
   };
 }
 
-function mapDbResourceToCard(resource: SupabaseResource) {
+function mapDbResourceToCard(resource: SupabaseResource, t: Dictionary) {
   const urls =
     Array.isArray(resource.file_urls) && resource.file_urls.length > 0
       ? resource.file_urls
@@ -60,14 +65,14 @@ function mapDbResourceToCard(resource: SupabaseResource) {
     title: resource.title,
     description:
       type === "Photo"
-        ? "Uploaded photo resource from the dashboard."
+        ? t.resources.defaultDescriptions.photo
         : type === "Video"
-        ? "Uploaded video resource from the dashboard."
+        ? t.resources.defaultDescriptions.video
         : type === "Blog"
-        ? "Published blog resource from the dashboard."
+        ? t.resources.defaultDescriptions.blog
         : type === "Webinar"
-        ? "Webinar resource uploaded and managed from the dashboard."
-        : "Uploaded document or publication resource from the dashboard.",
+        ? t.resources.defaultDescriptions.webinar
+        : t.resources.defaultDescriptions.document,
     category: type.toUpperCase(),
     type: type.toLowerCase(),
     topic: "All",
@@ -82,6 +87,7 @@ export default function ResourcesClientPage({
   resources,
   error = false,
 }: ResourcesClientPageProps) {
+  const { t, tr } = useLanguage();
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
 
@@ -110,8 +116,8 @@ export default function ResourcesClientPage({
   }, [searchParams]);
 
   const normalizedResources = useMemo(() => {
-    return resources.map(mapDbResourceToCard);
-  }, [resources]);
+    return resources.map((resource) => mapDbResourceToCard(resource, t));
+  }, [resources, t]);
 
   const filteredResources = useMemo(() => {
     return normalizedResources.filter((item) => {
@@ -131,19 +137,18 @@ export default function ResourcesClientPage({
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <section className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
-          Learning and transparency
+          {t.resources.hero.eyebrow}
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
-          Resources
+          {t.resources.hero.title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-[#475569]">
-          Explore reports, publications, learning notes, and media from One
-          World Hands programs.
+          {t.resources.hero.description}
         </p>
       </section>
 
       <div className="mt-10">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter resources by type">
+        <div className="flex flex-wrap gap-2" role="group" aria-label={t.resources.filters.ariaLabel}>
           {resourceTypes.map((type) => {
             const isActive = activeType === type.value;
 
@@ -153,13 +158,13 @@ export default function ResourcesClientPage({
                 type="button"
                 onClick={() => setActiveType(type.value)}
                 className={[
-                  "flex min-w-0 items-center justify-center rounded-full border px-4 py-2.5 text-center text-sm font-medium transition-colors",
+                  "flex min-w-0 items-center justify-center whitespace-nowrap rounded-full border px-4 py-2.5 text-center text-sm font-medium transition-colors",
                   isActive
                     ? "border-[#009EDB] bg-[#009EDB] text-white"
                     : "border-[#D9E2EC] bg-white text-[#475569] hover:border-[#009EDB] hover:bg-[#EAF6FB]",
                 ].join(" ")}
               >
-                {type.label}
+                {tr(type.labelKey)}
               </button>
             );
           })}
@@ -169,7 +174,7 @@ export default function ResourcesClientPage({
       <div className="mt-8">
         {error && (
           <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            Failed to load resources from database.
+            {t.resources.error.loadFailed}
           </div>
         )}
 
@@ -192,10 +197,10 @@ export default function ResourcesClientPage({
           ) : (
             <div className="col-span-full rounded-2xl border border-dashed border-[#D9E2EC] bg-white p-10 text-center">
               <h2 className="text-lg font-semibold text-neutral-900">
-                No resources found
+                {t.resources.empty.title}
               </h2>
               <p className="mt-2 text-sm leading-6 text-neutral-600">
-                Try changing the type filter.
+                {t.resources.empty.description}
               </p>
             </div>
           )}

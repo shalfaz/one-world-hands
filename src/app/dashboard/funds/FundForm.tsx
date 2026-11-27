@@ -5,6 +5,7 @@ import { createFund, updateFund } from "./actions";
 import Swal from "sweetalert2";
 import AdminImageField from "@/components/AdminImageField";
 import { getDashboardActionError } from "@/lib/dashboard/errors";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function FundForm({
   fund,
@@ -13,6 +14,7 @@ export default function FundForm({
   fund?: Record<string, unknown> | null;
   onSuccess?: () => void;
 }) {
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
 
@@ -35,7 +37,7 @@ export default function FundForm({
       if (!result.success) {
         await Swal.fire({
           icon: "error",
-          title: "Could not save fund",
+          title: t.manage.funds.form.saveErrorTitle,
           text: result.error,
         });
         return;
@@ -43,8 +45,8 @@ export default function FundForm({
 
       Swal.fire({
         icon: "success",
-        title: fund ? "Fund Updated!" : "Fund Created!",
-        text: fund ? "Fund updated successfully" : "New fund created successfully",
+        title: fund ? t.manage.funds.form.updatedTitle : t.manage.funds.form.createdTitle,
+        text: fund ? t.manage.funds.alerts.updatedText : t.manage.funds.form.createdText,
         timer: 2000,
       });
 
@@ -53,8 +55,8 @@ export default function FundForm({
       console.error("Form error:", error);
       Swal.fire({
         icon: "error",
-        title: "Could not save fund",
-        text: getDashboardActionError(error, "Please try again."),
+        title: t.manage.funds.form.saveErrorTitle,
+        text: getDashboardActionError(error, t.manage.common.tryAgain),
       });
     } finally {
       setLoading(false);
@@ -68,7 +70,7 @@ export default function FundForm({
         <input
           name="name"
           type="text"
-          placeholder="Fund name"
+          placeholder={t.manage.funds.form.namePlaceholder}
           defaultValue={String(fund?.name || "")}
           maxLength={100}
           className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
@@ -80,21 +82,21 @@ export default function FundForm({
           defaultValue={String(fund?.category || "")}
           className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
           required
-          aria-label="Fund category"
+          aria-label={t.manage.funds.form.categoryAria}
         >
-          <option value="">Select Category</option>
-          <option value="education">Education</option>
-          <option value="health">Health</option>
-          <option value="emergency">Emergency</option>
-          <option value="community">Community</option>
-          <option value="livelihood">Livelihood</option>
-          <option value="other">Other</option>
+          <option value="">{t.manage.common.selectCategory}</option>
+          <option value="education">{t.manage.common.categories.education}</option>
+          <option value="health">{t.manage.common.categories.health}</option>
+          <option value="emergency">{t.manage.common.categories.emergency}</option>
+          <option value="community">{t.manage.common.categories.community}</option>
+          <option value="livelihood">{t.manage.common.categories.livelihood}</option>
+          <option value="other">{t.manage.common.categories.other}</option>
         </select>
 
         <input
           name="targetAmount"
           type="number"
-          placeholder="Target amount (BDT)"
+          placeholder={t.manage.funds.form.targetPlaceholder}
           defaultValue={Number(fund?.targetAmount || 0)}
           min="0"
           className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
@@ -104,20 +106,20 @@ export default function FundForm({
           name="status"
           defaultValue={String(fund?.status || "draft")}
           className="h-11 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
-          aria-label="Fund status"
+          aria-label={t.manage.funds.form.statusAria}
         >
-          <option value="draft">Draft</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-          <option value="paused">Paused</option>
-          <option value="completed">Completed</option>
-          <option value="archived">Archived</option>
+          <option value="draft">{t.manage.common.statuses.draft}</option>
+          <option value="active">{t.manage.common.statuses.active}</option>
+          <option value="inactive">{t.manage.common.statuses.inactive}</option>
+          <option value="paused">{t.manage.common.statuses.paused}</option>
+          <option value="completed">{t.manage.common.statuses.completed}</option>
+          <option value="archived">{t.manage.common.statuses.archived}</option>
         </select>
 
         <div className="md:col-span-2 xl:col-span-4">
           <textarea
             name="description"
-            placeholder="Description"
+            placeholder={t.manage.common.description}
             defaultValue={String(fund?.description || "")}
             rows={2}
             className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
@@ -126,13 +128,13 @@ export default function FundForm({
 
         <label className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 md:col-span-2 xl:col-span-4">
           <input name="published" type="checkbox" value="true" defaultChecked={Boolean(fund?.published ?? fund?.status === "active")} className="h-4 w-4 rounded border-slate-300 text-[#009EDB]" />
-          Published on the website
+          {t.manage.common.publishedOnWebsite}
         </label>
 
         <div className="md:col-span-2 xl:col-span-4">
           <textarea
             name="impactSummary"
-            placeholder="Impact summary"
+            placeholder={t.manage.funds.form.impactPlaceholder}
             defaultValue={String(fund?.impactSummary || "")}
             rows={2}
             className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#009EDB]"
@@ -146,12 +148,12 @@ export default function FundForm({
             className="w-full rounded-full bg-[#009EDB] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] disabled:opacity-50"
           >
             {loading
-              ? "Processing..."
+              ? t.manage.common.processing
               : imageUploading
-                ? "Uploading image..."
+                ? t.manage.common.uploadingImage
               : fund
-                ? "Update Fund"
-                : "+ Add New Fund"}
+                ? t.manage.funds.form.updateButton
+                : t.manage.funds.form.addButton}
           </button>
         </div>
       </div>

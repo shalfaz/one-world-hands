@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import ForgotPasswordForm from './ForgotPasswordForm';
 import PageShell from '@/components/PageShell';
+import T from '@/components/T';
 
 export const metadata: Metadata = {
   title: 'Forgot Password | One World Hands',
@@ -13,9 +14,9 @@ export default function ForgotPasswordPage() {
       <div className="flex min-h-[65vh] items-center justify-center bg-[#F7FAFC] px-4 py-12">
         <div className="w-full max-w-md rounded-2xl border border-[#D9E2EC] bg-white p-7 sm:p-8">
           <div className="text-center mb-8">
-            <h1 className="mb-2 text-3xl font-semibold tracking-tight text-[#174A70]">Forgot Password?</h1>
+            <h1 className="mb-2 text-3xl font-semibold tracking-tight text-[#174A70]"><T k="auth.forgotPassword.title" /></h1>
             <p className="text-sm leading-6 text-[#627D98]">
-              Enter your email address and we&apos;ll send you a link to reset your password.
+              <T k="auth.forgotPassword.subtitle" />
             </p>
           </div>
 
@@ -23,16 +24,16 @@ export default function ForgotPasswordPage() {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-[#627D98]">
-              Remember your password?{' '}
+              <T k="auth.forgotPassword.rememberPassword" />{' '}
               <a href="/login" className="font-semibold text-[#174A70] hover:text-[#009EDB]">
-                Sign in here
+                <T k="auth.forgotPassword.signInHere" />
               </a>
             </p>
           </div>
 
           <div className="mt-6 rounded-lg border border-[#D9E2EC] bg-[#F7FAFC] p-4">
             <p className="text-sm leading-6 text-[#475569]">
-              <strong>Demo:</strong> Use your registered email address. A reset link will be sent to your inbox.
+              <strong><T k="auth.forgotPassword.demoLabel" /></strong> <T k="auth.forgotPassword.demoText" />
             </p>
           </div>
         </div>

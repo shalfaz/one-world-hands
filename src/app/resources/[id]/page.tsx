@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageShell from "@/components/PageShell";
+import T from "@/components/T";
+import {
+  RelatedResourcesHeading,
+  ResourceTypeLabel,
+} from "@/components/i18n/ProgramsHelpers";
 import { getPublishedResources } from "@/lib/services/resourceService";
 import React from "react";
 import {
@@ -87,7 +92,7 @@ export default async function ResourceDetailPage({
           href="/resources"
           className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#174A70] transition-colors hover:text-[#009EDB]"
         >
-          ← Back to Resources
+          <T k="resources.detail.backToResources" />
         </Link>
 
         {/* Main Content */}
@@ -98,8 +103,8 @@ export default async function ResourceDetailPage({
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#009EDB] shadow-sm">
                 <ResourceIcon aria-hidden="true" className="text-lg" />
               </span>
-              <div className={`rounded-full px-3 py-1.5 text-xs font-semibold ${colors.bg} ${colors.text}`}>
-                {type.charAt(0).toUpperCase() + type.slice(1)}
+              <div className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold ${colors.bg} ${colors.text}`}>
+                <ResourceTypeLabel type={type} />
               </div>
             </div>
             <h1 className="text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
@@ -110,13 +115,13 @@ export default async function ResourceDetailPage({
           {/* Meta Information */}
           <div className="mb-8 grid gap-3 md:grid-cols-2">
             <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Created by</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500"><T k="resources.detail.createdBy" /></p>
               <p className="mt-2 text-sm font-medium text-neutral-900">
-                {String(createdBy?.name || "One World Hands")}
+                {createdBy?.name ? String(createdBy.name) : <T k="resources.detail.defaultOrg" />}
               </p>
             </div>
             <div className="rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Published</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500"><T k="resources.detail.published" /></p>
               <p className="mt-2 text-sm font-medium text-neutral-900">
                 {createdDate.toLocaleDateString("en-US", {
                   year: "numeric",
@@ -131,7 +136,7 @@ export default async function ResourceDetailPage({
           {resource.description && (
             <section className="mb-10">
               <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#174A70]">
-                About This Resource
+                <T k="resources.detail.aboutTitle" />
               </h2>
               <p className="text-base leading-7 text-[#475569] whitespace-pre-wrap">
                 {String(resource.description)}
@@ -143,7 +148,7 @@ export default async function ResourceDetailPage({
           {type === "blog" && resource.content && (
             <section className="mb-10 rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-6 sm:p-8">
               <h2 className="mb-4 text-xl font-semibold tracking-tight text-[#174A70]">
-                Blog Content
+                <T k="resources.detail.blogContentTitle" />
               </h2>
               <div className="prose prose-neutral max-w-none">
                 <p className="text-neutral-700 leading-relaxed whitespace-pre-wrap">
@@ -158,19 +163,33 @@ export default async function ResourceDetailPage({
             <section className="mb-10 rounded-xl border border-[#D9E2EC] bg-[#F7FAFC] p-6 sm:p-8">
               <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold tracking-tight text-[#174A70]">
                 <FaFileArrowDown aria-hidden="true" className="text-[#009EDB]" />
-                Download Document
+                <T k="resources.detail.downloadDocumentTitle" />
               </h2>
               <p className="text-neutral-700 mb-4">
-                Access the {String(resource.fileType || "document").toUpperCase()} file:
+                {resource.fileType ? (
+                  <T
+                    k="resources.detail.accessFile"
+                    vars={{ fileType: String(resource.fileType).toUpperCase() }}
+                  />
+                ) : (
+                  <T k="resources.detail.accessDocumentFile" />
+                )}
               </p>
               <a
                 href={String(resource.fileUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be]"
+                className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-[#009EDB] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0088be]"
               >
-                Download {String(resource.fileType || "File").toUpperCase()}
+                {resource.fileType ? (
+                  <T
+                    k="resources.detail.downloadFileType"
+                    vars={{ fileType: String(resource.fileType).toUpperCase() }}
+                  />
+                ) : (
+                  <T k="resources.detail.downloadFile" />
+                )}
               </a>
             </section>
           )}
@@ -179,7 +198,7 @@ export default async function ResourceDetailPage({
           {type === "webinar" && resource.youtubeLink && (
             <section className="mb-10 overflow-hidden rounded-xl border border-[#D9E2EC]">
               <h2 className="mb-4 px-6 pt-6 text-xl font-semibold tracking-tight text-[#174A70] sm:px-8 sm:pt-8">
-                Watch Webinar
+                <T k="resources.detail.watchWebinar" />
               </h2>
               <div className="relative h-0 w-full overflow-hidden pb-[56.25%]">
                 <iframe
@@ -197,7 +216,7 @@ export default async function ResourceDetailPage({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-semibold text-[#174A70] hover:text-[#009EDB]"
                 >
-                  Watch on YouTube →
+                  <T k="resources.detail.watchOnYouTube" />
                 </a>
               </div>
             </section>
@@ -207,7 +226,7 @@ export default async function ResourceDetailPage({
           {type === "photo" && resource.fileUrl && (
             <section className="mb-10">
               <h2 className="mb-4 text-xl font-semibold tracking-tight text-[#174A70]">
-                Photo Gallery
+                <T k="resources.detail.photoGallery" />
               </h2>
               <div className="overflow-hidden rounded-xl border border-[#D9E2EC]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -223,16 +242,15 @@ export default async function ResourceDetailPage({
 
           {/* CTA Section */}
           <section className="mb-10 rounded-xl bg-[#174A70] p-6 text-white sm:p-8">
-            <h2 className="mb-3 text-xl font-semibold">Learn More About Our Work</h2>
+            <h2 className="mb-3 text-xl font-semibold"><T k="resources.detail.ctaTitle" /></h2>
             <p className="mb-6 max-w-2xl text-sm leading-6 text-white/75">
-              Explore more resources and discover how we&apos;re making an impact in
-              communities worldwide.
+              <T k="resources.detail.ctaDescription" />
             </p>
             <Link
               href="/resources"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#EAF6FB] px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-white"
+              className="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#EAF6FB] px-6 text-sm font-semibold text-[#174A70] transition-colors hover:bg-white"
             >
-              Browse All Resources <FaArrowRight aria-hidden="true" className="text-xs" />
+              <T k="resources.detail.browseAll" /> <FaArrowRight aria-hidden="true" className="text-xs" />
             </Link>
           </section>
         </article>
@@ -241,7 +259,7 @@ export default async function ResourceDetailPage({
         {relatedResources.length > 0 && (
           <section className="mt-12">
             <h2 className="mb-6 text-2xl font-semibold tracking-tight text-[#174A70]">
-              Related {type.charAt(0).toUpperCase() + type.slice(1)}s
+              <RelatedResourcesHeading type={type} />
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {relatedResources.map((relatedResource) => (
@@ -269,9 +287,9 @@ export default async function ResourceDetailPage({
         <div className="mt-12 text-center">
           <Link
             href="/resources"
-            className="inline-flex items-center gap-2 rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
+            className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[#D9E2EC] bg-white px-6 py-3 text-sm font-semibold text-[#174A70] transition-colors hover:border-[#009EDB] hover:bg-[#EAF6FB]"
           >
-            ← Explore All Resources
+            <T k="resources.detail.exploreAll" />
           </Link>
         </div>
       </div>

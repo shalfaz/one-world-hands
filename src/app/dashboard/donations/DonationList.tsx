@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { updateDonationStatus } from "./actions";
+import { useLanguage } from "@/context/LanguageContext";
 
 type Donation = {
   _id: string;
@@ -30,6 +31,23 @@ export default function DonationList({
 }) {
   const [rows, setRows] = useState(donations);
   const [savingId, setSavingId] = useState<string | null>(null);
+  const { t, tr } = useLanguage();
+
+  const statusLabels: Record<string, string> = {
+    pending: t.dashboard.status.pending,
+    completed: t.dashboard.status.completed,
+    failed: t.dashboard.status.failed,
+    refunded: t.dashboard.status.refunded,
+  };
+
+  const paymentMethodLabels: Record<string, string> = {
+    bkash: t.dashboard.donations.paymentMethods.bkash,
+    nagad: t.dashboard.donations.paymentMethods.nagad,
+    card: t.dashboard.donations.paymentMethods.card,
+    bank: t.dashboard.donations.paymentMethods.bank,
+    cash: t.dashboard.donations.paymentMethods.cash,
+    rocket: t.dashboard.donations.paymentMethods.rocket,
+  };
 
   const handleStatusChange = async (donationId: string, status: Donation["status"]) => {
     const previousStatus = rows.find((row) => row._id === donationId)?.status;
@@ -47,8 +65,10 @@ export default function DonationList({
       );
       await Swal.fire({
         icon: "success",
-        title: "Donation updated",
-        text: `Status changed to ${status}.`,
+        title: t.dashboard.donations.alerts.updatedTitle,
+        text: tr("dashboard.donations.alerts.updatedText", {
+          status: statusLabels[status] ?? status,
+        }),
         timer: 1600,
         showConfirmButton: false,
       });
@@ -56,8 +76,8 @@ export default function DonationList({
       console.error("Donation status update error:", error);
       await Swal.fire({
         icon: "error",
-        title: "Could not update donation",
-        text: error instanceof Error ? error.message : "Please try again.",
+        title: t.dashboard.donations.alerts.updateErrorTitle,
+        text: error instanceof Error ? error.message : t.dashboard.common.tryAgain,
       });
     } finally {
       setSavingId(null);
@@ -65,7 +85,7 @@ export default function DonationList({
   };
 
   if (!rows.length) {
-    return <p className="py-8 text-center text-slate-500">No donations found.</p>;
+    return <p className="py-8 text-center text-slate-500">{t.dashboard.donations.empty}</p>;
   }
 
   return (
@@ -73,14 +93,14 @@ export default function DonationList({
       <table className="min-w-full text-sm">
         <thead>
           <tr className="border-b border-slate-200 text-left text-slate-500">
-            <th className="px-3 py-3">ID</th>
-            <th className="px-3 py-3">Name</th>
-            <th className="px-3 py-3">Email / Contact</th>
-            <th className="px-3 py-3">Fund</th>
-            <th className="px-3 py-3">Amount</th>
-            <th className="px-3 py-3">Payment</th>
-            <th className="px-3 py-3">Status</th>
-            <th className="px-3 py-3">Date</th>
+            <th className="px-3 py-3">{t.dashboard.donations.columns.id}</th>
+            <th className="px-3 py-3">{t.dashboard.donations.columns.name}</th>
+            <th className="px-3 py-3">{t.dashboard.donations.columns.emailContact}</th>
+            <th className="px-3 py-3">{t.dashboard.donations.columns.fund}</th>
+            <th className="px-3 py-3">{t.dashboard.donations.columns.amount}</th>
+            <th className="px-3 py-3">{t.dashboard.donations.columns.payment}</th>
+            <th className="px-3 py-3">{t.dashboard.donations.columns.status}</th>
+            <th className="px-3 py-3">{t.dashboard.donations.columns.date}</th>
           </tr>
         </thead>
         <tbody>
@@ -95,16 +115,16 @@ export default function DonationList({
               <td className="px-3 py-3 text-slate-600">
                 {donation.email || donation.contact || "-"}
               </td>
-              <td className="px-3 py-3 text-slate-600">{donation.fundName}</td>
+              <td className="px-3 py-3 text-slate-600">{donation.fundName || t.dashboard.donations.generalFund}</td>
               <td className="px-3 py-3 font-semibold text-slate-900">
                 ৳ {donation.amount.toLocaleString()}
               </td>
               <td className="px-3 py-3 capitalize text-slate-600">
-                {donation.paymentMethod}
+                {paymentMethodLabels[donation.paymentMethod.toLowerCase()] ?? donation.paymentMethod}
               </td>
               <td className="px-3 py-3">
                 <select
-                  aria-label={`Status for donation ${donation._id}`}
+                  aria-label={tr("dashboard.donations.statusAriaLabel", { id: donation._id })}
                   value={donation.status}
                   disabled={savingId !== null}
                   onChange={(event) =>
@@ -117,12 +137,12 @@ export default function DonationList({
                 >
                   {donationStatuses.map((status) => (
                     <option key={status} value={status}>
-                      {status}
+                      {statusLabels[status] ?? status}
                     </option>
                   ))}
                 </select>
                 {savingId === donation._id && (
-                  <span className="ml-2 text-xs text-slate-500">Saving…</span>
+                  <span className="ml-2 text-xs text-slate-500">{t.dashboard.donations.saving}</span>
                 )}
               </td>
               <td className="px-3 py-3 text-slate-500">

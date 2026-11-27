@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import HomeDonationFundsSection from "@/components/HomeDonationFundsSection";
+import T from "@/components/T";
 import { FaArrowRight, FaBullhorn } from "react-icons/fa6";
 
 export const metadata = {
@@ -15,14 +16,13 @@ export default function UpdatesPage() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <section className="rounded-2xl border border-[#D9E2EC] bg-white p-6 sm:p-10">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#174A70]">
-            News and progress
+            <T k="updates.hero.eyebrow" />
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#174A70] sm:text-4xl">
-            Updates
+            <T k="updates.hero.title" />
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-[#475569]">
-            Notices, campaign progress, and announcements shared transparently
-            with our community.
+            <T k="updates.hero.subtitle" />
           </p>
         </section>
 
@@ -31,17 +31,16 @@ export default function UpdatesPage() {
             <FaBullhorn aria-hidden="true" />
           </span>
           <h2 className="mt-5 text-lg font-semibold text-[#174A70]">
-            No updates to share just yet
+            <T k="updates.empty.title" />
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#627D98]">
-            We’ll share campaign progress and announcements here as they become
-            available. In the meantime, explore our programs and resources.
+            <T k="updates.empty.body" />
           </p>
           <Link
             href="/programs"
-            className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#174A70] hover:text-[#009EDB]"
+            className="mt-5 inline-flex items-center gap-2 whitespace-nowrap text-sm font-semibold text-[#174A70] hover:text-[#009EDB]"
           >
-            Explore programs <FaArrowRight aria-hidden="true" className="text-xs" />
+            <T k="updates.empty.cta" /> <FaArrowRight aria-hidden="true" className="text-xs" />
           </Link>
         </div>
       </div>

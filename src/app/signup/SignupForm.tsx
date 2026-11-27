@@ -3,8 +3,11 @@
 import Swal from "sweetalert2";
 import { signupUser } from "./actions";
 import { FormEvent } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function SignupForm() {
+  const { t } = useLanguage();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -15,8 +18,8 @@ export function SignupForm() {
 
     if (!terms) {
       Swal.fire({
-        title: "Agreement Required",
-        text: "Please agree to the Terms & Conditions",
+        title: t.auth.signup.alerts.agreementTitle,
+        text: t.auth.signup.alerts.agreementText,
         icon: "warning",
       });
       return;
@@ -24,7 +27,7 @@ export function SignupForm() {
 
     // Show loading
     Swal.fire({
-      title: "Creating your account...",
+      title: t.auth.signup.alerts.creatingTitle,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -35,8 +38,8 @@ export function SignupForm() {
       await signupUser(formData);
     } catch (error) {
       Swal.fire({
-        title: "Error!",
-        text: "Failed to create account",
+        title: t.auth.signup.alerts.errorTitle,
+        text: t.auth.signup.alerts.errorText,
         icon: "error",
       });
     }
@@ -49,13 +52,13 @@ export function SignupForm() {
           htmlFor="name"
           className="mb-2 block text-sm font-semibold text-slate-900"
         >
-          Full Name
+          {t.auth.fields.fullName}
         </label>
         <input
           id="name"
           name="name"
           type="text"
-          placeholder="John Doe"
+          placeholder={t.auth.placeholders.fullName}
           className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
           required
         />
@@ -66,18 +69,18 @@ export function SignupForm() {
           htmlFor="email"
           className="mb-2 block text-sm font-semibold text-slate-900"
         >
-          Email Address
+          {t.auth.fields.emailAddress}
         </label>
         <input
           id="email"
           name="email"
           type="email"
-          placeholder="you@example.com"
+          placeholder={t.auth.placeholders.emailExample}
           className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
           required
         />
         <p className="mt-1 text-xs text-slate-500">
-          We&apos;ll never share your email with anyone else.
+          {t.auth.signup.emailHelper}
         </p>
       </div>
 
@@ -86,18 +89,18 @@ export function SignupForm() {
           htmlFor="password"
           className="mb-2 block text-sm font-semibold text-slate-900"
         >
-          Password
+          {t.auth.fields.password}
         </label>
         <input
           id="password"
           name="password"
           type="password"
-          placeholder="At least 8 characters"
+          placeholder={t.auth.placeholders.passwordMin}
           className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
           required
         />
         <p className="mt-1 text-xs text-slate-500">
-          Use uppercase, numbers, and special characters for security.
+          {t.auth.signup.passwordHelper}
         </p>
       </div>
 
@@ -106,13 +109,13 @@ export function SignupForm() {
           htmlFor="confirmPassword"
           className="mb-2 block text-sm font-semibold text-slate-900"
         >
-          Confirm Password
+          {t.auth.fields.confirmPassword}
         </label>
         <input
           id="confirmPassword"
           name="confirmPassword"
           type="password"
-          placeholder="Confirm your password"
+          placeholder={t.auth.placeholders.confirmPassword}
           className="h-12 w-full rounded-lg border border-[#D9E2EC] bg-white px-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition focus:border-[#009EDB] focus:ring-2 focus:ring-[#009EDB]/20"
           required
         />
@@ -127,22 +130,23 @@ export function SignupForm() {
           required
         />
         <label htmlFor="terms" className="text-xs text-slate-600">
-          I agree to the{" "}
+          {t.auth.signup.termsPrefix}{" "}
           <a href="#" className="font-semibold text-[#174A70] hover:text-[#009EDB]">
-            Terms & Conditions
+            {t.auth.signup.termsLink}
           </a>{" "}
-          and{" "}
+          {t.auth.signup.termsAnd}{" "}
           <a href="#" className="font-semibold text-[#174A70] hover:text-[#009EDB]">
-            Privacy Policy
+            {t.auth.signup.privacyLink}
           </a>
+          {t.auth.signup.termsSuffix}
         </label>
       </div>
 
       <button
         type="submit"
-        className="mt-6 h-12 w-full rounded-full bg-[#009EDB] font-semibold text-white transition-colors hover:bg-[#0088be]"
+        className="mt-6 h-12 w-full whitespace-nowrap rounded-full bg-[#009EDB] font-semibold text-white transition-colors hover:bg-[#0088be]"
       >
-        Create Account
+        {t.auth.signup.createAccountButton}
       </button>
     </form>
   );

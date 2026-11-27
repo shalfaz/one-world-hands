@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import type { Update } from "@/types/ngo";
+import { useLanguage } from "@/context/LanguageContext";
 
 function formatDate(dateISO: string) {
   const date = new Date(dateISO + "T00:00:00Z");
@@ -12,14 +15,20 @@ function formatDate(dateISO: string) {
 
 export default function UpdatesSection({
   updates,
-  title = "Latest Updates",
+  title,
   limit = 3,
 }: {
   updates: Update[];
   title?: string;
   limit?: number;
 }) {
+  const { t, tr } = useLanguage();
   const visible = updates.slice(0, limit);
+  const typeLabels: Record<string, string> = {
+    Notice: t.home.updates.typeNotice,
+    Campaign: t.home.updates.typeCampaign,
+    Update: t.home.updates.typeUpdate,
+  };
 
   return (
     <section aria-labelledby="updates-title">
@@ -29,19 +38,18 @@ export default function UpdatesSection({
             id="updates-title"
             className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl"
           >
-            {title}
+            {title ?? t.home.updates.defaultTitle}
           </h2>
           <p className="mt-2 max-w-2xl text-base leading-7 text-neutral-700">
-            Thoughtful notices and campaign progress—shared transparently with
-            our community.
+            {t.home.updates.subtitle}
           </p>
         </div>
 
         <Link
           href="/updates"
-          className="hidden rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50 sm:inline-flex focus:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+          className="hidden whitespace-nowrap rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50 sm:inline-flex focus:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
         >
-          View all
+          {t.home.updates.viewAll}
         </Link>
       </div>
 
@@ -52,8 +60,8 @@ export default function UpdatesSection({
             className="group rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
           >
             <div className="flex items-center justify-between gap-4">
-              <span className="inline-flex items-center rounded-full bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70] ring-1 ring-[#D9E2EC]">
-                {u.type}
+              <span className="inline-flex items-center whitespace-nowrap rounded-full bg-[#EAF6FB] px-3 py-1 text-xs font-semibold text-[#174A70] ring-1 ring-[#D9E2EC]">
+                {typeLabels[u.type] ?? u.type}
               </span>
               <time
                 dateTime={u.dateISO}
@@ -73,10 +81,10 @@ export default function UpdatesSection({
             <div className="mt-6 flex items-center justify-between">
               <Link
                 href={u.href}
-                className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition-colors hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
-                aria-label={`Read ${u.title}`}
+                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition-colors hover:bg-[#EAF6FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+                aria-label={tr("home.updates.readAriaLabel", { title: u.title })}
               >
-                Read more
+                {t.home.updates.readMore}
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
@@ -100,9 +108,9 @@ export default function UpdatesSection({
       <div className="mt-6 sm:hidden">
         <Link
           href="/updates"
-          className="inline-flex w-full items-center justify-center rounded-full bg-[#009EDB] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
+          className="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full bg-[#009EDB] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0088be] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009EDB] focus-visible:ring-offset-2"
         >
-          View all updates
+          {t.home.updates.viewAllUpdates}
         </Link>
       </div>
     </section>

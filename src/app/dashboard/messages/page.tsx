@@ -2,6 +2,7 @@ import connectToDatabase from "@/lib/mongoose";
 import Message from "@/lib/models/Message";
 import MessageList, { type Message as MessageType } from "./MessageList";
 import { requireAdminUser } from "@/lib/auth/admin";
+import T from "@/components/T";
 
 type MessageData = MessageType;
 
@@ -45,7 +46,7 @@ export default async function MessagesPage() {
     return (
       <div className="flex min-h-screen" style={{ backgroundColor: "#F7FAFC" }}>
         <div className="w-full">
-          <div className="text-red-600">Error loading messages</div>
+          <div className="text-red-600"><T k="dashboard.messages.loadError" /></div>
         </div>
       </div>
     );
@@ -55,9 +56,16 @@ export default async function MessagesPage() {
     <div className="flex min-h-screen" style={{ backgroundColor: "#F7FAFC" }}>
       <div className="w-full">
         <div className="rounded-2xl border border-[#D9E2EC] bg-white p-6">
-          <h1 className="text-3xl font-semibold tracking-tight text-[#174A70]">Messages</h1>
+          <h1 className="text-3xl font-semibold tracking-tight text-[#174A70]"><T k="dashboard.messages.title" /></h1>
           <p className="mt-2 text-slate-600">
-            {serializedMessages.length} message{serializedMessages.length !== 1 ? "s" : ""}
+            <T
+              k={
+                serializedMessages.length === 1
+                  ? "dashboard.messages.countSingular"
+                  : "dashboard.messages.countPlural"
+              }
+              vars={{ count: serializedMessages.length }}
+            />
           </p>
 
           <div className="mt-6">

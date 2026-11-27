@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 
 type ResourceCardType = {
   id: string;
@@ -20,7 +23,13 @@ export default function ResourceCard({
   resource: ResourceCardType;
   categoryLabelOverride?: string;
 }) {
+  const { t } = useLanguage();
   const hasPreview = Boolean(resource.previewUrl);
+  const typeLabels = t.resources.typeLabels as Record<string, string>;
+  const categoryLabel =
+    categoryLabelOverride ??
+    typeLabels[resource.category.toLowerCase()] ??
+    resource.category;
 
   return (
     <Link href={resource.href || "#"}>
@@ -33,7 +42,7 @@ export default function ResourceCard({
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#174A70]">
-            {categoryLabelOverride ?? resource.category}
+            {categoryLabel}
           </p>
           <h3 className="mt-2 text-lg font-semibold tracking-tight text-[#174A70]">
             {resource.title}
@@ -81,7 +90,7 @@ export default function ResourceCard({
         <span
           className="inline-flex items-center gap-2 text-sm font-semibold text-[#009EDB] transition-colors group-hover:text-[#0088be]"
         >
-          View
+          {t.resources.card.view}
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
